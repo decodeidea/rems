@@ -37,7 +37,7 @@
                      <td><?php echo $data->email ?></td>
                     <td>
                       <input type="hidden" name="id" value="<?php echo $data->id; ?>">
-                    <a href="<?=base_url('customer/list_customer_image/'.$data->id)?>"><button  class="btn btn-info btn-xs btn-img" type="button" data-original-title="Image" data-placement="top" data-toggle="tooltip"><i class="fa fa-image"></i></button></a>
+                    <a href="<?=base_url('customer/list_customer_album/'.$data->id)?>"><button  class="btn btn-info btn-xs btn-img" type="button" data-original-title="Image" data-placement="top" data-toggle="tooltip"><i class="fa fa-image"></i></button></a>
                     <a href="<?php echo base_url()."".$controller."/".$function."_form/"."".$data->id; ?>" ><button   data-toggle="tooltip" data-original-title="Edit" class="btn btn-warning btn-xs btn-mini tip" type="button"><i class="fa fa-pencil"></i></button></a> 
                     <button id="del<?php echo $data->id ?>"  data-toggle="tooltip" data-original-title="Delete" onclick="pasdel_id('<?php echo $data->id ?>')" class="delete btn btn-danger btn-xs btn-mini tip" type="button"><i class="fa fa-times"></i></button> </td>
                   </tr>

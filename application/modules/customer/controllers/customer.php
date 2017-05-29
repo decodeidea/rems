@@ -149,17 +149,16 @@ redirect('customer/list_customer');
 
     }
 
-    function list_customer_image($id){
-        $data = $this->get_app_settings();
-        $data += $this->controller_attr;
-        $data += $this->get_function('List Customer', 'list_customer_image');
-        $data += $this->get_menu();
-        //$this->check_userakses($data['function_id'], ACT_CREATE);
-        $data['data_customer'] = $this->model_basic->select_where($this->tbl_customer,'id',$id)->row();
-        $data['data'] = $this->model_basic->select_where($this->tbl_customer_image,'customer_id',$id)->result();
-        $data['content'] = $this->load->view('backend/customer/list_customer_image',$data,true);
-        $this->load->view('backend/index',$data);
-  
+    function list_customer_album($id=null){
+        $this->check_access();
+        $data = $this->controller_attr;
+        $data['function']='list_customer_image';
+        $data['list_customer'] = select_where($this->tbl_customer,'id',$id)->row();
+        $data['list'] = select_where($this->tbl_customer_album,'customer_id',$id)->result();
+        $data['page'] = $this->load->view('customer/list_customer_album', $data, true);
+        $this->load->view('layout_backend',$data);
+
+
     }
     function list_customer_image_add(){
         $data = $this->controller_attr;
@@ -313,6 +312,62 @@ redirect('customer/list_customer');
             redirect($data['controller'].'/'.$data['function'].'/'.$customer_image_data->customer_id);
         else
             redirect($data['controller'].'/'.$data['function'].'/'.$customer_image_data->customer_id);
+    }
+
+    function list_customer_album_form($id=null){
+        $this->check_access();
+        $data = $this->controller_attr;
+        $data['function']='list_customer_album';
+        if ($id) {
+            $data['data'] = select_where($this->tbl_customer_album, 'id', $id)->row();
+        }
+        else{
+            $data['data'] = null;
+        }
+        $data['page'] = $this->load->view('customer/customer_album_form',$data,true);
+        $this->load->view('layout_backend',$data);
+    }
+
+
+    function unit_album_add(){
+        $data = $this->controller_attr;
+        $data['function']='list_customer_album';
+        $table_field = $this->db->list_fields($this->tbl_customer_album);
+        $insert = array();
+        foreach ($table_field as $field) {
+            $insert[$field] = $this->input->post($field);
+        }
+        if(empty($_FILES['filename']['name'])){
+            $insert['filename']=='';
+        }else{
+            $insert['filename']=$_FILES['filename']['name'];
+        }
+        $insert['date_created']= date("Y-m-d H:i:s");
+        $insert['id_creator']=$this->session->userdata['admin']['id'];
+        $query=insert_all($this->tbl_unit_album,$insert);
+        if($query){
+            if(!empty($_FILES['filename']['name'])){
+                if (!file_exists('assets/uploads/unit/'.$this->db->insert_id())) {
+                    mkdir('assets/uploads/unit/'.$this->db->insert_id(), 0777, true);
+                }
+                $config['upload_path'] = 'assets/uploads/unit/'.$this->db->insert_id();
+                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                $config['file_name'] = $_FILES['filename']['name'];
+                $this->upload->initialize($config);
+                if($this->upload->do_upload('filename')){
+                    $uploadData = $this->upload->data();
+                }else{
+                    echo"error upload";
+                    die();
+                }
+            }
+            $this->session->set_flashdata('notif','success');
+            $this->session->set_flashdata('msg','Your data have been added');
+        }else{
+            $this->session->set_flashdata('notif','error');
+            $this->session->set_flashdata('msg','Your data not added');
+        }
+        redirect($data['controller']."/".$data['function']."/".$insert['area_id']);
     }
 
     function list_customer_delete($id=null) {

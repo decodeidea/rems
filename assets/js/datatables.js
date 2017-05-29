@@ -334,7 +334,7 @@ function delete_data()
   			method = $('#method').val();
   			base_url = $('#base_url').val();
       		$.ajax({
-        	url : controller + "/"+method+"_delete/"+id,
+        	url :  base_url + controller + "/"+method+"_delete/"+id,
         	type: "POST",
         	dataType: "JSON",
         	success: function(data)
@@ -343,7 +343,8 @@ function delete_data()
         	},
         	error: function (jqXHR, textStatus, errorThrown)
         	{
-            	alert('Error adding / update data');
+            //	alert('Error adding / update data');
+				window.location= base_url + controller + "/"+method;
         	}
     		});
 

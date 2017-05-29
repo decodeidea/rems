@@ -27,6 +27,7 @@ class DC_Controller extends CI_Controller {
         $this->tbl_unit_type= $this->tbl_prefix . 'unit_type';
 
         $this->tbl_customer= $this->tbl_prefix . 'customer';
+        $this->tbl_customer_album= $this->tbl_prefix . 'customer_album';
 
         //load model fo all page
         $this->load->model('model_basic');
