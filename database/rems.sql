@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2017 at 03:37 PM
+-- Generation Time: May 29, 2017 at 05:56 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -60,6 +60,13 @@ CREATE TABLE `dc_area` (
   `id_modifier` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `dc_area`
+--
+
+INSERT INTO `dc_area` (`id`, `name`, `area_size`, `address`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
+(1, 'dadas', 423432, 'lorem ipsum dolor amet', '2017-05-29 15:20:12', NULL, 1, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -76,6 +83,13 @@ CREATE TABLE `dc_area_album` (
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dc_area_album`
+--
+
+INSERT INTO `dc_area_album` (`id`, `area_id`, `filename`, `caption`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
+(1, 1, 'IMG_2027.jpg', 'a', '2017-05-29 15:34:13', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -349,7 +363,12 @@ INSERT INTO `dc_menu` (`id`, `name_menu`, `sub_menu`, `target`, `icon`, `positio
 (19, 'Kontrak', '17', 'kontrak', 'none', 2, '2017-05-27 20:31:07', NULL, 1, NULL),
 (20, 'Customer', '0', 'customer', 'fa fa-adjust', 0, '0000-00-00 00:00:00', '2017-05-27 20:34:54', 0, 1),
 (21, 'List Customer', '20', 'customer', 'none', 1, '2017-05-27 20:35:46', NULL, 1, NULL),
-(22, 'Finance', '0', 'finance', 'icon-custom-settings', 3, '0000-00-00 00:00:00', '2017-05-27 20:36:53', 0, 1);
+(22, 'Finance', '0', 'finance', 'icon-custom-settings', 1, '0000-00-00 00:00:00', '2017-05-27 20:38:04', 0, 1),
+(23, 'Unit', '0', 'unit', 'fa fa-arrows', 0, '2017-05-28 20:11:07', NULL, 1, NULL),
+(24, 'List Unit', '23', 'list_unit', 'none', 1, '2017-05-29 14:19:13', NULL, 1, NULL),
+(25, 'Area', '23', 'area', 'none', 2, '2017-05-29 14:51:00', NULL, 1, NULL),
+(26, 'Unit Type', '23', 'unit_type', 'none', 3, '2017-05-29 14:51:19', NULL, 1, NULL),
+(27, 'Rekening', '22', 'rekening', 'none', 1, '2017-05-29 20:39:24', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -419,7 +438,10 @@ INSERT INTO `dc_menu_accsess` (`id`, `id_menu`, `id_group`, `accsess`) VALUES
 (59, 23, 1, 1),
 (60, 22, 5, 0),
 (61, 23, 5, 0),
-(62, 24, 1, 0);
+(62, 24, 1, 1),
+(63, 25, 1, 1),
+(64, 26, 1, 1),
+(65, 27, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -556,7 +578,7 @@ CREATE TABLE `dc_rekening` (
 CREATE TABLE `dc_unit` (
   `id` int(11) NOT NULL,
   `area_id` int(11) NOT NULL,
-  `room_type` int(11) DEFAULT NULL,
+  `unit_type` int(11) DEFAULT NULL,
   `name` varchar(45) DEFAULT NULL,
   `luas_netto` decimal(4,2) DEFAULT NULL,
   `luas_semigross` decimal(4,2) DEFAULT NULL,
@@ -571,12 +593,19 @@ CREATE TABLE `dc_unit` (
   `pintu` varchar(45) DEFAULT NULL,
   `sanitasi` varchar(45) DEFAULT NULL,
   `jendela` varchar(45) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT '0',
   `date_created` datetime DEFAULT NULL,
   `date_modified` datetime DEFAULT NULL,
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dc_unit`
+--
+
+INSERT INTO `dc_unit` (`id`, `area_id`, `unit_type`, `name`, `luas_netto`, `luas_semigross`, `number`, `block`, `price`, `struktur`, `lantai`, `dapur`, `listrik`, `dinding`, `pintu`, `sanitasi`, `jendela`, `status`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
+(1, 1, 0, 'dsjh', '99.99', '0.00', 7, NULL, 7879879, 'jkh', 'hkj', 'hhjk', 'khj', 'jkh', 'hk', 'hjk', 'hkj', NULL, '2017-05-29 20:18:12', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -610,6 +639,13 @@ CREATE TABLE `dc_unit_type` (
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dc_unit_type`
+--
+
+INSERT INTO `dc_unit_type` (`id`, `name`, `color`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
+(0, 'type 5', '#000', '2017-05-29 15:45:36', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -651,6 +687,24 @@ ALTER TABLE `dc_appearance`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `dc_area`
+--
+ALTER TABLE `dc_area`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dc_area_album`
+--
+ALTER TABLE `dc_area_album`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dc_customer`
+--
+ALTER TABLE `dc_customer`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `dc_default`
 --
 ALTER TABLE `dc_default`
@@ -681,6 +735,12 @@ ALTER TABLE `dc_menu_accsess`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `dc_unit`
+--
+ALTER TABLE `dc_unit`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `dc_user`
 --
 ALTER TABLE `dc_user`
@@ -695,6 +755,21 @@ ALTER TABLE `dc_user`
 --
 ALTER TABLE `dc_appearance`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `dc_area`
+--
+ALTER TABLE `dc_area`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `dc_area_album`
+--
+ALTER TABLE `dc_area_album`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `dc_customer`
+--
+ALTER TABLE `dc_customer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `dc_default`
 --
@@ -714,12 +789,17 @@ ALTER TABLE `dc_icons`
 -- AUTO_INCREMENT for table `dc_menu`
 --
 ALTER TABLE `dc_menu`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `dc_menu_accsess`
 --
 ALTER TABLE `dc_menu_accsess`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+--
+-- AUTO_INCREMENT for table `dc_unit`
+--
+ALTER TABLE `dc_unit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `dc_user`
 --

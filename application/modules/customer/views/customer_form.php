@@ -5,7 +5,7 @@
                   
                   <div class="tools"> <a href="javascript:;" class="collapse"></a> <a href="#grid-config" data-toggle="modal" class="config"></a> <a href="javascript:;" class="reload"></a> <a href="javascript:;" class="remove"></a> </div>
                 </div>
-                <form enctype="multipart/form-data" method="post" action="<?php if($data)echo $controller.'/list_customer_edit'; else echo $controller.'/list_customer_add'; ?>">
+                <form enctype="multipart/form-data" method="post" action="<?php echo base_url(); if($data)echo $controller.'/list_customer_edit'; else echo $controller.'/list_customer_add'; ?>">
                   <input type="hidden" name="id" value="<?php if(isset($data)){ echo $data->id; } ?>">
              
               <input type="hidden" name="controller" id="controller" value="<?php echo $controller ?>">
