@@ -21,6 +21,8 @@ class DC_Controller extends CI_Controller {
         $this->tbl_user_accsess= $this->tbl_prefix . 'menu_accsess';
         $this->tbl_appearance= $this->tbl_prefix . 'appearance';
 
+        $this->tbl_customer= $this->tbl_prefix . 'customer';
+
         //load model fo all page
         $this->load->model('model_basic');
 
