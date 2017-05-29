@@ -110,6 +110,82 @@ class unit extends DC_controller {
 			$this->session->set_flashdata('msg','Your data not deleted');
 		}
 	}
+	function unit_album($id){
+		$this->check_access();
+		$data = $this->controller_attr;
+		$data['function']='unit_album';
+		$data['list']=select_all($this->tbl_unit_album);
+		$data['page'] = $this->load->view('unit/list_unit_album',$data,true);
+		$this->load->view('layout_backend',$data);
+	}
+
+	function unit_album_form($id=null){
+		$this->check_access();
+		$data = $this->controller_attr;
+		$data['function']='area_album';
+		if ($id) {
+            $data['data'] = select_where($this->tbl_unit_album, 'id', $id)->row();
+        }
+        else{
+            $data['data'] = null;
+        }
+		$data['page'] = $this->load->view('unit/unit_album_form',$data,true);
+		$this->load->view('layout_backend',$data);
+	}
+
+	function unit_album_add(){
+		$data = $this->controller_attr;
+		$data['function']='area_album';
+		$table_field = $this->db->list_fields($this->tbl_unit_album);
+		$insert = array();
+        foreach ($table_field as $field) {
+            $insert[$field] = $this->input->post($field);
+        }
+        if(empty($_FILES['filename']['name'])){
+        	$insert['filename']=='';
+        }else{
+        	 $insert['filename']=$_FILES['filename']['name'];
+        }
+        $insert['date_created']= date("Y-m-d H:i:s");
+        $insert['id_creator']=$this->session->userdata['admin']['id'];
+        $query=insert_all($this->tbl_unit_album,$insert);
+		if($query){
+			if(!empty($_FILES['filename']['name'])){
+			if (!file_exists('assets/uploads/unit/'.$this->db->insert_id())) {
+    				mkdir('assets/uploads/unit/'.$this->db->insert_id(), 0777, true);
+			 }
+        	 $config['upload_path'] = 'assets/uploads/unit/'.$this->db->insert_id();
+             $config['allowed_types'] = 'jpg|jpeg|png|gif';
+             $config['file_name'] = $_FILES['filename']['name'];
+             $this->upload->initialize($config);
+             if($this->upload->do_upload('filename')){
+                    $uploadData = $this->upload->data();
+                }else{
+                    echo"error upload";
+                    die();
+              }
+          }
+			$this->session->set_flashdata('notif','success');
+			$this->session->set_flashdata('msg','Your data have been added');
+		}else{
+			$this->session->set_flashdata('notif','error');
+			$this->session->set_flashdata('msg','Your data not added');
+		}
+		redirect($data['controller']."/".$data['function']."/".$insert['area_id']);
+	}
+
+	function unit_album_delete($id){
+		$data = $this->controller_attr;
+		$function='area';
+		$query=delete($this->tbl_unit_album,'id',$id);
+		if($query){
+			$this->session->set_flashdata('notif','success');
+			$this->session->set_flashdata('msg','Your data have been deleted');
+		}else{
+			$this->session->set_flashdata('notif','error');
+			$this->session->set_flashdata('msg','Your data not deleted');
+		}
+	}
 	function area(){
 		$this->check_access();
 		$data = $this->controller_attr;
