@@ -20,6 +20,11 @@ class DC_Controller extends CI_Controller {
         $this->tbl_groups= $this->tbl_prefix . 'groups';
         $this->tbl_user_accsess= $this->tbl_prefix . 'menu_accsess';
         $this->tbl_appearance= $this->tbl_prefix . 'appearance';
+        $this->tbl_unit= $this->tbl_prefix . 'unit';
+        $this->tbl_unit_album= $this->tbl_prefix . 'unit_album';
+        $this->tbl_area= $this->tbl_prefix . 'area';
+        $this->tbl_area_album= $this->tbl_prefix . 'area_album';
+        $this->tbl_unit_type= $this->tbl_prefix . 'unit_type';
 
         $this->tbl_customer= $this->tbl_prefix . 'customer';
 
