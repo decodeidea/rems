@@ -25,9 +25,11 @@ class DC_Controller extends CI_Controller {
         $this->tbl_area= $this->tbl_prefix . 'area';
         $this->tbl_area_album= $this->tbl_prefix . 'area_album';
         $this->tbl_unit_type= $this->tbl_prefix . 'unit_type';
-
+         $this->tbl_unit_type= $this->tbl_prefix . 'unit_type';
         $this->tbl_customer= $this->tbl_prefix . 'customer';
         $this->tbl_customer_album= $this->tbl_prefix . 'customer_album';
+        $this->tbl_rekening= $this->tbl_prefix . 'rekening';
+        $this->tbl_contract_type= $this->tbl_prefix . 'kontrak_type';
 
         //load model fo all page
         $this->load->model('model_basic');

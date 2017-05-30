@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2017 at 05:56 PM
+-- Generation Time: May 30, 2017 at 10:08 AM
 -- Server version: 10.1.13-MariaDB
--- PHP Version: 5.6.23
+-- PHP Version: 5.6.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -303,6 +303,15 @@ CREATE TABLE `dc_kontrak_type` (
   `id_modifier` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `dc_kontrak_type`
+--
+
+INSERT INTO `dc_kontrak_type` (`id`, `name`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
+(1, 'Cicilan', '2017-05-30 15:06:49', NULL, 1, NULL),
+(2, 'KPA', '2017-05-30 15:06:57', NULL, 1, NULL),
+(3, 'Cash Keras', '2017-05-30 15:07:04', NULL, 1, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -368,7 +377,8 @@ INSERT INTO `dc_menu` (`id`, `name_menu`, `sub_menu`, `target`, `icon`, `positio
 (24, 'List Unit', '23', 'list_unit', 'none', 1, '2017-05-29 14:19:13', NULL, 1, NULL),
 (25, 'Area', '23', 'area', 'none', 2, '2017-05-29 14:51:00', NULL, 1, NULL),
 (26, 'Unit Type', '23', 'unit_type', 'none', 3, '2017-05-29 14:51:19', NULL, 1, NULL),
-(27, 'Rekening', '22', 'rekening', 'none', 1, '2017-05-29 20:39:24', NULL, 1, NULL);
+(27, 'Rekening', '22', 'list_rekening', 'none', 1, '0000-00-00 00:00:00', '2017-05-30 13:23:40', 0, 1),
+(28, 'Contract Type', '22', 'contract_type', 'none', 2, '0000-00-00 00:00:00', '2017-05-30 14:50:12', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -441,7 +451,8 @@ INSERT INTO `dc_menu_accsess` (`id`, `id_menu`, `id_group`, `accsess`) VALUES
 (62, 24, 1, 1),
 (63, 25, 1, 1),
 (64, 26, 1, 1),
-(65, 27, 1, 1);
+(65, 27, 1, 1),
+(66, 28, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -558,16 +569,23 @@ CREATE TABLE `dc_pengajuan_harga_unit` (
 
 CREATE TABLE `dc_rekening` (
   `id` int(11) NOT NULL,
-  `nama_rek` varchar(45) NOT NULL,
   `no_rek` varchar(45) NOT NULL,
   `bank` varchar(45) NOT NULL,
   `atas_nama` varchar(45) NOT NULL,
-  `saldo` bigint(20) NOT NULL,
+  `saldo` bigint(20) DEFAULT NULL,
   `date_created` datetime DEFAULT NULL,
   `date_modified` datetime DEFAULT NULL,
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dc_rekening`
+--
+
+INSERT INTO `dc_rekening` (`id`, `no_rek`, `bank`, `atas_nama`, `saldo`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
+(1, '1050063888899', 'Mandiri Medan Cab. Taman Setiabudi', 'PT. Decodeidea', 0, '2017-05-30 14:18:08', NULL, 1, NULL),
+(2, '301300888889', 'BTN Medan Cab. Pemuda', 'PT. Decodeidea', 0, NULL, '2017-05-30 14:37:41', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -723,6 +741,12 @@ ALTER TABLE `dc_icons`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `dc_kontrak_type`
+--
+ALTER TABLE `dc_kontrak_type`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `dc_menu`
 --
 ALTER TABLE `dc_menu`
@@ -732,6 +756,12 @@ ALTER TABLE `dc_menu`
 -- Indexes for table `dc_menu_accsess`
 --
 ALTER TABLE `dc_menu_accsess`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dc_rekening`
+--
+ALTER TABLE `dc_rekening`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -786,15 +816,25 @@ ALTER TABLE `dc_groups`
 ALTER TABLE `dc_icons`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
+-- AUTO_INCREMENT for table `dc_kontrak_type`
+--
+ALTER TABLE `dc_kontrak_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT for table `dc_menu`
 --
 ALTER TABLE `dc_menu`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `dc_menu_accsess`
 --
 ALTER TABLE `dc_menu_accsess`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+--
+-- AUTO_INCREMENT for table `dc_rekening`
+--
+ALTER TABLE `dc_rekening`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `dc_unit`
 --
