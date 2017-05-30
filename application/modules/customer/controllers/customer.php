@@ -160,159 +160,6 @@ redirect('customer/list_customer');
 
 
     }
-    function list_customer_image_add(){
-        $data = $this->controller_attr;
-        $data += $this->get_function('List Customer','list_customer_image');
-        //$menu = $this->get_menu_id($data['function']);$this->userakses($menu->id, 2);
-        $img_name_crop = uniqid().'-rg.jpg';
-        $data_insert = array(
-            'customer_id' => $this->input->post('customer-id'),
-            'filename' => $img_name_crop,
-            'caption' => $this->input->post('customer-caption')
-            );
-        if($this->input->post('image')) {
-            $origw = $this->input->post('origwidth');
-            $origh = $this->input->post('origheight');
-            $fakew = $this->input->post('fakewidth');
-            $fakeh = $this->input->post('fakeheight');
-            $x = $this->input->post('x') * $origw / $fakew;
-            $y = $this->input->post('y') * $origh / $fakeh;
-            # ambil width crop
-            $targ_w = $this->input->post('w') * $origw / $fakew;
-            # ambil heigth crop
-            $targ_h = $this->input->post('h') * $origh / $fakeh;
-            # rasio gambar crop
-            $jpeg_quality = 100;
-            if(!is_dir(FCPATH . "assets/uploads/customer/".$this->input->post('customer-id')))
-                mkdir(FCPATH . "assets/uploads/customer/".$this->input->post('customer-id'));
-            if(basename($this->input->post('image')) && $this->input->post('image') != null){
-                $src = $this->input->post('image');
-            }
-            # inisial handle copy gambar
-            $ext = pathinfo($src, PATHINFO_EXTENSION);
-
-            if($ext == 'jpg' || $ext == 'jpeg' || $ext == 'JPG' || $ext == 'JPEG')
-                $img_r = imagecreatefromjpeg($src);
-            if($ext == 'png' || $ext == 'PNG')
-                $img_r = imagecreatefrompng($src);
-            if($ext == 'gif' || $ext == 'GIF')
-                $img_r = imagecreatefromgif($src);
-
-            $dst_r = ImageCreateTrueColor( $targ_w, $targ_h );
-            # simpan hasil croping pada folder lain
-            $path_img_crop = realpath(FCPATH . "assets/uploads/customer/".$this->input->post('customer-id'));
-            # nama gambar yg di crop
-            # proses copy
-            imagecopyresampled($dst_r,$img_r,0,0,$x,$y,$targ_w,$targ_h,$targ_w,$targ_h);
-            # buat gambar
-            imagejpeg($dst_r,$path_img_crop .'/'. $img_name_crop,$jpeg_quality);
-            $this->makeThumbnails($path_img_crop.'/', $img_name_crop, 300, 453);
-            $this->delete_temp('temp_folder');
-            $insert = $this->model_basic->insert_all($this->tbl_customer_image,$data_insert);
-            if($insert)
-                $this->returnJson(array('status' => 'ok','message' => 'Insert Success','redirect' => $data['controller'].'/'.$data['function'].'/'.$this->input->post('customer-id')));
-            else
-                $this->returnJson(array('status'=>'error','message'=>'Insert Failed'));
-        }
-        else
-            $this->returnJson(array('status' => 'error','message' => 'Please Complete The Form'));
-    }
-
-    function list_customer_image_get(){
-        $id = $this->input->post('id');
-        $data = $this->controller_attr;
-        $data += $this->get_function('List Customer','list_customer_image');
-        $data_get = $this->model_basic->select_where($this->customer_image,'id',$id)->row();
-        if($data_get){
-            $this->returnJson(array('status'=>'ok','data'=>$data_get));
-        }
-        else{
-            $this->returnJson(array('status'=>'error','message'=>'Data Not Found'));
-        }
-    }
-
-    function list_customer_image_edit(){
-        $data = $this->controller_attr;
-        $data += $this->get_function('List Customer','list_customer_image');
-        //$menu = $this->get_menu_id($data['function']);$this->userakses($menu->id, 3);
-        $id = $this->input->post('id');
-        $img_name_crop = uniqid().'-rg.jpg';
-        $foto = $this->input->post('image');
-        $old_foto = $this->input->post('old_image');
-        $data_update = array(
-            'customer_id' => $this->input->post('customer-id'),
-            'caption' => $this->input->post('customer-caption')
-            );
-        if($foto && (basename($foto) != $old_foto))
-            $data_update['filename'] = $img_name_crop;
-        else if($this->input->post('x') || $this->input->post('y') || $this->input->post('w') || $this->input->post('h'))
-            $data_update['filename'] = $img_name_crop;
-
-        if(!$this->model_basic->update($this->tbl_customer_image,$data_update,'id',$id))
-        {
-            $this->returnJson(array('status' => 'error', 'message' => 'Update Failed'));
-        }
-        else
-        {
-            if(($foto && (basename($foto) != $old_foto)) || ($this->input->post('x') || $this->input->post('y') || $this->input->post('w') || $this->input->post('h')))
-            {
-                $origw = $this->input->post('origwidth');
-                $origh = $this->input->post('origheight');
-                $fakew = $this->input->post('fakewidth');
-                $fakeh = $this->input->post('fakeheight');
-                $x = $this->input->post('x') * $origw / $fakew;
-                $y = $this->input->post('y') * $origh / $fakeh;
-                # ambil width crop
-                $targ_w = $this->input->post('w') * $origw / $fakew;
-                # abmil heigth crop
-                $targ_h = $this->input->post('h') * $origh / $fakeh;
-                # rasio gambar crop
-                $jpeg_quality = 90;
-                if(!is_dir(FCPATH . "assets/uploads/customer/".$this->input->post('customer-id')))
-                    mkdir(FCPATH . "assets/uploads/customer/".$this->input->post('customer-id'));
-                if(basename($foto) && $foto != null){
-                    $src = $this->input->post('image');
-                }
-                else if($this->input->post('x')||$this->input->post('y')||$this->input->post('w')||$this->input->post('h'))
-                    $src = "assets/uploads/customer/".$this->input->post('customer-id').'/'.$old_foto;
-                # inisial handle copy gambar
-                $ext = pathinfo($src, PATHINFO_EXTENSION);
-
-                if($ext == 'jpg' || $ext == 'jpeg' || $ext == 'JPG' || $ext == 'JPEG')
-                    $img_r = imagecreatefromjpeg($src);
-                if($ext == 'png' || $ext == 'PNG')
-                    $img_r = imagecreatefrompng($src);
-                if($ext == 'gif' || $ext == 'GIF')
-                    $img_r = imagecreatefromgif($src);
-
-                $dst_r = ImageCreateTrueColor( $targ_w, $targ_h );
-                # simpan hasil croping pada folder lain
-                $path_img_crop = realpath(FCPATH . "assets/uploads/customer/".$this->input->post('customer-id'));
-                # nama gambar yg di crop
-                # proses copy
-                imagecopyresampled($dst_r,$img_r,0,0,$x,$y,$targ_w,$targ_h,$targ_w,$targ_h);
-                # buat gambar
-                imagejpeg($dst_r,$path_img_crop .'/'. $img_name_crop,$jpeg_quality);
-                $this->makeThumbnails($path_img_crop.'/', $img_name_crop, 300, 454);
-                @unlink(FCPATH."assets/uploads/customer/".$this->input->post('customer-id').'/'.$old_foto);
-                $this->delete_temp('temp_folder');
-            }
-            $this->returnJson(array('status' => 'ok', 'message' => 'Update Success','redirect' => $this->controller_attr['controller'].'/'.$data['function'].'/'.$this->input->post('customer-id')));
-        }
-    }
-
-    function list_customer_image_delete($id){
-        $data = $this->controller_attr;
-        $data += $this->get_function('customer Image','list_customer_image');
-        //$menu = $this->get_menu_id($data['function']);$this->userakses($menu->id, 4);
-        $customer_image_data = $this->model_basic->select_where($this->tbl_customer_image,'id',$id)->row();
-        $delete = $this->model_basic->delete($this->tbl_customer_image,'id',$id);
-        @unlink(FCPATH."assets/uploads/customer/".$customer_image_data->customer_id.'/'.$customer_image_data->filename);
-        if($delete)
-            redirect($data['controller'].'/'.$data['function'].'/'.$customer_image_data->customer_id);
-        else
-            redirect($data['controller'].'/'.$data['function'].'/'.$customer_image_data->customer_id);
-    }
 
     function list_customer_album_form($id=null){
         $this->check_access();
@@ -328,8 +175,24 @@ redirect('customer/list_customer');
         $this->load->view('layout_backend',$data);
     }
 
+    function list_customer_album_delete($id,$idcustomer){
+        $data = $this->controller_attr;
+        $data['function']='list_customer_album';
+        $function='area';
+        $query=delete($this->tbl_customer_album,'id',$id);
+        if($query){
+            $this->session->set_flashdata('notif','success');
+            $this->session->set_flashdata('msg','Your data have been deleted');
+        }else{
+            $this->session->set_flashdata('notif','error');
+            $this->session->set_flashdata('msg','Your data not deleted');
+        }
 
-    function unit_album_add(){
+        redirect($data['controller']."/".$data['function']."/".$idcustomer);
+
+
+    }
+    function list_customer_album_add(){
         $data = $this->controller_attr;
         $data['function']='list_customer_album';
         $table_field = $this->db->list_fields($this->tbl_customer_album);
@@ -337,20 +200,22 @@ redirect('customer/list_customer');
         foreach ($table_field as $field) {
             $insert[$field] = $this->input->post($field);
         }
+
         if(empty($_FILES['filename']['name'])){
             $insert['filename']=='';
         }else{
             $insert['filename']=$_FILES['filename']['name'];
         }
+
         $insert['date_created']= date("Y-m-d H:i:s");
         $insert['id_creator']=$this->session->userdata['admin']['id'];
-        $query=insert_all($this->tbl_unit_album,$insert);
+        $query=insert_all($this->tbl_customer_album,$insert);
         if($query){
             if(!empty($_FILES['filename']['name'])){
-                if (!file_exists('assets/uploads/unit/'.$this->db->insert_id())) {
-                    mkdir('assets/uploads/unit/'.$this->db->insert_id(), 0777, true);
+                if (!file_exists('assets/uploads/customer/album/'.$this->db->insert_id())) {
+                    mkdir('assets/uploads/customer/album/'.$this->db->insert_id(), 0777, true);
                 }
-                $config['upload_path'] = 'assets/uploads/unit/'.$this->db->insert_id();
+                $config['upload_path'] = 'assets/uploads/customer/album/'.$this->db->insert_id();
                 $config['allowed_types'] = 'jpg|jpeg|png|gif';
                 $config['file_name'] = $_FILES['filename']['name'];
                 $this->upload->initialize($config);
@@ -367,7 +232,7 @@ redirect('customer/list_customer');
             $this->session->set_flashdata('notif','error');
             $this->session->set_flashdata('msg','Your data not added');
         }
-        redirect($data['controller']."/".$data['function']."/".$insert['area_id']);
+      redirect($data['controller']."/".$data['function']."/".$insert['customer_id']);
     }
 
     function list_customer_delete($id=null) {
