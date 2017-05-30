@@ -30,6 +30,7 @@ class DC_Controller extends CI_Controller {
         $this->tbl_customer_album= $this->tbl_prefix . 'customer_album';
         $this->tbl_rekening= $this->tbl_prefix . 'rekening';
         $this->tbl_contract_type= $this->tbl_prefix . 'kontrak_type';
+        $this->tbl_payment_type= $this->tbl_prefix . 'payment_type';
 
         //load model fo all page
         $this->load->model('model_basic');

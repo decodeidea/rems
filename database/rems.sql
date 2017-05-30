@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 30, 2017 at 10:08 AM
+-- Generation Time: May 30, 2017 at 11:03 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.20
 
@@ -378,7 +378,8 @@ INSERT INTO `dc_menu` (`id`, `name_menu`, `sub_menu`, `target`, `icon`, `positio
 (25, 'Area', '23', 'area', 'none', 2, '2017-05-29 14:51:00', NULL, 1, NULL),
 (26, 'Unit Type', '23', 'unit_type', 'none', 3, '2017-05-29 14:51:19', NULL, 1, NULL),
 (27, 'Rekening', '22', 'list_rekening', 'none', 1, '0000-00-00 00:00:00', '2017-05-30 13:23:40', 0, 1),
-(28, 'Contract Type', '22', 'contract_type', 'none', 2, '0000-00-00 00:00:00', '2017-05-30 14:50:12', 0, 1);
+(28, 'Contract Type', '22', 'contract_type', 'none', 2, '0000-00-00 00:00:00', '2017-05-30 14:50:12', 0, 1),
+(29, 'Payment Type', '22', 'payment_type', 'none', 3, '2017-05-30 15:49:15', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -452,7 +453,8 @@ INSERT INTO `dc_menu_accsess` (`id`, `id_menu`, `id_group`, `accsess`) VALUES
 (63, 25, 1, 1),
 (64, 26, 1, 1),
 (65, 27, 1, 1),
-(66, 28, 1, 1);
+(66, 28, 1, 1),
+(67, 29, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -501,6 +503,15 @@ CREATE TABLE `dc_payment_type` (
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dc_payment_type`
+--
+
+INSERT INTO `dc_payment_type` (`id`, `title`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
+(1, 'Booking Fee', '2017-05-30 16:01:29', NULL, 1, NULL),
+(2, 'DP', NULL, '2017-05-30 16:02:32', NULL, 1),
+(3, 'Cicilan', NULL, '2017-05-30 16:02:42', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -741,6 +752,12 @@ ALTER TABLE `dc_icons`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `dc_kontrak`
+--
+ALTER TABLE `dc_kontrak`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `dc_kontrak_type`
 --
 ALTER TABLE `dc_kontrak_type`
@@ -756,6 +773,12 @@ ALTER TABLE `dc_menu`
 -- Indexes for table `dc_menu_accsess`
 --
 ALTER TABLE `dc_menu_accsess`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dc_payment_type`
+--
+ALTER TABLE `dc_payment_type`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -816,6 +839,11 @@ ALTER TABLE `dc_groups`
 ALTER TABLE `dc_icons`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
+-- AUTO_INCREMENT for table `dc_kontrak`
+--
+ALTER TABLE `dc_kontrak`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `dc_kontrak_type`
 --
 ALTER TABLE `dc_kontrak_type`
@@ -824,12 +852,17 @@ ALTER TABLE `dc_kontrak_type`
 -- AUTO_INCREMENT for table `dc_menu`
 --
 ALTER TABLE `dc_menu`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT for table `dc_menu_accsess`
 --
 ALTER TABLE `dc_menu_accsess`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+--
+-- AUTO_INCREMENT for table `dc_payment_type`
+--
+ALTER TABLE `dc_payment_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `dc_rekening`
 --
