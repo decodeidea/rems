@@ -32,6 +32,13 @@ class DC_Controller extends CI_Controller {
         $this->tbl_contract_type= $this->tbl_prefix . 'kontrak_type';
         $this->tbl_payment_type= $this->tbl_prefix . 'payment_type';
 
+        $this->tbl_kontrak = $this->tbl_prefix . 'kontrak';
+        $this->tbl_kontrak_unit = $this->tbl_prefix . 'kontrak_unit';
+        $this->tbl_kontrak_type = $this->tbl_prefix . 'kontrak_type';
+
+        $this->tbl_payment_scheme = $this->tbl_prefix . 'payment_scheme';
+        $this->tbl_payment_scheme_detail = $this->tbl_prefix . 'payment_scheme_detail';
+
         //load model fo all page
         $this->load->model('model_basic');
 

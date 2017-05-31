@@ -264,5 +264,36 @@ class finance extends DC_controller {
 			$this->session->set_flashdata('msg','Your data not deleted');
 		}
 	}
+
+
+
+	//MODULE PAYMENT_SCHEMA
+ function payment_scheme() {
+		$data = $this->controller_attr;
+		$data['function']='payment_scheme';
+		$data['list'] = select_all($this->tbl_payment_scheme);
+		$data['page'] = $this->load->view('finance/payment_scheme', $data, true);
+		$this->load->view('layout_backend',$data);
+	}
+
+
+	public function payment_scheme_form() {
+		$data = $this->controller_attr;
+		$data['function']='payment_scheme';
+		$id = $this->input->post('id');
+		$data['detail'] = getAll($this->tbl_payment_scheme_detail, array('payment_scheme_id'=>'where/'.$id));
+		$data['kontrak_type'] = getAll($this->tbl_kontrak_type)->result();
+		if ($id) {
+			$data['data'] = select_where($this->tbl_payment_scheme, 'id', $id)->row();
+			$data['payment_type'] = getAll($this->tbl_payment_type);
+		}
+		else
+			$data['data'] = null;
+
+		$data['page'] = $this->load->view('finance/payment_scheme_form', $data, true);
+		$this->load->view('layout_backend',$data);
+	}
 }
+
+
 
