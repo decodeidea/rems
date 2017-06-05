@@ -5,7 +5,7 @@
 
 				<div class="tools"> <a href="javascript:;" class="collapse"></a> <a href="#grid-config" data-toggle="modal" class="config"></a> <a href="javascript:;" class="reload"></a> <a href="javascript:;" class="remove"></a> </div>
 			</div>
-			<form enctype="multipart/form-data" method="post" action="<?php echo base_url() ?><?php echo $controller."/".$function?>_<?php if(isset($data)){echo"update";}else{echo"add";} ?>">
+			<form  method="POST" action="<?php echo base_url() ?><?php if($data) echo $controller.'/payment_scheme_edit'; else echo $controller.'/payment_scheme_add'; ?>">
 				<input type="hidden" name="id" value="<?php if(isset($data)){ echo $data->id; } ?>">
 				<input type="hidden" name="controller" id="controller" value="<?php echo $controller ?>">
 				<input type="hidden" name="method" value="<?php echo $function ?>" id="method">
@@ -13,11 +13,10 @@
 					<div class="row">
 						<div class="col-md-12 col-sm-8 col-xs-8">
 
-
 							<div class="form-group">
 								<label class="form-label">Name</label>
 								<div class="controls">
-									<input type="text" name="title" required class="form-control" value="<?php if($data!=null) echo $data->title; ?>">
+									<input type="text" name="title" required class="form-control" value="<?php if(isset($data)){ echo $data->title; } ?>">
 								</div>
 							</div>
 
@@ -27,7 +26,11 @@
 									<select class="select2" name="kontrak_type" style="width: 100%">
 										<option>-- Choose Contract Type --</option>
 										<?php foreach ($kontrak_type as $k) {
-											$selected = ($data->kontrak_type == $k->id) ? 'selected' : '';
+											if($data) {
+												$selected = ($data->kontrak_type == $k->id) ? 'selected' : '';
+											}else{
+												$selected ='';
+											}
 											echo "<option value='$k->id' $selected>$k->name</option>";
 										}?>
 									</select>
@@ -40,11 +43,12 @@
 									<input type="text" class="form-control" name="bunga" id="bunga" value="<?php if($data!=null) echo $data->bunga;?>">
 								</div>
 							</div>
+
 							<fieldset>
 								<legend>Schema Detail</legend>
 								<div class="row">
 									<div class="col-md-12">
-										<button id="btnAdd" class="btn btn-primary pull-left" type="button" onclick="addRow('tbl')"><i class="fa fa-plus"> Add Detail</i></button>
+										<button id="btnAdd" class="btn btn-primary pull-left" type="button" onclick="addRow('tbl','<?php echo base_url() ?>')"><i class="fa fa-plus"> Add Detail</i></button>
 									</div>
 								</div>
 								<br/>
@@ -97,21 +101,36 @@
 								</div>
 							</fieldset>
 
-
-						</div>
+							<div class="form-group">
+								<div class="controls">
+									<button type="submit" class="btn btn-primary">Submit</button>
+								</div>
+							</div>
 					</div>
-				</div>
-			</form>
-		</div>
-	</div>
+
+
+				</div></div>
+
+			</form></div>
 </div>
 
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.js"></script>
 
-
+<!-- START SCRIPTS -->
+<!-- THIS PAGE PLUGINS -->
+<script type="text/javascript" src="<?php echo base_url() ?>assets/js/plugins/jquery-validation/jquery.validate.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/js/plugins/summernote/summernote.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/js/plugins/jquery-mask-money/jquery.maskMoney.js"></script>
 <link href="<?php echo base_url() ?>assets/css/select2.css" rel="stylesheet"/>
 <script src="<?php echo base_url() ?>assets/js/select2.js"></script>
+<!-- END PAGE PLUGINS -->
+<!-- START TEMPLATE -->
+<script type="text/javascript" src="<?php echo base_url() ?>assets/js/settings.js"></script>
 
+<script type="text/javascript" src="<?php echo base_url() ?>assets/js/plugins.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/js/actions.js"></script>
+<!-- END TEMPLATE -->
+<!-- THIS PAGE JS SETTINGS -->
+<script type="text/javascript" src="<?php echo base_url() ?>assets/page/site_content/static_content_form.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>assets/page/finance/payment_schema.js"></script>
-
+<!--  -->
+<!-- END SCRIPTS -->

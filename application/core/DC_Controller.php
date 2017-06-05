@@ -72,6 +72,45 @@ class DC_Controller extends CI_Controller {
        return $data;
     }
 
+    function returnJson($msg) {
+        echo json_encode($msg);
+        exit;
+    }
+
+    function check_userakses($menu_id, $function, $user = 'admin') {
+        if ($user == 'admin')
+            $group_id = $this->session_admin['id_usergroup'];
+        if ($user == 'member')
+            $group_id = $this->session->userdata['member']['group_id'];
+        $access = $this->model_useraccess->get_useraccess($group_id, $menu_id);
+        switch ($function) {
+            case 1:
+                if ($access->act_read == 1)
+                    return TRUE;
+                else
+                    redirect('admin');
+                break;
+            case 2:
+                if ($access->act_create == 1)
+                    return TRUE;
+                else
+                    redirect('admin');
+                break;
+            case 3:
+                if ($access->act_update == 1)
+                    return TRUE;
+                else
+                    redirect('admin');
+                break;
+            case 4:
+                if ($access->act_delete == 1)
+                    return TRUE;
+                else
+                    redirect('admin');
+                break;
+        }
+    }
+
 
     function check_access(){
         if($this->session->userdata('admin')){

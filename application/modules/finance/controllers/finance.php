@@ -277,21 +277,170 @@ class finance extends DC_controller {
 	}
 
 
-	public function payment_scheme_form() {
+	public function payment_scheme_form($id=null) {
 		$data = $this->controller_attr;
 		$data['function']='payment_scheme';
-		$id = $this->input->post('id');
+
+		//$this->check_userakses($data['function_id'], ACT_CREATE);
 		$data['detail'] = getAll($this->tbl_payment_scheme_detail, array('payment_scheme_id'=>'where/'.$id));
 		$data['kontrak_type'] = getAll($this->tbl_kontrak_type)->result();
 		if ($id) {
 			$data['data'] = select_where($this->tbl_payment_scheme, 'id', $id)->row();
 			$data['payment_type'] = getAll($this->tbl_payment_type);
 		}
-		else
+		else {
 			$data['data'] = null;
+			$data['payment_type'] = getAll($this->tbl_payment_type);
+		}
 
 		$data['page'] = $this->load->view('finance/payment_scheme_form', $data, true);
 		$this->load->view('layout_backend',$data);
+	}
+
+	function payment_scheme_add() {
+		// print_r($_POST);die();
+		$data = $this->controller_attr;
+		$data['function']='payment_scheme';
+		$images = $this->input->post('images');
+		$table_field = $this->db->list_fields($this->tbl_payment_scheme);
+		$insert = array();
+		foreach ($table_field as $field) {
+			$insert[$field] = $this->input->post($field);
+		}
+		$insert['date_created'] = date('Y-m-d H:i:s', now());
+		$insert['date_modified'] = date('Y-m-d H:i:s', now());
+		$insert['id_creator'] = $this->session->userdata['admin']['id'];
+		$insert['id_modifier'] = $this->session->userdata['admin']['id'];
+		//filter persentase
+		$persentase = $this->input->post('persentase');
+		$total_persentase = 0;
+		foreach ($persentase as $d) {
+			$total_persentase = $total_persentase + $d;
+		}
+		if ($total_persentase > 100) {
+			$this->returnJson(array('status' => 'error', 'msg' => 'Persentase tidak dapat melebihi 100%!'));
+		}
+		if ($insert['title'] && $insert['kontrak_type'] && $insert['bunga'] ) {
+			// print_r($insert);die();
+			$do_insert = insert_all($this->tbl_payment_scheme, $insert);
+			$payment_scheme_id = $this->db->insert_id();
+			if ($do_insert) {
+				$title = $this->input->post('title_detail');
+				$payment_type_id = $this->input->post('payment_type_id');
+				$tenor = $this->input->post('tenor');
+				$interval = $this->input->post('interval');
+				$persentase = $this->input->post('persentase');
+				for ($i=0; $i < sizeof($title) ; $i++) {
+
+					$detail = array(
+						'payment_scheme_id' => $payment_scheme_id,
+						'title' => $title[$i],
+						'payment_type_id' => $payment_type_id[$i],
+						'tenor' => $tenor[$i],
+						'interval' => $interval[$i],
+						'persentase' => $persentase[$i],
+					);
+
+					$this->db->insert($this->tbl_payment_scheme_detail, $detail);
+				}
+
+				//$this->returnJson(array('status' => 'ok', 'msg' => 'Input data success', 'redirect' => base_url(). $data['controller'] . '/' . $data['function']));
+				$this->session->set_flashdata('notif','success');
+				$this->session->set_flashdata('msg','Your data have been added');
+				redirect($data['controller']."/".$data['function']);
+			}
+			else
+				$this->returnJson(array('status' => 'error', 'msg' => 'Failed when saving data'));
+		}
+		else
+
+
+			$this->returnJson(array('status' => 'error', 'msg' => 'Please complete the form'));
+	}
+
+	function payment_scheme_edit() {
+		// print_c($_POST);
+		$data = $this->controller_attr;
+		$data['function']='payment_scheme';
+		$images = $this->input->post('images');
+		$table_field = $this->db->list_fields($this->tbl_payment_scheme);
+		$update = array();
+		foreach ($table_field as $field) {
+			$update[$field] = $this->input->post($field);
+		}
+		unset($update['date_created']);
+
+		$insert['date_modified'] = date('Y-m-d H:i:s', now());
+		$insert['id_modifier'] = $this->session->userdata['admin']['id'];
+		//filter persentase
+		$persentase = $this->input->post('persentase');
+		$total_persentase = 0;
+		foreach ($persentase as $d) {
+			$total_persentase = $total_persentase + $d;
+		}
+		if ($total_persentase > 100) {
+			$this->returnJson(array('status' => 'error', 'msg' => 'Persentase tidak dapat melebihi 100%!'));
+		}
+		if ($update['title'] && $update['bunga']) {
+			$do_update = update($this->tbl_payment_scheme, $update, 'id', $update['id']);
+			if ($do_update){
+				$this->db->where('payment_scheme_id', $update['id'])->delete($this->tbl_payment_scheme_detail);
+				$title = $this->input->post('title_detail');//print_die($title);
+				$payment_type_id = $this->input->post('payment_type_id');
+				$tenor = $this->input->post('tenor');
+				$interval = $this->input->post('interval');
+				$persentase = $this->input->post('persentase');
+				for ($i=0; $i < sizeof($title) ; $i++) {
+
+					$detail = array(
+						'payment_scheme_id' => $update['id'],
+						'title' => $title[$i],
+						'payment_type_id' => $payment_type_id[$i],
+						'tenor' => $tenor[$i],
+						'interval' => $interval[$i],
+						'persentase' => $persentase[$i],
+					);
+
+					$this->db->insert($this->tbl_payment_scheme_detail, $detail);
+					// print_c(lq());
+				}
+
+				$this->session->set_flashdata('notif','success');
+				$this->session->set_flashdata('msg','Your data have been added');
+				redirect($data['controller']."/".$data['function']);
+
+			}else{
+				$this->returnJson(array('status' => 'error', 'msg' => 'Failed when updating data'));
+			}
+		}
+		else
+			$this->returnJson(array('status' => 'error', 'msg' => 'Please complete the form'));
+	}
+
+	function payment_scheme_delete($id) {
+		$data = $this->controller_attr;
+		$data['function']='payment_scheme';
+		$do_delete = delete($this->tbl_payment_scheme, 'id', $id);
+
+		//$this->delete_folder('area/' . $id);
+		 if($do_delete){
+				$this->session->set_flashdata('notif','success');
+				$this->session->set_flashdata('msg','Your data have been deleted');
+			}else{
+				$this->session->set_flashdata('notif','error');
+				$this->session->set_flashdata('msg','Your data not deleted');
+			}
+		redirect($data['controller']."/".$data['function']);
+			//$this->returnJson(array('status' => 'error', 'msg' => 'Delete Failed'));
+	}
+
+	// FUNCTION FOR JS
+	function add_row($id){
+		$data['id'] = $id;
+		$data['payment_type'] = getAll($this->tbl_payment_type);
+
+		$this->load->view('finance/payment_scheme_detail_row', $data);
+
 	}
 }
 
