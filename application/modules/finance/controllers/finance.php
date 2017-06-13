@@ -442,6 +442,108 @@ class finance extends DC_controller {
 		$this->load->view('finance/payment_scheme_detail_row', $data);
 
 	}
+
+
+
+	//MODULE CHANGE PAYMENT SCHEME
+	public function change_payment_scheme() {
+		$data = $this->controller_attr;
+		$this->check_access();
+		$data['kontrak'] =getAll($this->tbl_kontrak)->result();
+		$data['page'] = $this->load->view('finance/change_payment_scheme', $data, true);
+		$this->load->view('layout_backend',$data);
+	}
+
+	function change_payment_scheme_add() {
+
+		$data = $this->controller_attr;
+
+		$this->check_access();
+
+		$booking_fee = str_replace(',', '', $this->input->post('booking_fee'));
+		$price = str_replace(',', '', $this->input->post('price'));
+		// print_die($price);
+		if ($booking_fee > $price) {
+			$this->returnJson(array('status' => 'error', 'msg' => 'Booking fee tidak dapat melebihi Price!'));
+		}
+
+		$table_field = $this->db->list_fields($this->tbl_kontrak);
+		$insert = array();
+		foreach ($table_field as $field) {
+			$insert[$field] = $this->input->post($field);
+		}
+		unset($insert['date_created']);
+		$insert['date_modified'] = date('Y-m-d H:i:s', now());
+		$insert['id_modified'] = $this->session_admin['admin_id'];
+		$insert['price'] = $price;
+		$insert['is_delete'] = 0;
+		$id = $this->input->post('id');
+		$is_signed = $this->input->post('is_signed');
+		$insert['sisa_hutang'] = str_replace(',', '', $this->input->post('sisa_hutang'));
+
+		if ($insert['sales_id'] && $insert['customer_id'] && $insert['payment_scheme_id'] && $insert['no_kontrak']) {
+			$do_insert = $this->model_basic->insert_all($this->tbl_kontrak, $insert);
+			$kontrak_id = $this->db->insert_id();
+			$this->db->where('id', $this->input->post('kontrak_id'))->update($this->tbl_kontrak, array('is_delete'=>1));
+			if($is_signed == 0){
+				// $kontrak_id = $id;
+
+				// INSERT TO TABLE KONTRAK_PAYMENT_SCHEDULE
+				$kontrak_payment_schedule_id = $this->sales->insert_kontrak_payment_schedule($kontrak_id);
+
+				//UPDATE DATE_END DITABLE KONTRAK, AMBIL DARI JATUH TEMPO PALING TERAKHIR DI PAYMENT SCHEDULE
+				$this->sales->update_kontrak_date_end($kontrak_id);
+
+				//CHECK BONUS SALES
+				// $this->check_bonus_sales($kontrak_id);
+
+				// INSERT TO TABLE KONTRAK PAYMENT RECORD
+				/*$data_kontrak_payment_record = array(
+                    'kontrak_payment_schedule_id' => $kontrak_payment_schedule_id,
+                    'rekening_id' => $this->input->post('rekening_id'),
+                    'nominal'=> str_replace(',', '', $this->input->post('booking_fee')),
+                    'payment_type'=> 1,
+                 );
+                $this->db->insert($this->tbl_kontrak_payment_record, $data_kontrak_payment_record);
+                $kontrak_payment_record_id = $this->db->insert_id();
+                $pemasukan_record_data = array('rekening_id' => $this->input->post('rekening_id'),
+                                                'kontrak_payment_record_id'=>$kontrak_payment_record_id,
+                                                'nominal'=> str_replace(',', '', $this->input->post('booking_fee')),
+                                                'date_created' => date('Y-m-d H:i:s', now()),
+                                                'date_modified' => date('Y-m-d H:i:s', now()),
+                                                'id_created' => $this->session_admin['admin_id'],
+                                                'id_modified' => $this->session_admin['admin_id'],
+                                                );
+                $this->db->insert($this->tbl_pemasukan_record, $pemasukan_record_data);*/
+			}
+			if ($do_insert){
+				$this->db->where('id',$kontrak_id)->update($this->tbl_kontrak, array('is_signed'=>1));
+				$this->returnJson(array('status' => 'ok', 'msg' => 'Update success', 'redirect' => 'sales/' . $data['function']));
+			}
+			else
+			{
+				$this->returnJson(array('status' => 'error', 'msg' => 'Failed when updating data'));
+			}
+		}
+		else
+			$this->returnJson(array('status' => 'error', 'msg' => 'Please complete the form'));
+	}
+
+	function get_kontrak_detail($id){
+		$data = $this->controller_attr;
+
+			$data['kontrak_unit'] = getAll($this->tbl_kontrak_unit, array('kontrak_id'=>'where/'.$id))->result();
+		$data['payment_scheme'] = getAll($this->tbl_payment_scheme, array('is_delete'=>'where/0'));
+		$data['record_id'] = $record_id = $this->input->post('kontrak_record_id');
+		if ($record_id) {
+			$kontrak_payment_schedule_id = $this->model_cashier->load_kontrak($record_id)->kontrak_payment_schedule_id;
+			$data['kontrak_payment_schedule'] = $this->model_basic->select_where($this->tbl_kontrak_payment_schedule, 'id', $kontrak_payment_schedule_id)->row();
+		}
+
+		$data['data'] = GetAll($this->tbl_kontrak, array('id'=>'where/'.$id))->row();
+		$data['ps'] = GetAll($this->tbl_kontrak_payment_schedule, array('kontrak_id'=>'where/'.$id, 'status'=>'where/0'));
+		$this->load->view('backend/finance/kontrak_detail', $data);
+	}
 }
 
 
