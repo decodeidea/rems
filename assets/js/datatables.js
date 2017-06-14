@@ -280,23 +280,23 @@ $(document).ready(function() {
      * Note that the indicator for showing which row is open is not controlled by DataTables,
      * rather it is done here
      */
-    $('#example2 tbody td i').live('click', function () {
-        var nTr = $(this).parents('tr')[0];
-        if ( oTable.fnIsOpen(nTr) )
-        {
-            /* This row is already open - close it */
-			this.removeClass = "fa fa-plus-circle";
-            this.addClass = "fa fa-minus-circle";     
-            oTable.fnClose( nTr );
-        }
-        else
-        {
-            /* Open this row */
-            this.removeClass = "fa fa-minus-circle";
-            this.addClass = "fa fa-plus-circle";  
-            oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
-        }
-    });
+   //  $('#example2 tbody td i').live('click', function () {
+   //      var nTr = $(this).parents('tr')[0];
+   //      if ( oTable.fnIsOpen(nTr) )
+   //      {
+   //          /* This row is already open - close it */
+			// this.removeClass = "fa fa-plus-circle";
+   //          this.addClass = "fa fa-minus-circle";     
+   //          oTable.fnClose( nTr );
+   //      }
+   //      else
+   //      {
+   //          /* Open this row */
+   //          this.removeClass = "fa fa-minus-circle";
+   //          this.addClass = "fa fa-plus-circle";  
+   //          oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
+   //      }
+   //  });
 	
 		$(".select2-wrapper").select2({minimumResultsForSearch: -1});
 

@@ -31,26 +31,6 @@
 <script src="<?php echo base_url() ?>assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url() ?>assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
 <!-- END CSS TEMPLATE -->
-
-
-
-  <!-- START PLUGINS -->
-  <script type="text/javascript" src="<?php echo base_url() ?>assets/js/plugins/jquery/jquery.min.js"></script>
-  <script type="text/javascript" src="<?php echo base_url() ?>assets/js/plugins/jquery/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="<?php echo base_url() ?>assets/js/plugins/bootstrap/bootstrap.min.js"></script>
-  <script type='text/javascript' src='<?php echo base_url() ?>assets/js/plugins/icheck/icheck.min.js'></script>
-  <script type="text/javascript" src="<?php echo base_url() ?>assets/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
-  <script type="text/javascript" src="<?php echo base_url() ?>assets/js/plugins/jcrop/jquery.Jcrop.min.js"></script>
-  <!-- END PLUGINS -->
-
-
-  <!-- THIS PAGE PLUGINS -->
-  <script type="text/javascript" src="<?php echo base_url() ?>assets/js/plugins/jquery-validation/jquery.validate.js"></script>
-  <script type="text/javascript" src="<?php echo base_url() ?>assets/js/plugins/summernote/summernote.js"></script>
-  <script type="text/javascript" src="<?php echo base_url() ?>assets/js/plugins/jquery-mask-money/jquery.maskMoney.js"></script>
-  <link href="<?php echo base_url() ?>assets/css/select2.css" rel="stylesheet"/>
-  <script src="<?php echo base_url() ?>assets/js/select2.js"></script>
-  <!-- END PAGE PLUGINS -->
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
