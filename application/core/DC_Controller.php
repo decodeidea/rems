@@ -32,6 +32,8 @@ class DC_Controller extends CI_Controller {
         $this->tbl_contract_type= $this->tbl_prefix . 'kontrak_type';
         $this->tbl_payment_type= $this->tbl_prefix . 'payment_type';
 
+        $this->tbl_contact= $this->tbl_prefix . 'contact';
+
         $this->tbl_kontrak = $this->tbl_prefix . 'kontrak';
         $this->tbl_kontrak_unit = $this->tbl_prefix . 'kontrak_unit';
         $this->tbl_kontrak_type = $this->tbl_prefix . 'kontrak_type';
@@ -75,6 +77,45 @@ class DC_Controller extends CI_Controller {
         }
        $data=$this->model_basic->get_menu($user_groups);
        return $data;
+    }
+
+    function returnJson($msg) {
+        echo json_encode($msg);
+        exit;
+    }
+
+    function check_userakses($menu_id, $function, $user = 'admin') {
+        if ($user == 'admin')
+            $group_id = $this->session_admin['id_usergroup'];
+        if ($user == 'member')
+            $group_id = $this->session->userdata['member']['group_id'];
+        $access = $this->model_useraccess->get_useraccess($group_id, $menu_id);
+        switch ($function) {
+            case 1:
+                if ($access->act_read == 1)
+                    return TRUE;
+                else
+                    redirect('admin');
+                break;
+            case 2:
+                if ($access->act_create == 1)
+                    return TRUE;
+                else
+                    redirect('admin');
+                break;
+            case 3:
+                if ($access->act_update == 1)
+                    return TRUE;
+                else
+                    redirect('admin');
+                break;
+            case 4:
+                if ($access->act_delete == 1)
+                    return TRUE;
+                else
+                    redirect('admin');
+                break;
+        }
     }
 
 

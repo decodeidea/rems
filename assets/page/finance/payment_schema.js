@@ -8,12 +8,12 @@ $('#bunga').autoNumeric("init",{
 });
 });
 $('.select2').select2();
-function addRow(tableID){
+function addRow(tableID,url){
     var table=document.getElementById(tableID);
     var rowCount=table.rows.length;
     $("#btnAdd").attr('disabled',true);
     $.ajax({
-        url: 'finance/add_row/'+rowCount,
+        url: url+'finance/add_row/'+rowCount,
         success: function(response){
             $("#"+tableID).find('tbody').append(response);
             // $("#submit").show();
