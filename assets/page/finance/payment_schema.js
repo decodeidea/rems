@@ -7,7 +7,6 @@ $('#bunga').autoNumeric("init",{
     // aDec: ','
 });
 });
-$('.select2').select2();
 function addRow(tableID,url){
     var table=document.getElementById(tableID);
     var rowCount=table.rows.length;
