@@ -21,6 +21,16 @@ class Model_unit extends CI_Model {
         $data=$this->db->get();
         return $data;
 	}
+
+    function unit_tbl(){
+        $this->db->select('a.*, b.name as name_area')
+             ->from($this->tbl_unit.' as a')
+             ->join($this->tbl_area.' as b', 'a.area_id=b.id')
+             ->where('a.status','0');
+        $query= $this->db->get();
+        return $query;
+
+      }
 	
 
 }

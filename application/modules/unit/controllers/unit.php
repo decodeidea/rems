@@ -425,5 +425,83 @@ class unit extends DC_controller {
 			$this->session->set_flashdata('msg','Your data not deleted');
 		}
 	}
+
+	function denah(){
+
+		$this->check_access();
+		$data = $this->controller_attr;
+
+		$data['function']='denah';
+		$area=select_all($this->tbl_area);
+		//print_r($area);exit;
+		foreach ($area as $key) {
+			$area_image=select_where($this->tbl_area_album,'area_id',$key->id);
+            if($area_image->num_rows()>0){
+	            $area_image= $area_image->row();
+	            $key->image=$area_image->filename;
+	            $key->caption=$area_image->caption;
+            }else{
+	            $key->image=''; 
+	            $key->caption='';
+            }
+		}
+		$data['area'] = $area;
+		
+		$data['page'] = $this->load->view('unit/list_denah_area',$data,true);
+		$this->load->view('layout_backend',$data);
+	}
+
+	function form_denah_submit() {
+        $this->check_access();
+        $data = $this->controller_attr;
+        $data['function']='Pengajuan harga';
+       
+
+        if ($this->input->post('unit_id')) {
+
+            $this->session->set_userdata('checked_unit', $this->input->post('unit_id'));
+
+            if (isset($_POST['kontrak_button'])) {
+                //create kontrak action
+                $this->kontrak_add_unit();
+            } else if (isset($_POST['pengajuan_button'])) {
+                //create pengajuan action
+                
+                $this->pengajuan_harga_form();
+            } 
+
+        }else{
+            redirect('unit/denah','refresh');
+        }
+        
+    }
+
+	function list_block($id){
+      	$this->check_access();
+		$data = $this->controller_attr;
+		$data['function']='list_block';
+        $where=array(
+            'area_id'=>$id,
+            //'is_delete'=>0,
+            );
+        $data['area']=select_where($this->tbl_area,'id',$id)->row();
+        $data['unit']=select_where_array_group($this->tbl_unit,$where,'block')->result();
+
+        
+       	$data['page'] = $this->load->view('unit/list_block',$data,true); //print_r($data['content']);
+       	$this->load->view('layout_backend',$data);
+    }
+
+    function area1_blockA(){
+
+        $this->check_access();
+        $data = $this->controller_attr;
+        $data['function']='Denah';
+        
+        $data['a1']=select_where($this->tbl_unit,'id',1)->row();
+
+       
+        $this->load->view('unit/area1/blockA',$data);
+    }
 }
 

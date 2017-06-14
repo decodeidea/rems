@@ -90,6 +90,19 @@ function get_client_ip_server() {
 		$data = $ci->db->get();
 		return $data;
 	}
+
+	function select_where_array_group($table,$where,$group_by){
+        $ci=& get_instance();
+		$ci->load->database('default',TRUE);       
+        $ci->db->select('*');
+        $ci->db->from($table);
+        $ci->db->where($where);
+        $ci->db->group_by($group_by);
+        $ci->db->order_by($group_by,'DESC');
+        $data = $ci->db->get();
+        return $data;
+    }
+
 	function select_where_order($table,$column,$where,$order_by,$order_type){
 		$ci=& get_instance();
 		$ci->load->database('default',TRUE);
@@ -339,4 +352,33 @@ if (!function_exists('GetAll')){
 
 		return $q;
 	}
+
+	if (!function_exists('GetValue')){
+	function GetValue($field,$table,$filter=array(),$order=NULL)
+	{
+		$CI =& get_instance();
+		$CI->db->select($field);
+		foreach($filter as $key=> $value)
+		{
+			$exp = explode("/",$value);
+			if(isset($exp[1]))
+			{
+				if($exp[0] == "where") $CI->db->where($key, $exp[1]);
+				else if($exp[0] == "like") $CI->db->like($key, $exp[1]);
+				else if($exp[0] == "order") $CI->db->order_by($key, $exp[1]);
+				else if($key == "limit") $CI->db->limit($exp[1], $exp[0]);
+			}
+			
+			if($exp[0] == "group") $CI->db->group_by($key);
+		}
+		
+		if($order) $CI->db->order_by($order);
+		$q = $CI->db->get($table);
+		foreach($q->result_array() as $r)
+		{
+			return $r[$field];
+		}
+		return 0;
+	}
+}
 }

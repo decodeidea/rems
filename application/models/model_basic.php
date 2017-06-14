@@ -28,6 +28,17 @@ class Model_basic extends CI_Model {
                 return $data->result();
 	}
 
+        function select_emailtlp($email,$phone)
+        {
+                $this->db->select('id');
+                $this->db->from($this->tbl_customer);
+                $this->db->where('email', $email);
+                $this->db->where('phone', $phone);
+                $result = $this->db->get();
+                
+                return $result;
+        }
+
         
 
 }

@@ -38,14 +38,19 @@ class DC_Controller extends CI_Controller {
 
         $this->tbl_payment_scheme = $this->tbl_prefix . 'payment_scheme';
         $this->tbl_payment_scheme_detail = $this->tbl_prefix . 'payment_scheme_detail';
+        $this->tbl_pengajuan_harga = $this->tbl_prefix . 'pengajuan_harga';
+        $this->tbl_pengajuan_harga_unit = $this->tbl_prefix . 'pengajuan_harga_unit';
 
         //load model fo all page
         $this->load->model('model_basic');
 
         //apperance function for all
         $this->appearance=select_where($this->tbl_appearance,'id',1)->row();
+      
          
     }
+
+    
 
     function name_method($method){
         if($method!='index'){
@@ -88,6 +93,26 @@ class DC_Controller extends CI_Controller {
         }
     }
 
+    function send_email($to, $subject, $content) {
+        $this->email->from('chelseabogor@gmail.com', '02519194647**');
+        $this->email->to($to); 
+        $this->email->subject($subject);
+        $this->email->message($content);
+
+        $this->email->send();
+    }
+
+    function returnJson($msg) {
+        echo json_encode($msg);
+        exit;
+    }
+
+    function indonesian_date($date)
+    {
+        //die($date);
+        $result = date('j F Y', strtotime($date));
+        return $result;
+    }
     
 
 }

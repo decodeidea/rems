@@ -12,6 +12,9 @@
 <link rel="icon" type="image/png" href="<?php echo base_url()."assets/uploads/settings/favicon.png" ?>" sizes="16x16">
 <link href="<?php echo base_url() ?>assets/plugins/bootstrap-select2/select2.css" rel="stylesheet" type="text/css" media="screen"/>
 
+<link href="<?php echo base_url() ?>assets/css/decode.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo base_url() ?>assets/css/select2.css" rel="stylesheet"/>
+
 <link href="<?php echo base_url() ?>assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen"/>
 <link href="<?php echo base_url() ?>assets/plugins/jquery-datatable/css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
 <link href="<?php echo base_url() ?>assets/plugins/datatables-responsive/css/datatables.responsive.css" rel="stylesheet" type="text/css" media="screen"/>
@@ -30,6 +33,7 @@
 <link href="<?php echo base_url() ?>assets/css/custom-icon-set.css" rel="stylesheet" type="text/css"/>
 <script src="<?php echo base_url() ?>assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url() ?>assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/page/unit/denah.js"></script> 
 <!-- END CSS TEMPLATE -->
 </head>
 <!-- END HEAD -->
@@ -206,6 +210,9 @@
 <script src="<?php echo base_url() ?>assets/js/datatables.js" type="text/javascript"></script>
 <script src="<?php echo base_url() ?>assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
 <!-- BEGIN CORE TEMPLATE JS -->
+
+<script src="<?php echo base_url() ?>assets/js/select2.js"></script>
+
 
 
 <script src="<?php echo base_url() ?>assets/plugins/pace/pace.min.js" type="text/javascript"></script>
