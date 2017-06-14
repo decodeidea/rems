@@ -6,7 +6,7 @@
   </div>
 <?php } ?>
 
-     <div class="row-fluid">
+     <div class="row-fluid" style=" overflow: scroll;">
         <div class="span12">
           <div class="grid simple ">
             <div class="grid-title">
