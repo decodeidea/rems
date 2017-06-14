@@ -21,6 +21,47 @@ class sales extends DC_controller {
 	 function index(){
 		redirect('unit/list_unit');
 	}
+
+	function denah(){
+
+		$this->check_access();
+		$data = $this->controller_attr;
+
+		$data['function']='denah';
+		$area=select_all($this->tbl_area);
+		//print_r($area);exit;
+		foreach ($area as $key) {
+			$area_image=select_where($this->tbl_area_album,'area_id',$key->id);
+            if($area_image->num_rows()>0){
+	            $area_image= $area_image->row();
+	            $key->image=$area_image->filename;
+	            $key->caption=$area_image->caption;
+            }else{
+	            $key->image=''; 
+	            $key->caption='';
+            }
+		}
+		$data['area'] = $area;
+		
+		$data['page'] = $this->load->view('sales/list_denah_area',$data,true);
+		$this->load->view('layout_backend',$data);
+	}
+
+	function list_denah($id){
+      	$this->check_access();
+		$data = $this->controller_attr;
+		$data['function']='List Denah';
+        $where=array(
+            'area_id'=>$id,
+            //'is_delete'=>0,
+            );
+        $data['area']=select_where($this->tbl_area,'id',$id)->row();
+        $data['unit']=select_where_array_group($this->tbl_unit,$where,'block')->result();
+
+        
+       	$data['page'] = $this->load->view('sales/list_denah',$data,true); //print_r($data['content']);
+       	$this->load->view('layout_backend',$data);
+    }
 	
 	function form_denah_submit() {
         $this->check_access();

@@ -36,7 +36,7 @@
                       </br></br>
                       <a href="sales/area_unit/<?php echo $data->id ?>">Detail</a>
                     </figcaption> -->
-                      <a class="pull-right" href="<?php echo base_url() ?>unit/list_denah/<?php echo $data->id ?>"><button class="btn btn-primary">Detail</button></a>
+                      <a class="pull-right" href="<?php echo base_url() ?>sales/list_denah/<?php echo $data->id ?>"><button class="btn btn-primary">Detail</button></a>
                       
                     </figure>
                   </li>

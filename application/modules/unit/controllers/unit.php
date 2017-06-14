@@ -476,10 +476,10 @@ class unit extends DC_controller {
         
     }
 
-	function list_block($id){
+	function list_denah($id){
       	$this->check_access();
 		$data = $this->controller_attr;
-		$data['function']='list_block';
+		$data['function']='List Denah';
         $where=array(
             'area_id'=>$id,
             //'is_delete'=>0,
@@ -488,7 +488,7 @@ class unit extends DC_controller {
         $data['unit']=select_where_array_group($this->tbl_unit,$where,'block')->result();
 
         
-       	$data['page'] = $this->load->view('unit/list_block',$data,true); //print_r($data['content']);
+       	$data['page'] = $this->load->view('unit/list_denah',$data,true); //print_r($data['content']);
        	$this->load->view('layout_backend',$data);
     }
 

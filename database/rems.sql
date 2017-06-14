@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2017 at 06:55 AM
+-- Generation Time: Jun 14, 2017 at 07:20 PM
 -- Server version: 10.1.13-MariaDB
--- PHP Version: 5.6.23
+-- PHP Version: 5.6.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -379,7 +379,10 @@ INSERT INTO `dc_menu` (`id`, `name_menu`, `sub_menu`, `target`, `icon`, `positio
 (26, 'Unit Type', '23', 'unit_type', 'none', 3, '2017-05-29 14:51:19', NULL, 1, NULL),
 (27, 'Rekening', '22', 'list_rekening', 'none', 1, '0000-00-00 00:00:00', '2017-05-30 13:23:40', 0, 1),
 (28, 'Contract Type', '22', 'contract_type', 'none', 2, '0000-00-00 00:00:00', '2017-05-30 14:50:12', 0, 1),
-(29, 'Payment Type', '22', 'payment_type', 'none', 3, '2017-05-30 15:49:15', NULL, 1, NULL);
+(29, 'Payment Type', '22', 'payment_type', 'none', 3, '2017-05-30 15:49:15', NULL, 1, NULL),
+(30, 'Denah', '23', 'denah', 'none', 1, '2017-06-14 23:56:08', NULL, 1, NULL),
+(31, 'Sales', '0', 'sales', 'fa fa-building-o', 0, '2017-06-15 00:02:34', NULL, 1, NULL),
+(32, 'Denah', '31', 'denah', 'none', 1, '2017-06-15 00:04:25', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -454,7 +457,10 @@ INSERT INTO `dc_menu_accsess` (`id`, `id_menu`, `id_group`, `accsess`) VALUES
 (64, 26, 1, 1),
 (65, 27, 1, 1),
 (66, 28, 1, 1),
-(67, 29, 1, 1);
+(67, 29, 1, 1),
+(68, 30, 1, 1),
+(69, 31, 1, 1),
+(70, 32, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -938,12 +944,12 @@ ALTER TABLE `dc_kontrak_unit`
 -- AUTO_INCREMENT for table `dc_menu`
 --
 ALTER TABLE `dc_menu`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT for table `dc_menu_accsess`
 --
 ALTER TABLE `dc_menu_accsess`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 --
 -- AUTO_INCREMENT for table `dc_payment_scheme`
 --
