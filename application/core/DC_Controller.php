@@ -143,10 +143,7 @@ class DC_Controller extends CI_Controller {
         $this->email->send();
     }
 
-    function returnJson($msg) {
-        echo json_encode($msg);
-        exit;
-    }
+
 
     function indonesian_date($date)
     {
