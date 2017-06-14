@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 30, 2017 at 11:03 AM
+-- Generation Time: Jun 14, 2017 at 06:55 AM
 -- Server version: 10.1.13-MariaDB
--- PHP Version: 5.6.20
+-- PHP Version: 5.6.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -674,7 +674,7 @@ CREATE TABLE `dc_unit_type` (
 --
 
 INSERT INTO `dc_unit_type` (`id`, `name`, `color`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
-(0, 'type 5', '#000', '2017-05-29 15:45:36', NULL, 1, NULL);
+(1, 'type 5', '#000', '2017-05-29 15:45:36', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -734,6 +734,12 @@ ALTER TABLE `dc_customer`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `dc_customer_album`
+--
+ALTER TABLE `dc_customer_album`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `dc_default`
 --
 ALTER TABLE `dc_default`
@@ -758,9 +764,27 @@ ALTER TABLE `dc_kontrak`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `dc_kontrak_payment_record`
+--
+ALTER TABLE `dc_kontrak_payment_record`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dc_kontrak_payment_schedule`
+--
+ALTER TABLE `dc_kontrak_payment_schedule`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `dc_kontrak_type`
 --
 ALTER TABLE `dc_kontrak_type`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dc_kontrak_unit`
+--
+ALTER TABLE `dc_kontrak_unit`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -776,9 +800,39 @@ ALTER TABLE `dc_menu_accsess`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `dc_payment_scheme`
+--
+ALTER TABLE `dc_payment_scheme`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dc_payment_scheme_detail`
+--
+ALTER TABLE `dc_payment_scheme_detail`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `dc_payment_type`
 --
 ALTER TABLE `dc_payment_type`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dc_pemasukan_record`
+--
+ALTER TABLE `dc_pemasukan_record`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dc_pengajuan_harga`
+--
+ALTER TABLE `dc_pengajuan_harga`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dc_pengajuan_harga_unit`
+--
+ALTER TABLE `dc_pengajuan_harga_unit`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -791,6 +845,18 @@ ALTER TABLE `dc_rekening`
 -- Indexes for table `dc_unit`
 --
 ALTER TABLE `dc_unit`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dc_unit_album`
+--
+ALTER TABLE `dc_unit_album`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dc_unit_type`
+--
+ALTER TABLE `dc_unit_type`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -824,6 +890,11 @@ ALTER TABLE `dc_area_album`
 ALTER TABLE `dc_customer`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `dc_customer_album`
+--
+ALTER TABLE `dc_customer_album`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `dc_default`
 --
 ALTER TABLE `dc_default`
@@ -844,10 +915,25 @@ ALTER TABLE `dc_icons`
 ALTER TABLE `dc_kontrak`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `dc_kontrak_payment_record`
+--
+ALTER TABLE `dc_kontrak_payment_record`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `dc_kontrak_payment_schedule`
+--
+ALTER TABLE `dc_kontrak_payment_schedule`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `dc_kontrak_type`
 --
 ALTER TABLE `dc_kontrak_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `dc_kontrak_unit`
+--
+ALTER TABLE `dc_kontrak_unit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `dc_menu`
 --
@@ -859,10 +945,35 @@ ALTER TABLE `dc_menu`
 ALTER TABLE `dc_menu_accsess`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 --
+-- AUTO_INCREMENT for table `dc_payment_scheme`
+--
+ALTER TABLE `dc_payment_scheme`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `dc_payment_scheme_detail`
+--
+ALTER TABLE `dc_payment_scheme_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `dc_payment_type`
 --
 ALTER TABLE `dc_payment_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `dc_pemasukan_record`
+--
+ALTER TABLE `dc_pemasukan_record`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `dc_pengajuan_harga`
+--
+ALTER TABLE `dc_pengajuan_harga`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `dc_pengajuan_harga_unit`
+--
+ALTER TABLE `dc_pengajuan_harga_unit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `dc_rekening`
 --
@@ -872,6 +983,16 @@ ALTER TABLE `dc_rekening`
 -- AUTO_INCREMENT for table `dc_unit`
 --
 ALTER TABLE `dc_unit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `dc_unit_album`
+--
+ALTER TABLE `dc_unit_album`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `dc_unit_type`
+--
+ALTER TABLE `dc_unit_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `dc_user`
