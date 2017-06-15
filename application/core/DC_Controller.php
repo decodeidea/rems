@@ -40,6 +40,7 @@ class DC_Controller extends CI_Controller {
 
         $this->tbl_payment_scheme = $this->tbl_prefix . 'payment_scheme';
         $this->tbl_payment_scheme_detail = $this->tbl_prefix . 'payment_scheme_detail';
+        $this->tbl_kontrak_payment_schedule = $this->tbl_prefix . 'kontrak_payment_schedule';
         $this->tbl_pengajuan_harga = $this->tbl_prefix . 'pengajuan_harga';
         $this->tbl_pengajuan_harga_unit = $this->tbl_prefix . 'pengajuan_harga_unit';
 

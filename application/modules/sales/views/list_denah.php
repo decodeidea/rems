@@ -22,7 +22,7 @@
 						<div class="col-md-12">
 						<form id="add_unit" class="form" method="POST" action="<?= base_url('sales/form_denah_submit')?>">
 							<div class="areaA01">
-								<input name="unit_id[]" value="" type="checkbox">
+								<input name="unit_id[]" value="1" type="checkbox">
 							</div>
 							<div class="areaA02">
 								<input name="unit_id[]" value="" type="checkbox">

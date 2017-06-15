@@ -16,6 +16,7 @@ class sales extends DC_controller {
 		}
 		$this->controller_attr = array('controller' => 'sales','controller_name' => 'Sales','method'=>ucwords($method),'menu'=>$this->get_menu());
 		$this->load->model('model_unit', 'unit');
+        $this->load->model('model_sales', 'sales');
 	}
 	
 	 function index(){
@@ -67,8 +68,6 @@ class sales extends DC_controller {
         $this->check_access();
         $data = $this->controller_attr;
         $data['function']='pengajuan_harga';
-      
-
         if ($this->input->post('unit_id')) {
 
             $this->session->set_userdata('checked_unit', $this->input->post('unit_id'));
@@ -227,7 +226,125 @@ class sales extends DC_controller {
 
     }
 
+    function kontrak_add_unit(){
+       $this->check_access();
+        $data = $this->controller_attr;
+        $data['function']='kontrak_add_unit';
 
-	
+        
+        $select= select_all_order_row($this->tbl_kontrak,'id','DESC');
+        $kontrak_id=$select->id+1;
+        $unit_id = $this->input->post('unit_id');
+
+        for ($i=0; $i <sizeof($unit_id) ; $i++) { 
+            $unit = array(
+                    'kontrak_id'=>$kontrak_id,
+                    'unit_id'   => $unit_id[$i]
+                );
+            $this->db->insert($this->tbl_kontrak_unit, $unit);
+        }
+        redirect('sales/kontrak_form/'.$kontrak_id, 'refresh');
+    }
+
+	public function kontrak_form($id = null, $flag=null) {
+        $this->check_access();
+        $data = $this->controller_attr;
+        $data['function']='kontrak_form';
+        $data['unit'] =select_all($this->tbl_unit, 'id');
+        $data['all_user'] = select_where($this->tbl_user,'user_group',6)->result();
+        $data['customer'] = select_all($this->tbl_customer);
+        $data['payment_scheme'] = select_all($this->tbl_payment_scheme, 'id');
+        $data['kontrak_type'] = select_all($this->tbl_kontrak_type, 'id');
+        $data['rekening'] = select_all($this->tbl_rekening, 'id');
+        // 
+        $data['flag'] = $flag;
+        if($id == null) $id = $this->input->post('id');
+        if($flag!=null){
+            $num_rows = getAll($this->tbl_kontrak)->num_rows();
+            $last_id = ($num_rows>0) ? $this->db->select('id')->order_by('id',"desc")->limit(1)->get($this->tbl_kontrak)->row()->id : 1;
+            $data['id'] = $last_id+1;
+            $data['data'] = null;
+            $data['booking_fee'] = null;
+            $data['data_pengajuan'] = select_where($this->tbl_pengajuan_harga, 'id', $id)->row();
+            $data['id_unit_pengajuan'] = getValue('id_unit', $this->tbl_pengajuan_harga, array('id'=>'where/'.$data['data_pengajuan']->id));
+            $data['customer_pengajuan'] = getValue('id_customer', $this->tbl_pengajuan_harga, array('id'=>'where/'.$data['data_pengajuan']->id));
+            $data['nominal_pengajuan'] = getValue('approved_nominal', $this->tbl_pengajuan_harga, array('id'=>'where/'.$data['data_pengajuan']->id));
+            $data['pengajuan_unit'] = select_where($this->tbl_pengajuan_harga_unit, 'pengajuan_harga_id', $data['data_pengajuan']->id)->result();
+        }elseif ($id!=null && $flag==null) {
+            $data['id'] = $id;
+            $data['data'] = select_where($this->tbl_kontrak, 'id', $id)->row();
+            $data['booking_fee'] = getValue('nominal', $this->tbl_kontrak_payment_schedule, array('kontrak_id'=>'where/'.$id, 'payment_type'=>'where/1'));
+            $data['kontrak_unit'] = getAll($this->tbl_kontrak_unit, array('kontrak_id'=>'where/'.$id))->result();
+        }
+        else{
+            $data['data'] = null;
+            $data['booking_fee'] = null;
+        }
+        $data['page'] = $this->load->view('sales/kontrak_form', $data, true);
+        $this->load->view('layout_backend', $data);
+    }
+
+    function get_kontrak_type($id){
+        $type_id = getValue('kontrak_type', $this->tbl_payment_scheme, array('id'=>'where/'.$id));
+        $bunga = getValue('bunga', $this->tbl_payment_scheme, array('id'=>'where/'.$id));
+        $type = getAll($this->tbl_kontrak_type, array('id'=>'where/'.$type_id))->row();
+        $data = array('name' => $type->name, 
+                      'id'  => $type->id,
+                      'bunga'  => $bunga,
+                    );
+        echo json_encode($data);
+    }
+
+     function kontrak_form_add() {
+        $this->check_access();
+        $data = $this->controller_attr;
+        $data['function']='kontrak_add';
+
+        $price = str_replace(',', '', $this->input->post('price'));
+        $bunga = $this->input->post('bunga');
+        $bunga = $price * ($bunga/100);
+        $booking_fee = str_replace(',', '', $this->input->post('booking_fee'));        
+        if ($booking_fee > $price) {
+            $this->session->set_flashdata('notif','success');
+            $this->session->set_flashdata('msg','booking fee tidak bisa melebihi price');
+            redirect($data['controller']."/kontrak_form/".$this->input->post('id'));
+        }
+        $table_field = $this->db->list_fields($this->tbl_kontrak);
+        $insert = array();
+        foreach ($table_field as $field) {
+            $insert[$field] = $this->input->post($field);
+        }
+        $insert['date_created'] = date('Y-m-d H:i:s', now());
+        $insert['date_modified'] = date('Y-m-d H:i:s', now());
+        $insert['id_creator'] = $this->session->userdata['admin']['id'];
+        $insert['id_modifier'] = $this->session->userdata['admin']['id'];
+        $insert['price'] = $price;
+        $insert['sisa_hutang'] = str_replace(',', '', $this->input->post('sisa_hutang'));
+        if ($insert['sales_id'] && $insert['customer_id'] && $insert['payment_scheme_id'] && $insert['no_kontrak']) {
+            $do_insert = insert_all($this->tbl_kontrak, $insert);
+            $kontrak_id = $this->db->insert_id();
+            $kontrak_payment_schedule_id = $this->sales->insert_kontrak_payment_schedule($kontrak_id, $bunga);
+            // $this->sales->update_kontrak_date_end($kontrak_id);
+            // $this->check_bonus_sales($kontrak_id);
+            if ($do_insert) {
+                foreach ($this->input->post('unit_id') as $key) {
+                    $insert = array('kontrak_id' => $kontrak_id, 'unit_id' => $key, 'date_created' => date('Y-m-d H:i:s', now()), 'id_creator' => $this->session->userdata['admin']['id']);
+                    insert_all($this->tbl_kontrak_unit, $insert);
+
+                }
+               $this->session->set_flashdata('notif','success');
+            $this->session->set_flashdata('msg','Input Data Succsess');
+            redirect($data['controller']."/kontrak_form/".$this->input->post('id'));
+            }
+            else
+                 $this->session->set_flashdata('notif','success');
+            $this->session->set_flashdata('msg','error, not saved');
+            redirect($data['controller']."/kontrak_form/".$this->input->post('id'));
+        }
+        else
+             $this->session->set_flashdata('notif','success');
+            $this->session->set_flashdata('msg','Please fill compleate the text');
+            redirect($data['controller']."/kontrak_form/".$this->input->post('id'));
+    }
 }
 
