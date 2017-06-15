@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2017 at 07:20 PM
+-- Generation Time: Jun 15, 2017 at 04:11 PM
 -- Server version: 10.1.13-MariaDB
--- PHP Version: 5.6.20
+-- PHP Version: 5.6.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -117,6 +117,13 @@ CREATE TABLE `dc_customer` (
   `id_modifier` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `dc_customer`
+--
+
+INSERT INTO `dc_customer` (`id`, `name`, `gender`, `date_of_birth`, `address`, `phone`, `email`, `no_ktp`, `no_npwp`, `pekerjaan`, `nama_kantor`, `alamat_kantor`, `photo`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
+(1, 'Ilham Mudzakir', 'Male', '2017-06-15 00:00:00', 'gfgd', '543534', 'ilhamudzakir@gmail.com', '065114430', '37289', 'dada', 'hdask', 'gfdgfd', 'IMG_0056.JPG', '2017-06-15 17:06:54', '2017-06-15 17:06:54', 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -170,7 +177,10 @@ CREATE TABLE `dc_groups` (
 
 INSERT INTO `dc_groups` (`id`, `name_group`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
 (1, 'Super Admin', '2017-04-13 12:29:39', NULL, 1, NULL),
-(5, 'Admin', '2017-04-13 15:24:27', NULL, 1, NULL);
+(5, 'Admin', '2017-04-13 15:24:27', NULL, 1, NULL),
+(6, 'Sales', '2017-06-15 14:06:58', NULL, 1, NULL),
+(7, 'Atasan', '2017-06-15 14:07:06', NULL, 1, NULL),
+(8, 'Chasier', '2017-06-15 14:07:16', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -238,7 +248,7 @@ CREATE TABLE `dc_kontrak` (
   `payment_scheme_id` int(11) NOT NULL,
   `no_kontrak` varchar(45) NOT NULL,
   `price` bigint(20) NOT NULL,
-  `date_end` datetime NOT NULL,
+  `date_end` datetime DEFAULT NULL,
   `sisa_hutang` bigint(20) NOT NULL,
   `is_signed` tinyint(4) NOT NULL,
   `date_created` datetime DEFAULT NULL,
@@ -246,6 +256,15 @@ CREATE TABLE `dc_kontrak` (
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dc_kontrak`
+--
+
+INSERT INTO `dc_kontrak` (`id`, `kontrak_type_id`, `customer_id`, `sales_id`, `payment_scheme_id`, `no_kontrak`, `price`, `date_end`, `sisa_hutang`, `is_signed`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
+(13, 1, 1, 3, 1, '00000013', 7879879, NULL, 6879879, 0, '2017-06-15 17:48:18', '2017-06-15 17:48:18', 1, 1),
+(14, 1, 1, 3, 1, '00000014', 7879879, NULL, 7878559, 0, '2017-06-15 17:49:58', '2017-06-15 17:49:58', 1, 1),
+(15, 1, 1, 3, 1, '00000015', 7879879, NULL, 7878879, 0, '2017-06-15 17:52:02', '2017-06-15 17:52:02', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -288,6 +307,103 @@ CREATE TABLE `dc_kontrak_payment_schedule` (
   `id_modifier` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `dc_kontrak_payment_schedule`
+--
+
+INSERT INTO `dc_kontrak_payment_schedule` (`id`, `kontrak_id`, `payment_type`, `title`, `jatuh_tempo`, `nominal`, `nominal_paid`, `date_payment`, `status`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
+(1, 15, 1, 'Booking Fee', '2017-06-15 17:52:02', 1000, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:02', NULL, 1, NULL),
+(2, 15, 2, 'DP - 1', '2017-07-15 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(3, 15, 2, 'DP - 2', '2017-08-14 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(4, 15, 2, 'DP - 3', '2017-09-13 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(5, 15, 2, 'DP - 4', '2017-10-13 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(6, 15, 2, 'DP - 5', '2017-11-12 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(7, 15, 2, 'DP - 6', '2017-12-12 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(8, 15, 2, 'DP - 7', '2018-01-11 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(9, 15, 2, 'DP - 8', '2018-02-10 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(10, 15, 2, 'DP - 9', '2018-03-12 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(11, 15, 2, 'DP - 10', '2018-04-11 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(12, 15, 2, 'DP - 11', '2018-05-11 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(13, 15, 2, 'DP - 12', '2018-06-10 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(14, 15, 2, 'DP - 13', '2018-07-10 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(15, 15, 2, 'DP - 14', '2018-08-09 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(16, 15, 2, 'DP - 15', '2018-09-08 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(17, 15, 2, 'DP - 16', '2018-10-08 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(18, 15, 2, 'DP - 17', '2018-11-07 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(19, 15, 2, 'DP - 18', '2018-12-07 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(20, 15, 2, 'DP - 19', '2019-01-06 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(21, 15, 2, 'DP - 20', '2019-02-05 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(22, 15, 2, 'DP - 21', '2019-03-07 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(23, 15, 2, 'DP - 22', '2019-04-06 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(24, 15, 2, 'DP - 23', '2019-05-06 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(25, 15, 2, 'DP - 24', '2019-06-05 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(26, 15, 2, 'DP - 25', '2019-07-05 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(27, 15, 2, 'DP - 26', '2019-08-04 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(28, 15, 2, 'DP - 27', '2019-09-03 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(29, 15, 2, 'DP - 28', '2019-10-03 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(30, 15, 2, 'DP - 29', '2019-11-02 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(31, 15, 2, 'DP - 30', '2019-12-02 00:00:00', 1365842, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:03', NULL, 1, NULL),
+(32, 15, 3, 'Cicilan pertama - 1', '2020-01-01 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(33, 15, 3, 'Cicilan pertama - 2', '2020-01-31 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(34, 15, 3, 'Cicilan pertama - 3', '2020-03-01 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(35, 15, 3, 'Cicilan pertama - 4', '2020-03-31 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(36, 15, 3, 'Cicilan pertama - 5', '2020-04-30 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(37, 15, 3, 'Cicilan pertama - 6', '2020-05-30 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(38, 15, 3, 'Cicilan pertama - 7', '2020-06-29 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(39, 15, 3, 'Cicilan pertama - 8', '2020-07-29 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(40, 15, 3, 'Cicilan pertama - 9', '2020-08-28 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(41, 15, 3, 'Cicilan pertama - 10', '2020-09-27 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(42, 15, 3, 'Cicilan pertama - 11', '2020-10-27 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(43, 15, 3, 'Cicilan pertama - 12', '2020-11-26 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(44, 15, 3, 'Cicilan pertama - 13', '2020-12-26 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(45, 15, 3, 'Cicilan pertama - 14', '2021-01-25 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(46, 15, 3, 'Cicilan pertama - 15', '2021-02-24 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(47, 15, 3, 'Cicilan pertama - 16', '2021-03-26 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(48, 15, 3, 'Cicilan pertama - 17', '2021-04-25 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(49, 15, 3, 'Cicilan pertama - 18', '2021-05-25 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(50, 15, 3, 'Cicilan pertama - 19', '2021-06-24 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(51, 15, 3, 'Cicilan pertama - 20', '2021-07-24 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(52, 15, 3, 'Cicilan pertama - 21', '2021-08-23 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(53, 15, 3, 'Cicilan pertama - 22', '2021-09-22 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(54, 15, 3, 'Cicilan pertama - 23', '2021-10-22 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(55, 15, 3, 'Cicilan pertama - 24', '2021-11-21 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(56, 15, 3, 'Cicilan pertama - 25', '2021-12-21 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(57, 15, 3, 'Cicilan pertama - 26', '2022-01-20 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(58, 15, 3, 'Cicilan pertama - 27', '2022-02-19 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(59, 15, 3, 'Cicilan pertama - 28', '2022-03-21 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(60, 15, 3, 'Cicilan pertama - 29', '2022-04-20 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(61, 15, 3, 'Cicilan pertama - 30', '2022-05-20 00:00:00', 1470894, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:04', NULL, 1, NULL),
+(62, 15, 3, 'cicilan kedua - 1', '2022-06-19 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(63, 15, 3, 'cicilan kedua - 2', '2022-07-19 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(64, 15, 3, 'cicilan kedua - 3', '2022-08-18 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(65, 15, 3, 'cicilan kedua - 4', '2022-09-17 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(66, 15, 3, 'cicilan kedua - 5', '2022-10-17 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(67, 15, 3, 'cicilan kedua - 6', '2022-11-16 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(68, 15, 3, 'cicilan kedua - 7', '2022-12-16 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(69, 15, 3, 'cicilan kedua - 8', '2023-01-15 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(70, 15, 3, 'cicilan kedua - 9', '2023-02-14 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(71, 15, 3, 'cicilan kedua - 10', '2023-03-16 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(72, 15, 3, 'cicilan kedua - 11', '2023-04-15 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(73, 15, 3, 'cicilan kedua - 12', '2023-05-15 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(74, 15, 3, 'cicilan kedua - 13', '2023-06-14 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(75, 15, 3, 'cicilan kedua - 14', '2023-07-14 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(76, 15, 3, 'cicilan kedua - 15', '2023-08-13 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(77, 15, 3, 'cicilan kedua - 16', '2023-09-12 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(78, 15, 3, 'cicilan kedua - 17', '2023-10-12 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(79, 15, 3, 'cicilan kedua - 18', '2023-11-11 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(80, 15, 3, 'cicilan kedua - 19', '2023-12-11 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(81, 15, 3, 'cicilan kedua - 20', '2024-01-10 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(82, 15, 3, 'cicilan kedua - 21', '2024-02-09 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(83, 15, 3, 'cicilan kedua - 22', '2024-03-10 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(84, 15, 3, 'cicilan kedua - 23', '2024-04-09 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(85, 15, 3, 'cicilan kedua - 24', '2024-05-09 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(86, 15, 3, 'cicilan kedua - 25', '2024-06-08 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(87, 15, 3, 'cicilan kedua - 26', '2024-07-08 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(88, 15, 3, 'cicilan kedua - 27', '2024-08-07 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(89, 15, 3, 'cicilan kedua - 28', '2024-09-06 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(90, 15, 3, 'cicilan kedua - 29', '2024-10-06 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL),
+(91, 15, 3, 'cicilan kedua - 30', '2024-11-05 00:00:00', 1444631, 0, '0000-00-00 00:00:00', 0, '2017-06-15 17:52:05', NULL, 1, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -327,6 +443,14 @@ CREATE TABLE `dc_kontrak_unit` (
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dc_kontrak_unit`
+--
+
+INSERT INTO `dc_kontrak_unit` (`id`, `kontrak_id`, `unit_id`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
+(16, 13, 1, NULL, NULL, NULL, NULL),
+(19, 15, 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -382,7 +506,8 @@ INSERT INTO `dc_menu` (`id`, `name_menu`, `sub_menu`, `target`, `icon`, `positio
 (29, 'Payment Type', '22', 'payment_type', 'none', 3, '2017-05-30 15:49:15', NULL, 1, NULL),
 (30, 'Denah', '23', 'denah', 'none', 1, '2017-06-14 23:56:08', NULL, 1, NULL),
 (31, 'Sales', '0', 'sales', 'fa fa-building-o', 0, '2017-06-15 00:02:34', NULL, 1, NULL),
-(32, 'Denah', '31', 'denah', 'none', 1, '2017-06-15 00:04:25', NULL, 1, NULL);
+(32, 'Denah', '31', 'denah', 'none', 1, '2017-06-15 00:04:25', NULL, 1, NULL),
+(33, 'Payment Scheme', '22', 'payment_scheme', 'none', 3, '2017-06-15 17:07:43', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -460,7 +585,8 @@ INSERT INTO `dc_menu_accsess` (`id`, `id_menu`, `id_group`, `accsess`) VALUES
 (67, 29, 1, 1),
 (68, 30, 1, 1),
 (69, 31, 1, 1),
-(70, 32, 1, 1);
+(70, 32, 1, 1),
+(71, 33, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -479,6 +605,13 @@ CREATE TABLE `dc_payment_scheme` (
   `id_modifier` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `dc_payment_scheme`
+--
+
+INSERT INTO `dc_payment_scheme` (`id`, `title`, `kontrak_type`, `bunga`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
+(1, 'Cicilan 2 thn', 1, '17.00', '2017-06-15 17:09:09', '2017-06-15 17:09:09', 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -494,6 +627,15 @@ CREATE TABLE `dc_payment_scheme_detail` (
   `interval` int(11) NOT NULL,
   `persentase` decimal(9,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dc_payment_scheme_detail`
+--
+
+INSERT INTO `dc_payment_scheme_detail` (`id`, `payment_scheme_id`, `payment_type_id`, `title`, `tenor`, `interval`, `persentase`) VALUES
+(1, 1, 2, 'DP', 30, 30, '10.00'),
+(2, 1, 3, 'Cicilan pertama', 30, 30, '50.00'),
+(3, 1, 3, 'cicilan kedua', 30, 30, '40.00');
 
 -- --------------------------------------------------------
 
@@ -640,7 +782,7 @@ CREATE TABLE `dc_unit` (
 --
 
 INSERT INTO `dc_unit` (`id`, `area_id`, `unit_type`, `name`, `luas_netto`, `luas_semigross`, `number`, `block`, `price`, `struktur`, `lantai`, `dapur`, `listrik`, `dinding`, `pintu`, `sanitasi`, `jendela`, `status`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
-(1, 1, 0, 'dsjh', '99.99', '0.00', 7, NULL, 7879879, 'jkh', 'hkj', 'hhjk', 'khj', 'jkh', 'hk', 'hjk', 'hkj', NULL, '2017-05-29 20:18:12', NULL, 1, NULL);
+(1, 1, 1, 'dsjh', '99.99', '0.00', 7, NULL, 7879879, 'jkh', 'hkj', 'hhjk', 'khj', 'jkh', 'hk', 'hjk', 'hkj', NULL, '2017-05-29 20:18:12', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -709,7 +851,8 @@ CREATE TABLE `dc_user` (
 
 INSERT INTO `dc_user` (`id`, `username`, `password`, `email`, `first_name`, `last_name`, `photo`, `user_group`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
 (1, 'admins', '21232f297a57a5a743894a0e4a801fc3', 'admin@gmail.com', 'admin', 'webei', '16807164_1234243823400398_1687302977082263434_n.jpg', 1, '0000-00-00 00:00:00', '2017-04-17 00:12:22', 0, 1),
-(2, 'ilhamudzakir', '81dc9bdb52d04dc20036dbd8313ed055', 'ilhamudzakir@gmail.com', 'ilham', 'mudzakir', '20161201_6435.jpg', 5, '2017-04-17 01:54:09', NULL, 1, NULL);
+(2, 'ilhamudzakir', '81dc9bdb52d04dc20036dbd8313ed055', 'ilhamudzakir@gmail.com', 'ilham', 'mudzakir', '20161201_6435.jpg', 5, '2017-04-17 01:54:09', NULL, 1, NULL),
+(3, 'sales', '9ed083b1436e5f40ef984b28255eef18', 'sales@sales.com', 'Sales', 'Coba', 'traxex-drow-ranger-dota-2-hd-wallpaper--busya_sama-1366x768.jpg', 6, '2017-06-15 17:11:17', NULL, 1, NULL);
 
 --
 -- Indexes for dumped tables
@@ -894,7 +1037,7 @@ ALTER TABLE `dc_area_album`
 -- AUTO_INCREMENT for table `dc_customer`
 --
 ALTER TABLE `dc_customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `dc_customer_album`
 --
@@ -909,7 +1052,7 @@ ALTER TABLE `dc_default`
 -- AUTO_INCREMENT for table `dc_groups`
 --
 ALTER TABLE `dc_groups`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `dc_icons`
 --
@@ -919,7 +1062,7 @@ ALTER TABLE `dc_icons`
 -- AUTO_INCREMENT for table `dc_kontrak`
 --
 ALTER TABLE `dc_kontrak`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `dc_kontrak_payment_record`
 --
@@ -929,7 +1072,7 @@ ALTER TABLE `dc_kontrak_payment_record`
 -- AUTO_INCREMENT for table `dc_kontrak_payment_schedule`
 --
 ALTER TABLE `dc_kontrak_payment_schedule`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 --
 -- AUTO_INCREMENT for table `dc_kontrak_type`
 --
@@ -939,27 +1082,27 @@ ALTER TABLE `dc_kontrak_type`
 -- AUTO_INCREMENT for table `dc_kontrak_unit`
 --
 ALTER TABLE `dc_kontrak_unit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `dc_menu`
 --
 ALTER TABLE `dc_menu`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT for table `dc_menu_accsess`
 --
 ALTER TABLE `dc_menu_accsess`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 --
 -- AUTO_INCREMENT for table `dc_payment_scheme`
 --
 ALTER TABLE `dc_payment_scheme`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `dc_payment_scheme_detail`
 --
 ALTER TABLE `dc_payment_scheme_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `dc_payment_type`
 --
@@ -1004,7 +1147,7 @@ ALTER TABLE `dc_unit_type`
 -- AUTO_INCREMENT for table `dc_user`
 --
 ALTER TABLE `dc_user`
-  MODIFY `id` int(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
