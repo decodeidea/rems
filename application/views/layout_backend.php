@@ -13,7 +13,6 @@
 <link href="<?php echo base_url() ?>assets/plugins/bootstrap-select2/select2.css" rel="stylesheet" type="text/css" media="screen"/>
 
 <link href="<?php echo base_url() ?>assets/css/decode.css" rel="stylesheet" type="text/css"/>
-<link href="<?php echo base_url() ?>assets/css/select2.css" rel="stylesheet"/>
 
 <link href="<?php echo base_url() ?>assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen"/>
 <link href="<?php echo base_url() ?>assets/plugins/jquery-datatable/css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>

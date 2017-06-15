@@ -699,18 +699,7 @@ edited rifan
 	background:#93081f; 
 }
 
-.yellow{
-	background: #e9e832!important;
-}
-.blue{
-	background: #7ebefe!important;
-}
-.green{
-	background: #dfff79!important;
-}
-.red{
-	background: #fc7e7f!important;
-}
+
 @media screen and (max-width: 31.5em) {
 	.grid {
 		padding: 10px 10px 100px 10px;
