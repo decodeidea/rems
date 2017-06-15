@@ -56,7 +56,7 @@ redirect('customer/list_customer');
         }
         
         if(empty($_FILES['photo']['name'])){
-        	$insert['photo']=='';
+        	$insert['photo']='';
         }else{
         	 $insert['photo']=$_FILES['photo']['name'];
         }

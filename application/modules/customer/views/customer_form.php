@@ -18,7 +18,7 @@
                      	<div class="form-group">
                         <label class="form-label">Name</label>
                         <div class="controls">
-                      	<input type="text" class="form-control" name="name"value="<?php if($data!=null) echo $data->name; ?>">
+                      	<input type="text" class="form-control" name="name"value="<?php if($data!=null) echo $data->name; ?>" required>
 						  </div>
                       </div>
 
@@ -36,7 +36,7 @@
 						<div class="form-group">
                         <label class="form-label">Date of Birth</label>
                         <div class="controls">
-                     	<input type="text" class="datepicker form-control" name="date_of_birth"  value="<?php if($data!=null) echo $data->date_of_birth; ?>">
+                     	<input type="text" class="datepicker form-control" name="date_of_birth"  value="<?php if($data!=null) echo $data->date_of_birth; ?>" required>
 					 </div>
                       </div>
 
@@ -52,7 +52,7 @@
 						<div class="form-group">
                           <label class="form-label">Phone</label>
                            <div class="controls">
-                   					<input type="text" class="form-control" name="phone" value="<?php if($data!=null) echo $data->phone; ?>">
+                   					<input type="text" class="form-control" name="phone" value="<?php if($data!=null) echo $data->phone; ?>" required>
 						  </div>
                 		</div>
                 
@@ -60,7 +60,7 @@
 					<div class="form-group">
                         <label class="form-label">Email</label>
                         <div class="controls">
-                   			<input type="email" class="form-control" name="email" value="<?php if($data!=null) echo $data->email; ?>">
+                   			<input type="email" class="form-control" name="email" value="<?php if($data!=null) echo $data->email; ?>" required>
 						</div>
                 		</div>
 
@@ -68,7 +68,7 @@
 					<div class="form-group">
                         <label class="form-label">No KTP</label>
                         <div class="controls">
-                   			<input type="text" class="form-control" name="no_ktp"  value="<?php if($data!=null) echo $data->no_ktp; ?>">
+                   			<input type="text" class="form-control" name="no_ktp"  value="<?php if($data!=null) echo $data->no_ktp; ?>" required>
 						</div>
                 		</div>
 					
@@ -76,7 +76,7 @@
 					<div class="form-group">
                         <label class="form-label">No NPWP</label>
                         <div class="controls">
-                   				<input type="text" class="form-control" name="no_npwp" value="<?php if($data!=null) echo $data->no_npwp; ?>">
+                   				<input type="text" class="form-control" name="no_npwp" value="<?php if($data!=null) echo $data->no_npwp; ?>" required>
 					    </div>
                 		</div>
 

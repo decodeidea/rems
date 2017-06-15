@@ -521,7 +521,7 @@ class finance extends DC_controller {
 			if ($do_insert){
 				$this->db->where('id',$kontrak_id)->update($this->tbl_kontrak, array('is_signed'=>1));
 				$this->session->set_flashdata('notif','success');
-				$this->session->set_flashdata('msg','Your data have been added');
+				$this->session->set_flashdata('msg','Your data have been update');
 				redirect($data['controller']."/".$data['function']);
 			//	$this->returnJson(array('status' => 'ok', 'msg' => 'Update success', 'redirect' => 'sales/' . $data['function']));
 			}
