@@ -449,7 +449,7 @@ class finance extends DC_controller {
 	public function change_payment_scheme() {
 		$data = $this->controller_attr;
 		$this->check_access();
-		$data['kontrak'] =getAll($this->tbl_kontrak)->result();
+		$data['kontrak'] =select_all($this->tbl_kontrak);
 		$data['page'] = $this->load->view('finance/change_payment_scheme', $data, true);
 		$this->load->view('layout_backend',$data);
 	}
