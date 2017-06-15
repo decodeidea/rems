@@ -459,7 +459,7 @@ class finance extends DC_controller {
 		$data = $this->controller_attr;
 
 		$this->check_access();
-
+		$data['function']='change_payment_scheme';
 		$booking_fee = str_replace(',', '', $this->input->post('booking_fee'));
 		$price = str_replace(',', '', $this->input->post('price'));
 		// print_die($price);
@@ -474,21 +474,23 @@ class finance extends DC_controller {
 		}
 		unset($insert['date_created']);
 		$insert['date_modified'] = date('Y-m-d H:i:s', now());
-		$insert['id_modified'] = $this->session_admin['admin_id'];
+		$insert['id_modifier'] = $this->session->userdata['admin']['id'];
 		$insert['price'] = $price;
-		$insert['is_delete'] = 0;
 		$id = $this->input->post('id');
-		$is_signed = $this->input->post('is_signed');
+		//$is_signed = $this->input->post('is_signed');
+		$is_signed = 1;
+		$insert['is_signed'] = $is_signed;
 		$insert['sisa_hutang'] = str_replace(',', '', $this->input->post('sisa_hutang'));
-
+		print_r($insert);
 		if ($insert['sales_id'] && $insert['customer_id'] && $insert['payment_scheme_id'] && $insert['no_kontrak']) {
-			$do_insert = $this->model_basic->insert_all($this->tbl_kontrak, $insert);
+			$do_insert = insert_all($this->tbl_kontrak, $insert);
 			$kontrak_id = $this->db->insert_id();
-			$this->db->where('id', $this->input->post('kontrak_id'))->update($this->tbl_kontrak, array('is_delete'=>1));
+			// $this->db->where('id', $this->input->post('kontrak_id'))->update($this->tbl_kontrak, array('is_delete'=>1));
 			if($is_signed == 0){
 				// $kontrak_id = $id;
 
 				// INSERT TO TABLE KONTRAK_PAYMENT_SCHEDULE
+
 				$kontrak_payment_schedule_id = $this->sales->insert_kontrak_payment_schedule($kontrak_id);
 
 				//UPDATE DATE_END DITABLE KONTRAK, AMBIL DARI JATUH TEMPO PALING TERAKHIR DI PAYMENT SCHEDULE
@@ -518,22 +520,27 @@ class finance extends DC_controller {
 			}
 			if ($do_insert){
 				$this->db->where('id',$kontrak_id)->update($this->tbl_kontrak, array('is_signed'=>1));
-				$this->returnJson(array('status' => 'ok', 'msg' => 'Update success', 'redirect' => 'sales/' . $data['function']));
+				$this->session->set_flashdata('notif','success');
+				$this->session->set_flashdata('msg','Your data have been added');
+				redirect($data['controller']."/".$data['function']);
+			//	$this->returnJson(array('status' => 'ok', 'msg' => 'Update success', 'redirect' => 'sales/' . $data['function']));
 			}
 			else
 			{
-				$this->returnJson(array('status' => 'error', 'msg' => 'Failed when updating data'));
+
+				$this->session->set_flashdata('notif','error');
+				$this->session->set_flashdata('msg','Failed when updating data');
 			}
 		}
 		else
-			$this->returnJson(array('status' => 'error', 'msg' => 'Please complete the form'));
+			$this->session->set_flashdata('notif','error');
+		$this->session->set_flashdata('msg','Please complete the form');
 	}
 
 	function get_kontrak_detail($id){
 		$data = $this->controller_attr;
-
-			$data['kontrak_unit'] = getAll($this->tbl_kontrak_unit, array('kontrak_id'=>'where/'.$id))->result();
-		$data['payment_scheme'] = getAll($this->tbl_payment_scheme, array('is_delete'=>'where/0'));
+		$data['kontrak_unit'] = getAll($this->tbl_kontrak_unit, array('kontrak_id'=>'where/'.$id))->result();
+		$data['payment_scheme'] = getAll($this->tbl_payment_scheme);
 		$data['record_id'] = $record_id = $this->input->post('kontrak_record_id');
 		if ($record_id) {
 			$kontrak_payment_schedule_id = $this->model_cashier->load_kontrak($record_id)->kontrak_payment_schedule_id;
@@ -542,7 +549,7 @@ class finance extends DC_controller {
 
 		$data['data'] = GetAll($this->tbl_kontrak, array('id'=>'where/'.$id))->row();
 		$data['ps'] = GetAll($this->tbl_kontrak_payment_schedule, array('kontrak_id'=>'where/'.$id, 'status'=>'where/0'));
-		$this->load->view('backend/finance/kontrak_detail', $data);
+		$this->load->view('finance/kontrak_detail',$data);
 	}
 }
 

@@ -18,7 +18,9 @@
 <link href="<?php echo base_url() ?>assets/plugins/jquery-datatable/css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
 <link href="<?php echo base_url() ?>assets/plugins/datatables-responsive/css/datatables.responsive.css" rel="stylesheet" type="text/css" media="screen"/>
 <!-- END PLUGIN CSS -->
-<!-- BEGIN CORE CSS FRAMEWORK -->
+
+
+  <!-- BEGIN CORE CSS FRAMEWORK -->
 <link href="<?php echo base_url() ?>assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <link href="<?php echo base_url() ?>assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
 <link href="<?php echo base_url() ?>assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
@@ -218,6 +220,9 @@
 <script src="<?php echo base_url() ?>assets/js/core.js" type="text/javascript"></script>
 <script src="<?php echo base_url() ?>assets/js/chat.js" type="text/javascript"></script>
 <script src="<?php echo base_url() ?>assets/js/demo.js" type="text/javascript"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/js/plugins/icheck/icheck.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+
 <!-- END CORE TEMPLATE JS -->
 <!-- END JAVASCRIPTS -->
 </body>

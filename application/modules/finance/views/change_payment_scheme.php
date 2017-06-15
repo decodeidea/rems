@@ -12,8 +12,8 @@
 
 				<div class="tools"> <a href="javascript:;" class="collapse"></a> <a href="#grid-config" data-toggle="modal" class="config"></a> <a href="javascript:;" class="reload"></a> <a href="javascript:;" class="remove"></a> </div>
 			</div>
-			<form enctype="multipart/form-data" method="post" action="<?php echo $controller.'/change_payment_scheme_add' ?>">
-				<input type="hidden" id="base_url" val=<?=base_url()?>>
+			<form enctype="multipart/form-data" method="post" action="<?php echo base_url() ?><?php echo $controller.'/change_payment_scheme_add' ?>">
+				<input type="hidden" id="base_url" value="<?php echo base_url() ?>">
 				<div class="grid-body no-border">
 					<div class="row">
 						<div class="col-md-12 col-sm-8 col-xs-8">
