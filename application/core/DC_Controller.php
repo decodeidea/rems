@@ -149,12 +149,7 @@ class DC_Controller extends CI_Controller {
     //     exit;
     // }
 
-    function indonesian_date($date)
-    {
-        //die($date);
-        $result = date('j F Y', strtotime($date));
-        return $result;
-    }
+    
     
 
 }

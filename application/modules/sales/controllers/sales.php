@@ -59,15 +59,17 @@ class sales extends DC_controller {
         $data['area']=select_where($this->tbl_area,'id',$id)->row();
         $data['unit']=select_where_array_group($this->tbl_unit,$where,'block')->result();
 
+        $data['a1']=select_where($this->tbl_unit,'id',1)->row();
         
        	$data['page'] = $this->load->view('sales/list_denah',$data,true); //print_r($data['content']);
        	$this->load->view('layout_backend',$data);
     }
 	
 	function form_denah_submit() {
+
         $this->check_access();
         $data = $this->controller_attr;
-        $data['function']='pengajuan_harga';
+        $data['function']='Pengajuan Harga';
         if ($this->input->post('unit_id')) {
 
             $this->session->set_userdata('checked_unit', $this->input->post('unit_id'));
@@ -77,7 +79,7 @@ class sales extends DC_controller {
                 $this->kontrak_add_unit();
             } else if (isset($_POST['pengajuan_button'])) {
                 //create pengajuan action
-                
+               
                 $this->pengajuan_harga_form();
             } 
 
@@ -89,6 +91,7 @@ class sales extends DC_controller {
 
 
     function pengajuan_harga() {
+    	//echo "masuk";exit;
         $this->check_access();
         $data = $this->controller_attr;
         $data['function']='pengajuan_harga';
@@ -100,11 +103,12 @@ class sales extends DC_controller {
             $pengajuan = select_where_order($this->tbl_pengajuan_harga,'id_created',$id_sales,'id','DESC');
         }
         
+        //print_r($pengajuan);exit;
 
-        if($pengajuan->num_rows() > 0) {
-            foreach ($pengajuan->result() as $pengajuan_harga) {
+        if(count($pengajuan) > 0) {
+            foreach ($pengajuan as $pengajuan_harga) {
                 $unit=select_where($this->tbl_unit, 'id', $pengajuan_harga->id_unit)->row();
-                $pengajuan_harga->indonesian_date($pengajuan_harga->date_created);
+                //$pengajuan_harga->indonesian_date($pengajuan_harga->date_created);
             }
         }
         
@@ -126,6 +130,8 @@ class sales extends DC_controller {
         $data['unit']= $this->unit->unit_tbl()->result();
         $data['atasan']= select_where($this->tbl_user,'user_group','5')->result();
         $data['checked_unit'] = $this->session->userdata('checked_unit');
+
+        //print_r($data['checked_unit']);exit;
         
         if ($id) {
             $data['data'] = select_where($this->tbl_pengajuan_harga, 'id', $id)->row();
@@ -137,6 +143,36 @@ class sales extends DC_controller {
         $data['page'] = $this->load->view('sales/pengajuan_harga_form',$data,true);
 		$this->load->view('layout_backend',$data);
        
+    }
+
+    function pengajuan_harga_detail($id) {
+        $this->check_access();
+        $data = $this->controller_attr;
+        $data['function']='pengajuan_harga_detail';
+        
+        $data['pengajuan'] = select_where($this->tbl_pengajuan_harga, 'id', $id)->row();
+        $data['pengajuan']->date_created = date('d M Y H:i:s', strtotime($data['pengajuan']->date_created));
+        $data['pengajuan']->nominal = indonesian_currency($data['pengajuan']->nominal);
+        $admin = select_where($this->tbl_user, 'id', $data['pengajuan']->id_creator)->row();
+        $data['pengajuan']->posted_by = $admin->first_name.$admin->last_name;
+         if($data['pengajuan']->id_modifier != 0)
+            {
+                $data['update'] = new stdClass();
+                $data['update']->name = select_where($this->tbl_user, 'id', $data['pengajuan']->id_modifier)->row()->first_name;
+                $data['update']->date_modified = date('d M Y H:i:s', strtotime($data['pengajuan']->date_modified));
+            }
+       
+        $data['pengajuan_unit']=select_where($this->tbl_pengajuan_harga_unit, 'pengajuan_harga_id',$id)->result();
+        $total_price = 0;
+        foreach ($data['pengajuan_unit'] as $key) {
+            $unit = select_where($this->tbl_unit, 'id',$key->unit_id)->row();
+            $total_price = $total_price + $unit->price;
+        }
+        $data['total_price'] = indonesian_currency($total_price);
+        $data['customer']=select_where($this->tbl_customer, 'id',$data['pengajuan']->id_customer)->row();
+       
+       	$data['page'] = $this->load->view('sales/pengajuan_harga_detail',$data,true);
+		$this->load->view('layout_backend',$data);
     }
 
     function pengajuan_harga_add() {
@@ -184,15 +220,16 @@ class sales extends DC_controller {
             $id_insert = $this->db->insert_id();
             if ($do_insert) {
                 $unit = $this->session->userdata('checked_unit');
-                //print_ $unit;exit;
+                
                 foreach ($unit as $key) {
+
                     $insert_unit = array(
                                     'pengajuan_harga_id' => $id_insert,
                                     'unit_id' => $key,
                                     'date_created' => date('Y-m-d H:i:s', now()),
                                     'id_creator' =>  $this->session->userdata['admin']['id'],
                             );
-
+                   
                     $query=insert_all($this->tbl_pengajuan_harga_unit, $insert_unit);
                 }
                 //remove checked unit session

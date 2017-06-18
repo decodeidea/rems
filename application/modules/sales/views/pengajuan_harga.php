@@ -30,8 +30,8 @@
                   </thead>
                   <tbody>
                     <?php $no=1; 
-                    if ($data->num_rows() > 0) {
-                    foreach ($data->result() as $d_row) { ?>
+                    if (count($data)> 0) {
+                    foreach ($data as $d_row) { ?>
                     <tr>
                       <td class="text-center"><?php echo $no; ?></td>
                       <td class="text-center"><?php echo $d_row->nama; ?></td>
@@ -39,10 +39,10 @@
                       <td class="text-center"><?php 
                       if($d_row->status==1){echo"Aproved";}elseif ($d_row->status==0){echo"Waiting";}else{ echo"Rejected"; } 
                       ?></td>
-                      <td class="text-center"><?php echo $d_row->date_created; ?></td>
+                      <td class="text-center"><?php echo indonesian_date($d_row->date_created); ?></td>
                       <td class="text-center">
                       
-                        <form action="<?php echo $controller.'/'.$function_form; ?>" method="post">
+                        <form action="<?php echo $controller.'/'.$function."_form/"; ?>" method="post">
                           <input type="hidden" name="id" value="<?php echo $d_row->id; ?>">
                           <a data-toggle="tooltip" data-placement="top" data-original-title="Detail" href="<?php echo $controller.'/pengajuan_harga_detail/'.$d_row->id; ?>" class="btn btn-default btn-xs"><i class="fa fa-eye"></i></a>
 
