@@ -60,6 +60,8 @@ class sales extends DC_controller {
         $data['unit']=select_where_array_group($this->tbl_unit,$where,'block')->result();
 
         $data['a1']=select_where($this->tbl_unit,'id',1)->row();
+
+        //print_r($data['a1']);
         
        	$data['page'] = $this->load->view('sales/list_denah',$data,true); //print_r($data['content']);
        	$this->load->view('layout_backend',$data);

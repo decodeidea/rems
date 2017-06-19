@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.3.11
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2017 at 05:57 PM
--- Server version: 5.6.24
--- PHP Version: 5.6.8
+-- Generation Time: Jun 19, 2017 at 07:54 PM
+-- Server version: 10.1.13-MariaDB
+-- PHP Version: 5.6.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `rems`
@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `dc_appearance`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_appearance` (
+CREATE TABLE `dc_appearance` (
   `id` int(100) NOT NULL,
   `name` varchar(250) NOT NULL,
   `logo` text NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `dc_appearance` (
   `date_modified` datetime DEFAULT NULL,
   `id_creator` int(250) NOT NULL,
   `id_modifier` int(250) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_appearance`
@@ -49,7 +49,7 @@ INSERT INTO `dc_appearance` (`id`, `name`, `logo`, `date_created`, `date_modifie
 -- Table structure for table `dc_area`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_area` (
+CREATE TABLE `dc_area` (
   `id` int(11) NOT NULL,
   `name` varchar(45) DEFAULT NULL,
   `area_size` int(11) DEFAULT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `dc_area` (
   `date_modified` datetime DEFAULT NULL,
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_area`
@@ -73,7 +73,7 @@ INSERT INTO `dc_area` (`id`, `name`, `area_size`, `address`, `date_created`, `da
 -- Table structure for table `dc_area_album`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_area_album` (
+CREATE TABLE `dc_area_album` (
   `id` int(11) NOT NULL,
   `area_id` int(11) NOT NULL,
   `filename` text NOT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `dc_area_album` (
   `date_modified` datetime DEFAULT NULL,
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_area_album`
@@ -97,7 +97,7 @@ INSERT INTO `dc_area_album` (`id`, `area_id`, `filename`, `caption`, `date_creat
 -- Table structure for table `dc_customer`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_customer` (
+CREATE TABLE `dc_customer` (
   `id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
   `gender` varchar(45) NOT NULL,
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `dc_customer` (
   `date_modified` datetime NOT NULL,
   `id_creator` int(11) NOT NULL,
   `id_modifier` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_customer`
@@ -123,7 +123,12 @@ CREATE TABLE IF NOT EXISTS `dc_customer` (
 
 INSERT INTO `dc_customer` (`id`, `name`, `gender`, `date_of_birth`, `address`, `phone`, `email`, `no_ktp`, `no_npwp`, `pekerjaan`, `nama_kantor`, `alamat_kantor`, `photo`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
 (1, 'Ilham Mudzakir', 'Male', '2017-06-15 00:00:00', 'gfgd', '543534', 'ilhamudzakir@gmail.com', '065114430', '37289', 'dada', 'hdask', 'gfdgfd', 'IMG_0056.JPG', '2017-06-15 17:06:54', '2017-06-15 17:06:54', 1, 1),
-(2, '', '', '0000-00-00 00:00:00', '', '', '', '', '', '', '', '', '', '2017-06-15 22:48:35', '2017-06-15 22:48:35', 1, 1);
+(2, '', '', '0000-00-00 00:00:00', '', '', '', '', '', '', '', '', '', '2017-06-15 22:48:35', '2017-06-15 22:48:35', 1, 1),
+(3, ' minks', '', '0000-00-00 00:00:00', 'xvcxvxcv', '09876543211', 'minks@gmail.com', '', '', '', 'cxvxcxcv', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0),
+(4, ' dfdgdg', '', '0000-00-00 00:00:00', 'ghhjfdg', '3456789765', 'dianzsaint27@gmail.com', '', '', '', 'ghhhjfgffh', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0),
+(5, ' surti', '', '0000-00-00 00:00:00', 'ghghfh', '234353454', 'kandidat@gmail.com', '', '', '', 'gfhfhfg', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0),
+(6, 'surti', '', '0000-00-00 00:00:00', 'ssjfldkfglsg', '03908348509', 'supri@gmail.com', '', '', '', 'ljldfglksj', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0),
+(7, ' surti', '', '0000-00-00 00:00:00', 'gdfhghdh', '09876543', 'surti@gmail.com', '', '', '', 'fghfghfgh', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -131,7 +136,7 @@ INSERT INTO `dc_customer` (`id`, `name`, `gender`, `date_of_birth`, `address`, `
 -- Table structure for table `dc_customer_album`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_customer_album` (
+CREATE TABLE `dc_customer_album` (
   `id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `filename` text NOT NULL,
@@ -148,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `dc_customer_album` (
 -- Table structure for table `dc_default`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_default` (
+CREATE TABLE `dc_default` (
   `id` int(100) NOT NULL,
   `name_group` varchar(250) NOT NULL,
   `date_created` datetime NOT NULL,
@@ -163,14 +168,14 @@ CREATE TABLE IF NOT EXISTS `dc_default` (
 -- Table structure for table `dc_groups`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_groups` (
+CREATE TABLE `dc_groups` (
   `id` int(100) NOT NULL,
   `name_group` varchar(250) NOT NULL,
   `date_created` datetime NOT NULL,
   `date_modified` datetime DEFAULT NULL,
   `id_creator` int(250) NOT NULL,
   `id_modifier` int(250) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_groups`
@@ -189,14 +194,14 @@ INSERT INTO `dc_groups` (`id`, `name_group`, `date_created`, `date_modified`, `i
 -- Table structure for table `dc_icons`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_icons` (
+CREATE TABLE `dc_icons` (
   `id` int(100) NOT NULL,
   `name_icons` varchar(250) NOT NULL,
   `date_created` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   `id_creator` int(250) NOT NULL,
   `id_modifier` int(250) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_icons`
@@ -241,7 +246,7 @@ INSERT INTO `dc_icons` (`id`, `name_icons`, `date_created`, `date_modified`, `id
 -- Table structure for table `dc_kontrak`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_kontrak` (
+CREATE TABLE `dc_kontrak` (
   `id` int(11) NOT NULL,
   `kontrak_type_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
@@ -256,7 +261,7 @@ CREATE TABLE IF NOT EXISTS `dc_kontrak` (
   `date_modified` datetime DEFAULT NULL,
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_kontrak`
@@ -284,7 +289,7 @@ INSERT INTO `dc_kontrak` (`id`, `kontrak_type_id`, `customer_id`, `sales_id`, `p
 -- Table structure for table `dc_kontrak_payment_record`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_kontrak_payment_record` (
+CREATE TABLE `dc_kontrak_payment_record` (
   `id` int(11) NOT NULL,
   `kontrak_payment_schedule_id` int(11) NOT NULL,
   `no_invoice` char(9) NOT NULL,
@@ -303,7 +308,7 @@ CREATE TABLE IF NOT EXISTS `dc_kontrak_payment_record` (
 -- Table structure for table `dc_kontrak_payment_schedule`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_kontrak_payment_schedule` (
+CREATE TABLE `dc_kontrak_payment_schedule` (
   `id` int(11) NOT NULL,
   `kontrak_id` int(11) NOT NULL,
   `payment_type` int(11) NOT NULL,
@@ -317,7 +322,7 @@ CREATE TABLE IF NOT EXISTS `dc_kontrak_payment_schedule` (
   `date_modified` datetime DEFAULT NULL,
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_kontrak_payment_schedule`
@@ -422,14 +427,14 @@ INSERT INTO `dc_kontrak_payment_schedule` (`id`, `kontrak_id`, `payment_type`, `
 -- Table structure for table `dc_kontrak_type`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_kontrak_type` (
+CREATE TABLE `dc_kontrak_type` (
   `id` int(11) NOT NULL,
   `name` varchar(25) NOT NULL,
   `date_created` datetime DEFAULT NULL,
   `date_modified` datetime DEFAULT NULL,
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_kontrak_type`
@@ -446,7 +451,7 @@ INSERT INTO `dc_kontrak_type` (`id`, `name`, `date_created`, `date_modified`, `i
 -- Table structure for table `dc_kontrak_unit`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_kontrak_unit` (
+CREATE TABLE `dc_kontrak_unit` (
   `id` int(11) NOT NULL,
   `kontrak_id` int(11) NOT NULL,
   `unit_id` int(11) NOT NULL,
@@ -454,7 +459,7 @@ CREATE TABLE IF NOT EXISTS `dc_kontrak_unit` (
   `date_modified` datetime DEFAULT NULL,
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_kontrak_unit`
@@ -470,7 +475,7 @@ INSERT INTO `dc_kontrak_unit` (`id`, `kontrak_id`, `unit_id`, `date_created`, `d
 -- Table structure for table `dc_menu`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_menu` (
+CREATE TABLE `dc_menu` (
   `id` int(100) NOT NULL,
   `name_menu` varchar(1000) NOT NULL,
   `sub_menu` varchar(100) NOT NULL,
@@ -481,7 +486,7 @@ CREATE TABLE IF NOT EXISTS `dc_menu` (
   `date_modified` datetime DEFAULT NULL,
   `id_creator` int(250) NOT NULL,
   `id_modifier` int(250) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_menu`
@@ -519,7 +524,8 @@ INSERT INTO `dc_menu` (`id`, `name_menu`, `sub_menu`, `target`, `icon`, `positio
 (30, 'Denah', '23', 'denah', 'none', 1, '2017-06-14 23:56:08', NULL, 1, NULL),
 (31, 'Sales', '0', 'sales', 'fa fa-building-o', 0, '2017-06-15 00:02:34', NULL, 1, NULL),
 (32, 'Denah', '31', 'denah', 'none', 1, '2017-06-15 00:04:25', NULL, 1, NULL),
-(33, 'Payment Scheme', '22', 'payment_scheme', 'none', 3, '2017-06-15 17:07:43', NULL, 1, NULL);
+(33, 'Payment Scheme', '22', 'payment_scheme', 'none', 3, '2017-06-15 17:07:43', NULL, 1, NULL),
+(34, 'Pengajuan Harga', '31', 'pengajuan_harga', 'none', 2, '2017-06-18 05:17:47', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -527,12 +533,12 @@ INSERT INTO `dc_menu` (`id`, `name_menu`, `sub_menu`, `target`, `icon`, `positio
 -- Table structure for table `dc_menu_accsess`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_menu_accsess` (
+CREATE TABLE `dc_menu_accsess` (
   `id` int(100) NOT NULL,
   `id_menu` int(100) NOT NULL,
   `id_group` int(100) NOT NULL,
   `accsess` int(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_menu_accsess`
@@ -598,7 +604,8 @@ INSERT INTO `dc_menu_accsess` (`id`, `id_menu`, `id_group`, `accsess`) VALUES
 (68, 30, 1, 1),
 (69, 31, 1, 1),
 (70, 32, 1, 1),
-(71, 33, 1, 1);
+(71, 33, 1, 1),
+(72, 34, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -606,7 +613,7 @@ INSERT INTO `dc_menu_accsess` (`id`, `id_menu`, `id_group`, `accsess`) VALUES
 -- Table structure for table `dc_payment_scheme`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_payment_scheme` (
+CREATE TABLE `dc_payment_scheme` (
   `id` int(11) NOT NULL,
   `title` varchar(45) NOT NULL,
   `kontrak_type` int(11) NOT NULL,
@@ -615,7 +622,7 @@ CREATE TABLE IF NOT EXISTS `dc_payment_scheme` (
   `date_modified` datetime DEFAULT NULL,
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_payment_scheme`
@@ -630,7 +637,7 @@ INSERT INTO `dc_payment_scheme` (`id`, `title`, `kontrak_type`, `bunga`, `date_c
 -- Table structure for table `dc_payment_scheme_detail`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_payment_scheme_detail` (
+CREATE TABLE `dc_payment_scheme_detail` (
   `id` int(11) NOT NULL,
   `payment_scheme_id` int(11) NOT NULL,
   `payment_type_id` int(11) NOT NULL,
@@ -638,7 +645,7 @@ CREATE TABLE IF NOT EXISTS `dc_payment_scheme_detail` (
   `tenor` int(11) NOT NULL,
   `interval` int(11) NOT NULL,
   `persentase` decimal(9,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_payment_scheme_detail`
@@ -655,14 +662,14 @@ INSERT INTO `dc_payment_scheme_detail` (`id`, `payment_scheme_id`, `payment_type
 -- Table structure for table `dc_payment_type`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_payment_type` (
+CREATE TABLE `dc_payment_type` (
   `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `date_created` datetime DEFAULT NULL,
   `date_modified` datetime DEFAULT NULL,
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_payment_type`
@@ -679,7 +686,7 @@ INSERT INTO `dc_payment_type` (`id`, `title`, `date_created`, `date_modified`, `
 -- Table structure for table `dc_pemasukan_record`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_pemasukan_record` (
+CREATE TABLE `dc_pemasukan_record` (
   `id` int(11) NOT NULL,
   `no_invoice` char(9) NOT NULL,
   `rekening_id` int(11) NOT NULL,
@@ -697,7 +704,7 @@ CREATE TABLE IF NOT EXISTS `dc_pemasukan_record` (
 -- Table structure for table `dc_pengajuan_harga`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_pengajuan_harga` (
+CREATE TABLE `dc_pengajuan_harga` (
   `id` int(11) NOT NULL,
   `id_unit` int(11) NOT NULL,
   `id_customer` int(11) NOT NULL,
@@ -716,13 +723,20 @@ CREATE TABLE IF NOT EXISTS `dc_pengajuan_harga` (
   `id_modifier` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `dc_pengajuan_harga`
+--
+
+INSERT INTO `dc_pengajuan_harga` (`id`, `id_unit`, `id_customer`, `id_atasan`, `nama`, `alamat`, `email`, `tlp`, `instansi`, `nominal`, `approved_nominal`, `status`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
+(1, 0, 7, 2, ' surti', 'gdfhghdh', 'surti@gmail.com', '09876543', 'fghfghfgh', 6879879, 6879879, 2, '2017-06-18 05:46:49', '2017-06-20 00:49:50', 1, 1);
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `dc_pengajuan_harga_unit`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_pengajuan_harga_unit` (
+CREATE TABLE `dc_pengajuan_harga_unit` (
   `id` int(11) NOT NULL,
   `pengajuan_harga_id` int(11) NOT NULL,
   `unit_id` int(11) NOT NULL,
@@ -732,13 +746,20 @@ CREATE TABLE IF NOT EXISTS `dc_pengajuan_harga_unit` (
   `id_modifier` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `dc_pengajuan_harga_unit`
+--
+
+INSERT INTO `dc_pengajuan_harga_unit` (`id`, `pengajuan_harga_id`, `unit_id`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
+(1, 1, 1, '2017-06-18 05:46:49', NULL, 1, NULL);
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `dc_rekening`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_rekening` (
+CREATE TABLE `dc_rekening` (
   `id` int(11) NOT NULL,
   `no_rek` varchar(45) NOT NULL,
   `bank` varchar(45) NOT NULL,
@@ -748,7 +769,7 @@ CREATE TABLE IF NOT EXISTS `dc_rekening` (
   `date_modified` datetime DEFAULT NULL,
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_rekening`
@@ -764,7 +785,7 @@ INSERT INTO `dc_rekening` (`id`, `no_rek`, `bank`, `atas_nama`, `saldo`, `date_c
 -- Table structure for table `dc_unit`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_unit` (
+CREATE TABLE `dc_unit` (
   `id` int(11) NOT NULL,
   `area_id` int(11) NOT NULL,
   `unit_type` int(11) DEFAULT NULL,
@@ -787,14 +808,14 @@ CREATE TABLE IF NOT EXISTS `dc_unit` (
   `date_modified` datetime DEFAULT NULL,
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_unit`
 --
 
 INSERT INTO `dc_unit` (`id`, `area_id`, `unit_type`, `name`, `luas_netto`, `luas_semigross`, `number`, `block`, `price`, `struktur`, `lantai`, `dapur`, `listrik`, `dinding`, `pintu`, `sanitasi`, `jendela`, `status`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
-(1, 1, 1, 'dsjh', '99.99', '0.00', 7, NULL, 7879879, 'jkh', 'hkj', 'hhjk', 'khj', 'jkh', 'hk', 'hjk', 'hkj', NULL, '2017-05-29 20:18:12', NULL, 1, NULL);
+(1, 1, 1, 'dsjh', '99.99', '0.00', 7, 'A01', 7879879, 'jkh', 'hkj', 'hhjk', 'khj', 'jkh', 'hk', 'hjk', 'hkj', NULL, NULL, '2017-06-16 16:26:18', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -802,7 +823,7 @@ INSERT INTO `dc_unit` (`id`, `area_id`, `unit_type`, `name`, `luas_netto`, `luas
 -- Table structure for table `dc_unit_album`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_unit_album` (
+CREATE TABLE `dc_unit_album` (
   `id` int(11) NOT NULL,
   `unit_id` int(11) NOT NULL,
   `filename` text NOT NULL,
@@ -819,7 +840,7 @@ CREATE TABLE IF NOT EXISTS `dc_unit_album` (
 -- Table structure for table `dc_unit_type`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_unit_type` (
+CREATE TABLE `dc_unit_type` (
   `id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
   `color` varchar(200) NOT NULL,
@@ -827,7 +848,7 @@ CREATE TABLE IF NOT EXISTS `dc_unit_type` (
   `date_modified` datetime DEFAULT NULL,
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_unit_type`
@@ -842,7 +863,7 @@ INSERT INTO `dc_unit_type` (`id`, `name`, `color`, `date_created`, `date_modifie
 -- Table structure for table `dc_user`
 --
 
-CREATE TABLE IF NOT EXISTS `dc_user` (
+CREATE TABLE `dc_user` (
   `id` int(250) NOT NULL,
   `username` varchar(250) NOT NULL,
   `password` varchar(250) NOT NULL,
@@ -855,7 +876,7 @@ CREATE TABLE IF NOT EXISTS `dc_user` (
   `date_modified` datetime DEFAULT NULL,
   `id_creator` int(10) NOT NULL,
   `id_modifier` int(10) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dc_user`
@@ -1034,22 +1055,22 @@ ALTER TABLE `dc_user`
 -- AUTO_INCREMENT for table `dc_appearance`
 --
 ALTER TABLE `dc_appearance`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `dc_area`
 --
 ALTER TABLE `dc_area`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `dc_area_album`
 --
 ALTER TABLE `dc_area_album`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `dc_customer`
 --
 ALTER TABLE `dc_customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `dc_customer_album`
 --
@@ -1064,17 +1085,17 @@ ALTER TABLE `dc_default`
 -- AUTO_INCREMENT for table `dc_groups`
 --
 ALTER TABLE `dc_groups`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `dc_icons`
 --
 ALTER TABLE `dc_icons`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT for table `dc_kontrak`
 --
 ALTER TABLE `dc_kontrak`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT for table `dc_kontrak_payment_record`
 --
@@ -1084,42 +1105,42 @@ ALTER TABLE `dc_kontrak_payment_record`
 -- AUTO_INCREMENT for table `dc_kontrak_payment_schedule`
 --
 ALTER TABLE `dc_kontrak_payment_schedule`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=92;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 --
 -- AUTO_INCREMENT for table `dc_kontrak_type`
 --
 ALTER TABLE `dc_kontrak_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `dc_kontrak_unit`
 --
 ALTER TABLE `dc_kontrak_unit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `dc_menu`
 --
 ALTER TABLE `dc_menu`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT for table `dc_menu_accsess`
 --
 ALTER TABLE `dc_menu_accsess`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=72;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 --
 -- AUTO_INCREMENT for table `dc_payment_scheme`
 --
 ALTER TABLE `dc_payment_scheme`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `dc_payment_scheme_detail`
 --
 ALTER TABLE `dc_payment_scheme_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `dc_payment_type`
 --
 ALTER TABLE `dc_payment_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `dc_pemasukan_record`
 --
@@ -1129,22 +1150,22 @@ ALTER TABLE `dc_pemasukan_record`
 -- AUTO_INCREMENT for table `dc_pengajuan_harga`
 --
 ALTER TABLE `dc_pengajuan_harga`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `dc_pengajuan_harga_unit`
 --
 ALTER TABLE `dc_pengajuan_harga_unit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `dc_rekening`
 --
 ALTER TABLE `dc_rekening`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `dc_unit`
 --
 ALTER TABLE `dc_unit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `dc_unit_album`
 --
@@ -1154,12 +1175,12 @@ ALTER TABLE `dc_unit_album`
 -- AUTO_INCREMENT for table `dc_unit_type`
 --
 ALTER TABLE `dc_unit_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `dc_user`
 --
 ALTER TABLE `dc_user`
-  MODIFY `id` int(250) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
