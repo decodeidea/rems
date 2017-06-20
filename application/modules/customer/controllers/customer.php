@@ -248,5 +248,13 @@ redirect('customer/list_customer');
 		}
 		    }
 
+
+    public function customer_detail($id) {
+        $data = $this->controller_attr;
+        $data['customer']=select_where($this->tbl_customer, 'id',$id)->row();
+        $data['page'] = $this->load->view('customer/customer_detail', $data, true);
+        $this->load->view('layout_backend',$data);
+    }
+
     
  }
