@@ -737,3 +737,8 @@ edited rifan
     box-shadow: none;
     color: #fff;
 }
+.table-bordered th {
+    background-color: #0aa699;
+    border: 0 none;
+    color: #fff;
+}
