@@ -363,31 +363,75 @@ if (!function_exists('GetAll')){
 	}
 
 	if (!function_exists('GetValue')){
-	function GetValue($field,$table,$filter=array(),$order=NULL)
-	{
-		$CI =& get_instance();
-		$CI->db->select($field);
-		foreach($filter as $key=> $value)
+		function GetValue($field,$table,$filter=array(),$order=NULL)
 		{
-			$exp = explode("/",$value);
-			if(isset($exp[1]))
+			$CI =& get_instance();
+			$CI->db->select($field);
+			foreach($filter as $key=> $value)
 			{
-				if($exp[0] == "where") $CI->db->where($key, $exp[1]);
-				else if($exp[0] == "like") $CI->db->like($key, $exp[1]);
-				else if($exp[0] == "order") $CI->db->order_by($key, $exp[1]);
-				else if($key == "limit") $CI->db->limit($exp[1], $exp[0]);
+				$exp = explode("/",$value);
+				if(isset($exp[1]))
+				{
+					if($exp[0] == "where") $CI->db->where($key, $exp[1]);
+					else if($exp[0] == "like") $CI->db->like($key, $exp[1]);
+					else if($exp[0] == "order") $CI->db->order_by($key, $exp[1]);
+					else if($key == "limit") $CI->db->limit($exp[1], $exp[0]);
+				}
+				
+				if($exp[0] == "group") $CI->db->group_by($key);
 			}
 			
-			if($exp[0] == "group") $CI->db->group_by($key);
+			if($order) $CI->db->order_by($order);
+			$q = $CI->db->get($table);
+			foreach($q->result_array() as $r)
+			{
+				return $r[$field];
+			}
+			return 0;
 		}
-		
-		if($order) $CI->db->order_by($order);
-		$q = $CI->db->get($table);
-		foreach($q->result_array() as $r)
+	}
+
+	if (!function_exists('to_idr')){	
+		function to_idr($data)
 		{
-			return $r[$field];
+			$result = 'Rp. ' . number_format($data, 0, '', '.');
+	        return $result;
 		}
-		return 0;
+	}
+
+	function indonesian_date($date)
+    {
+        //die($date);
+        $result = date('j F Y', strtotime($date));
+        return $result;
+    }
+
+    if ( ! function_exists('indonesian_currency'))
+	{
+		function indonesian_currency($number){
+			$result = 'Rp. ' . number_format($number, 0, '', '.');
+	                return $result;
+		}
+
+		
+	}
+if ( ! function_exists('dateIndo'))
+	{
+	function dateIndo($date,$format=null)
+	{
+		if($date!=0000-00-00){
+			try {
+				
+				$newdate = date('d',strtotime($date)).' '.monthIndo(date('m',strtotime($date))).' '.date('Y',strtotime($date));
+				return $newdate;
+
+			} catch (Exception $e) {
+				return array();
+			}
+		}else{
+			return '';
+		}
+
 	}
 }
 }

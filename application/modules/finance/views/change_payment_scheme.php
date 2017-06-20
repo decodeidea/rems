@@ -48,24 +48,8 @@
 		</div>
 	</div>
 </div>
-<!-- PAGE CONTENT WRAPPER -->
-
-
-<!-- START SCRIPTS -->
-<!-- THIS PAGE PLUGINS -->
 <script type="text/javascript" src="<?php echo base_url() ?>assets/js/plugins/jquery-validation/jquery.validate.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>assets/js/plugins/summernote/summernote.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>assets/js/plugins/jquery-mask-money/jquery.maskMoney.js"></script>
-<link href="<?php echo base_url() ?>assets/css/select2.css" rel="stylesheet"/>
-<script src="<?php echo base_url() ?>assets/js/select2.js"></script>
-<!-- END PAGE PLUGINS -->
-<!-- START TEMPLATE -->
-<script type="text/javascript" src="<?php echo base_url() ?>assets/js/settings.js"></script>
 
-<script type="text/javascript" src="<?php echo base_url() ?>assets/js/plugins.js"></script>
-<script type="text/javascript" src="<?php echo base_url() ?>assets/js/actions.js"></script>
-<!-- END TEMPLATE -->
-<!-- THIS PAGE JS SETTINGS -->
 <script type="text/javascript" src="<?php echo base_url() ?>assets/page/finance/change_payment_scheme.js"></script>
-<!--  -->
-<!-- END SCRIPTS -->

@@ -17,32 +17,32 @@
               <div class="tools"> <a href="javascript:;" class="collapse"></a> <a href="javascript:;" class="reload"></a> </div>
             </div>
             <div class="grid-body ">
-                <table class="table datatable table-bordered">
+                <table class="table" id="example2">
                   <thead>
                     <tr>
-                      <th width="6%" class="text-center">No</th>
-                      <th width="6%" class="text-center">Nama Customer</th>
-                      <th width="15%" class="text-center">Nominal</th>
-                      <th width="15%" class="text-center">Status</th>
-                      <th width="15%" class="text-center">Date Created</th>
-                      <th width="15%" class="text-center">Action</th>
+                      <th>No</th>
+                      <th>Nama Customer</th>
+                      <th>Nominal</th>
+                      <th>Status</th>
+                      <th>Date Created</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php $no=1; 
-                    if ($data->num_rows() > 0) {
-                    foreach ($data->result() as $d_row) { ?>
+                    if (count($data)> 0) {
+                    foreach ($data as $d_row) { ?>
                     <tr>
-                      <td class="text-center"><?php echo $no; ?></td>
-                      <td class="text-center"><?php echo $d_row->nama; ?></td>
-                      <td class="text-center"><?php echo to_idr($d_row->nominal); ?></td>
-                      <td class="text-center"><?php 
+                      <td><?php echo $no; ?></td>
+                      <td><?php echo $d_row->nama; ?></td>
+                      <td><?php echo to_idr($d_row->nominal); ?></td>
+                      <td><?php 
                       if($d_row->status==1){echo"Aproved";}elseif ($d_row->status==0){echo"Waiting";}else{ echo"Rejected"; } 
                       ?></td>
-                      <td class="text-center"><?php echo $d_row->date_created; ?></td>
-                      <td class="text-center">
+                      <td ><?php echo indonesian_date($d_row->date_created); ?></td>
+                      <td>
                       
-                        <form action="<?php echo $controller.'/'.$function_form; ?>" method="post">
+                        <form action="<?php echo $controller.'/'.$function."_form/"; ?>" method="post">
                           <input type="hidden" name="id" value="<?php echo $d_row->id; ?>">
                           <a data-toggle="tooltip" data-placement="top" data-original-title="Detail" href="<?php echo $controller.'/pengajuan_harga_detail/'.$d_row->id; ?>" class="btn btn-default btn-xs"><i class="fa fa-eye"></i></a>
 

@@ -5,7 +5,13 @@ body, html { font-size: 100%; padding: 0; margin: 0;}
 /*
 edited rifan
 */
-
+.box-back {
+    background: #f1f1f1!important;
+    border-top: 3px solid #ccc;
+    border-radius: 2px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 
 .areaA01{
 	padding: 0;
@@ -708,4 +714,26 @@ edited rifan
 		width: 100%;
 		min-width: 300px;
 	}
+}
+.nav-tabs > li {
+    margin-bottom: -3px;
+    padding: 0;
+    width: auto;
+}
+.nav-tabs > li > a {
+    border: 0 none;
+    border-radius: 0;
+    color: #8e9aa2;
+    min-width: 70px;
+    padding: 15px 20px;
+}
+.nav-tabs > li > a:hover {
+    background:#fff;
+}
+.panel-default > .panel-heading {
+    background-color: #22262e;
+    background-image: none;
+    border-radius: 2px;
+    box-shadow: none;
+    color: #fff;
 }

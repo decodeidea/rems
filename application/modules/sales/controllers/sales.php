@@ -59,15 +59,19 @@ class sales extends DC_controller {
         $data['area']=select_where($this->tbl_area,'id',$id)->row();
         $data['unit']=select_where_array_group($this->tbl_unit,$where,'block')->result();
 
+        $data['a1']=select_where($this->tbl_unit,'id',1)->row();
+
+        //print_r($data['a1']);
         
        	$data['page'] = $this->load->view('sales/list_denah',$data,true); //print_r($data['content']);
        	$this->load->view('layout_backend',$data);
     }
 	
 	function form_denah_submit() {
+
         $this->check_access();
         $data = $this->controller_attr;
-        $data['function']='pengajuan_harga';
+        $data['function']='Pengajuan Harga';
         if ($this->input->post('unit_id')) {
 
             $this->session->set_userdata('checked_unit', $this->input->post('unit_id'));
@@ -77,7 +81,7 @@ class sales extends DC_controller {
                 $this->kontrak_add_unit();
             } else if (isset($_POST['pengajuan_button'])) {
                 //create pengajuan action
-                
+               
                 $this->pengajuan_harga_form();
             } 
 
@@ -89,6 +93,7 @@ class sales extends DC_controller {
 
 
     function pengajuan_harga() {
+    	//echo "masuk";exit;
         $this->check_access();
         $data = $this->controller_attr;
         $data['function']='pengajuan_harga';
@@ -100,11 +105,12 @@ class sales extends DC_controller {
             $pengajuan = select_where_order($this->tbl_pengajuan_harga,'id_created',$id_sales,'id','DESC');
         }
         
+        //print_r($pengajuan);exit;
 
-        if($pengajuan->num_rows() > 0) {
-            foreach ($pengajuan->result() as $pengajuan_harga) {
+        if(count($pengajuan) > 0) {
+            foreach ($pengajuan as $pengajuan_harga) {
                 $unit=select_where($this->tbl_unit, 'id', $pengajuan_harga->id_unit)->row();
-                $pengajuan_harga->indonesian_date($pengajuan_harga->date_created);
+                //$pengajuan_harga->indonesian_date($pengajuan_harga->date_created);
             }
         }
         
@@ -126,6 +132,8 @@ class sales extends DC_controller {
         $data['unit']= $this->unit->unit_tbl()->result();
         $data['atasan']= select_where($this->tbl_user,'user_group','5')->result();
         $data['checked_unit'] = $this->session->userdata('checked_unit');
+
+        //print_r($data['checked_unit']);exit;
         
         if ($id) {
             $data['data'] = select_where($this->tbl_pengajuan_harga, 'id', $id)->row();
@@ -137,6 +145,36 @@ class sales extends DC_controller {
         $data['page'] = $this->load->view('sales/pengajuan_harga_form',$data,true);
 		$this->load->view('layout_backend',$data);
        
+    }
+
+    function pengajuan_harga_detail($id) {
+        $this->check_access();
+        $data = $this->controller_attr;
+        $data['function']='pengajuan_harga_detail';
+        
+        $data['pengajuan'] = select_where($this->tbl_pengajuan_harga, 'id', $id)->row();
+        $data['pengajuan']->date_created = date('d M Y H:i:s', strtotime($data['pengajuan']->date_created));
+        $data['pengajuan']->nominal = indonesian_currency($data['pengajuan']->nominal);
+        $admin = select_where($this->tbl_user, 'id', $data['pengajuan']->id_creator)->row();
+        $data['pengajuan']->posted_by = $admin->first_name.$admin->last_name;
+         if($data['pengajuan']->id_modifier != 0)
+            {
+                $data['update'] = new stdClass();
+                $data['update']->name = select_where($this->tbl_user, 'id', $data['pengajuan']->id_modifier)->row()->first_name;
+                $data['update']->date_modified = date('d M Y H:i:s', strtotime($data['pengajuan']->date_modified));
+            }
+       
+        $data['pengajuan_unit']=select_where($this->tbl_pengajuan_harga_unit, 'pengajuan_harga_id',$id)->result();
+        $total_price = 0;
+        foreach ($data['pengajuan_unit'] as $key) {
+            $unit = select_where($this->tbl_unit, 'id',$key->unit_id)->row();
+            $total_price = $total_price + $unit->price;
+        }
+        $data['total_price'] = indonesian_currency($total_price);
+        $data['customer']=select_where($this->tbl_customer, 'id',$data['pengajuan']->id_customer)->row();
+       
+       	$data['page'] = $this->load->view('sales/pengajuan_harga_detail',$data,true);
+		$this->load->view('layout_backend',$data);
     }
 
     function pengajuan_harga_add() {
@@ -184,15 +222,16 @@ class sales extends DC_controller {
             $id_insert = $this->db->insert_id();
             if ($do_insert) {
                 $unit = $this->session->userdata('checked_unit');
-                //print_ $unit;exit;
+                
                 foreach ($unit as $key) {
+
                     $insert_unit = array(
                                     'pengajuan_harga_id' => $id_insert,
                                     'unit_id' => $key,
                                     'date_created' => date('Y-m-d H:i:s', now()),
                                     'id_creator' =>  $this->session->userdata['admin']['id'],
                             );
-
+                   
                     $query=insert_all($this->tbl_pengajuan_harga_unit, $insert_unit);
                 }
                 //remove checked unit session
@@ -345,6 +384,101 @@ class sales extends DC_controller {
              $this->session->set_flashdata('notif','success');
             $this->session->set_flashdata('msg','Please fill compleate the text');
             redirect($data['controller']."/kontrak_form/".$this->input->post('id'));
+    }
+
+    function kontrak(){
+        $this->check_access();
+        $data = $this->controller_attr;
+        $data['function']='kontrak';
+        $id_sales = $this->session->userdata['admin']['id'];
+
+        if ($this->session->userdata['admin']['user_group'] == 1) {
+            $data['list'] = select_all_order($this->tbl_kontrak,'id','DESC');
+        }else{
+            $data['list'] = select_where_order($this->tbl_kontrak,'sales_id',$id_sales,'id','DESC')->result();
+        }
+
+        foreach ($data['list'] as $data_row) {
+            $customer = isset(select_where($this->tbl_customer, 'id', $data_row->customer_id)->row()->name);
+            $data_row->customer = select_where($this->tbl_customer, 'id', $data_row->customer_id)->row()->name;
+            $data_row->sales = select_where($this->tbl_user, 'id', $data_row->sales_id)->row()->username;
+            $data_row->payment_scheme = select_where($this->tbl_payment_scheme, 'id', $data_row->payment_scheme_id)->row()->title;
+        }
+        $data['page'] = $this->load->view('sales/list_kontrak',$data,true);
+        $this->load->view('layout_backend',$data);
+    }
+
+    function kontrak_pdf($id){
+        $this->load->library('mpdf60/mpdf');
+        $data['kontrak'] = select_where($this->tbl_kontrak, 'id', $id)->row();
+        $data['customer']=select_where($this->tbl_customer, 'id',$data['kontrak']->customer_id)->row();
+        $data['kontrak_unit'] = getAll($this->tbl_kontrak_unit, array('kontrak_id'=>'where/'.$id))->result();
+        $data['payment_schedule'] = getAll($this->tbl_kontrak_payment_schedule, array('kontrak_id'=>'where/'.$id))->result();
+        $data['booking_fee'] = getAll($this->tbl_kontrak_payment_schedule, array('kontrak_id'=>'where/'.$id, 'payment_type'=>'where/1'))->row();
+        $kontrak_payment_scheme=select_where($this->tbl_payment_scheme, 'id',$data['kontrak']->payment_scheme_id)->row();
+        $data['kontrak_payment_scheme']=$kontrak_payment_scheme->title;
+        $kontrak_type_id = getValue('kontrak_type', $this->tbl_payment_scheme, array('id'=>'where/'.$kontrak_payment_scheme->id));
+        $data['kontrak_type']=getValue('name', $this->tbl_kontrak_type, array('id'=>'where/'.$kontrak_type_id));
+        $data['payment_schedule'] = getAll($this->tbl_kontrak_payment_schedule, array('kontrak_id'=>'where/'.$id, 'payment_type'=>'where/2'));
+        //print_die($data['payment_schedule']->result());
+        $html = $this->load->view('sales/kontrak_pdf', $data, true); 
+        $this->mpdf = new mPDF();
+        $this->mpdf->AddPage('p', // L - landscape, P - portrait
+            '', '', '', '',
+            5, // margin_left
+            5, // margin right
+            5, // margin top
+            0, // margin bottom
+            0, // margin header
+            5); // margin footer
+    $this->mpdf->WriteHTML($html);
+    $this->mpdf->Output('SPU'.'.pdf', 'I');
+    }
+
+    public function kontrak_detail($id) {
+        $this->check_access();
+        $data = $this->controller_attr;
+        $data['function']='kontrak';
+        $data['kontrak'] = select_where($this->tbl_kontrak, 'id', $id)->row();
+        $data['kontrak']->date_created = date('d M Y H:i:s', strtotime($data['kontrak']->date_created));
+        $data['kontrak']->sisa_hutang = idr($data['kontrak']->sisa_hutang);
+        $admin = getValue('username', $this->tbl_user, array('id'=>'where/'.$data['kontrak']->id_creator));
+        $data['kontrak']->posted_by = $admin;
+         if($data['kontrak']->id_modifier != 0)
+            {
+                $data['update'] = new stdClass();
+                $data['update']->name = select_where($this->tbl_user, 'id', $data['kontrak']->id_modifier)->row()->username;
+                $data['update']->date_modified = date('d M Y H:i:s', strtotime($data['kontrak']->date_modified));
+            }
+       
+        $data['kontrak_unit'] = getAll($this->tbl_kontrak_unit, array('kontrak_id'=>'where/'.$id))->result();
+        $kontrak_payment_scheme=select_where($this->tbl_payment_scheme, 'id',$data['kontrak']->payment_scheme_id)->row();
+        $data['kontrak_payment_scheme']=$kontrak_payment_scheme->title;
+        $kontrak_type_id = getValue('kontrak_type', $this->tbl_payment_scheme, array('id'=>'where/'.$kontrak_payment_scheme->id));
+        $data['kontrak_type']=getValue('name', $this->tbl_kontrak_type, array('id'=>'where/'.$kontrak_type_id));
+        $data['customer']=select_where($this->tbl_customer, 'id',$data['kontrak']->customer_id)->row();
+        $data['payment_schedule'] = getAll($this->tbl_kontrak_payment_schedule, array('kontrak_id'=>'where/'.$id))->result();
+        foreach ($data['payment_schedule'] as $key) {
+            $key->nominal = $this->indonesian_currency($key->nominal);
+            $key->nominal_paid = $this->indonesian_currency($key->nominal_paid);
+            $key->date_created = $this->indonesian_date($key->date_created);
+            $key->jatuh_tempo = $this->indonesian_date($key->jatuh_tempo);
+
+        }
+        $data['payment_record'] = $this->sales->payment_record_detail($id);
+        foreach ($data['payment_record'] as $key) {
+            $key->nominal = $this->indonesian_currency($key->nominal);
+            $key->date_created = $this->indonesian_date($key->date_created);
+            if ($key->is_delete == 0) {
+                $key->status = "Paid";
+            }else{
+                $key->status = "Cancelled";
+            }
+        }
+        $data['last_num_rows'] = $this->sales->last_payment_record_detail($id)->num_rows();
+        $data['last'] = $this->sales->last_payment_record_detail($id)->row();
+        $data['page'] = $this->load->view('sales/kontrak_detail', $data, true);
+        $this->load->view('layout_backend', $data);
     }
 }
 
