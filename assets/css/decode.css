@@ -715,3 +715,25 @@ edited rifan
 		min-width: 300px;
 	}
 }
+.nav-tabs > li {
+    margin-bottom: -3px;
+    padding: 0;
+    width: auto;
+}
+.nav-tabs > li > a {
+    border: 0 none;
+    border-radius: 0;
+    color: #8e9aa2;
+    min-width: 70px;
+    padding: 15px 20px;
+}
+.nav-tabs > li > a:hover {
+    background:#fff;
+}
+.panel-default > .panel-heading {
+    background-color: #22262e;
+    background-image: none;
+    border-radius: 2px;
+    box-shadow: none;
+    color: #fff;
+}

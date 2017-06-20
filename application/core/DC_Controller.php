@@ -43,6 +43,8 @@ class DC_Controller extends CI_Controller {
         $this->tbl_kontrak_payment_schedule = $this->tbl_prefix . 'kontrak_payment_schedule';
         $this->tbl_pengajuan_harga = $this->tbl_prefix . 'pengajuan_harga';
         $this->tbl_pengajuan_harga_unit = $this->tbl_prefix . 'pengajuan_harga_unit';
+        $this->tbl_kontrak_payment_record = $this->tbl_prefix . 'kontrak_payment_record';
+         $this->tbl_pemasukan_record = $this->tbl_prefix . 'pemasukan_record';
 
         //load model fo all page
         $this->load->model('model_basic');

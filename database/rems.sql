@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 19, 2017 at 07:54 PM
+-- Generation Time: Jun 20, 2017 at 04:06 PM
 -- Server version: 10.1.13-MariaDB
--- PHP Version: 5.6.20
+-- PHP Version: 5.6.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -525,7 +525,8 @@ INSERT INTO `dc_menu` (`id`, `name_menu`, `sub_menu`, `target`, `icon`, `positio
 (31, 'Sales', '0', 'sales', 'fa fa-building-o', 0, '2017-06-15 00:02:34', NULL, 1, NULL),
 (32, 'Denah', '31', 'denah', 'none', 1, '2017-06-15 00:04:25', NULL, 1, NULL),
 (33, 'Payment Scheme', '22', 'payment_scheme', 'none', 3, '2017-06-15 17:07:43', NULL, 1, NULL),
-(34, 'Pengajuan Harga', '31', 'pengajuan_harga', 'none', 2, '2017-06-18 05:17:47', NULL, 1, NULL);
+(34, 'Pengajuan Harga', '31', 'pengajuan_harga', 'none', 2, '2017-06-18 05:17:47', NULL, 1, NULL),
+(35, 'Kontrak', '31', 'kontrak', 'none', 3, '2017-06-20 19:44:46', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -605,7 +606,8 @@ INSERT INTO `dc_menu_accsess` (`id`, `id_menu`, `id_group`, `accsess`) VALUES
 (69, 31, 1, 1),
 (70, 32, 1, 1),
 (71, 33, 1, 1),
-(72, 34, 1, 1);
+(72, 34, 1, 1),
+(73, 35, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1120,12 +1122,12 @@ ALTER TABLE `dc_kontrak_unit`
 -- AUTO_INCREMENT for table `dc_menu`
 --
 ALTER TABLE `dc_menu`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 --
 -- AUTO_INCREMENT for table `dc_menu_accsess`
 --
 ALTER TABLE `dc_menu_accsess`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 --
 -- AUTO_INCREMENT for table `dc_payment_scheme`
 --

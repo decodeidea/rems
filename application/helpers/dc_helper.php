@@ -415,5 +415,23 @@ if (!function_exists('GetAll')){
 
 		
 	}
+if ( ! function_exists('dateIndo'))
+	{
+	function dateIndo($date,$format=null)
+	{
+		if($date!=0000-00-00){
+			try {
+				
+				$newdate = date('d',strtotime($date)).' '.monthIndo(date('m',strtotime($date))).' '.date('Y',strtotime($date));
+				return $newdate;
 
+			} catch (Exception $e) {
+				return array();
+			}
+		}else{
+			return '';
+		}
+
+	}
+}
 }
