@@ -19,22 +19,27 @@
               <table class="table" id="list_data" >
                 <thead>
                   <tr>
-                  <th>No</th>
-                    <th>Title</th>
-                    <th>Action</th>
-                  </tr>
+                <th class="text-center">No</th>
+                <th class="text-center">No Kontrak</th>
+                <th class="text-center">Payment Name</th>
+                <th class="text-center">Nominal</th>
+                <th class="text-center">Date Created</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Action</th>
+              </tr>
                 </thead>
                 <tbody>
-               <?php
-                $no=0;
-                foreach ($list as $data) {
-                $no++;
-                ?>
-                  <tr >
-                    <td><?php echo $no ?></td>
-                    <td><?php echo $data->title ?></td>
-                    <td>
-                    <a href="<?php echo base_url()."".$controller."/".$function."_form/"."".$data->id; ?>" ><button   data-toggle="tooltip" data-original-title="Edit" class="btn btn-warning btn-xs btn-mini tip" type="button"><i class="fa fa-pencil"></i></button></a> 
+              <?php $no=1; foreach ($list as $d_row) { ?>
+              <tr>
+                <td class="text-center"><?php echo $no; ?></td>
+                <td class="text-center"><?php echo $d_row->no_kontrak; ?></td>
+                <td class="text-center"><?php echo $d_row->payment_title; ?></td>
+                <td class="text-center"><?php echo to_idr($d_row->nominal); ?></td>
+                <td class="text-center"><?php echo $d_row->date_created; ?></td>
+                <td class="text-center"><?php echo $d_row->status; ?></td>
+               
+                 <td>
+                     <a data-toggle="tooltip" target="_blank" data-placement="top" data-original-title="Download PDF" href="<?php echo base_url()."".$controller.'/payment_pdf/'.$d_row->id; ?>" class="btn btn-warning btn-xs btn-mini tip"><i class="fa fa-download"></i></a>
                     <button id="del<?php echo $data->id ?>"  data-toggle="tooltip" data-original-title="Delete" onclick="pasdel_id('<?php echo $data->id ?>')" class="delete btn btn-danger btn-xs btn-mini tip" type="button"><i class="fa fa-times"></i></button> </td>
                   </tr>
                   <?php } ?>

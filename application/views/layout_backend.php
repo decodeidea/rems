@@ -188,6 +188,7 @@
         </li>
         <li><a href="#" class="active"><?php echo $method ?></a> </li>
       </ul>
+      <input type="hidden" name="base_url" id="base_url" value="<?php echo base_url() ?>">
     <?php echo $page ?>
     </div>
    </div> 
