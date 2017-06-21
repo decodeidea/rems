@@ -51,7 +51,7 @@ class Cashier extends DC_controller {
     	$this->check_access();
 		$data = $this->controller_attr;
 		$data['function']='payment';
-        $data['kontrak'] = select_all($this->tbl_kontrak);
+        $data['kontrak'] = select_where($this->tbl_kontrak,'is_delete',0)->result();
         $data['rekening'] = select_all($this->tbl_rekening, 'id');
         $data['ps'] = select_all($this->tbl_kontrak_payment_schedule, 'id');
         $id = $this->input->post('id');
@@ -84,18 +84,25 @@ class Cashier extends DC_controller {
         $this->load->view('cashier/kontrak_detail', $data);
     }
 
+    function get_payment_schedule_nominal($id){
+        $nominal1 = getValue('nominal', $this->tbl_kontrak_payment_schedule, array('id'=>'where/'.$id));
+        $nominal2 = getValue('nominal_paid', $this->tbl_kontrak_payment_schedule, array('id'=>'where/'.$id));
+        $nominal = $nominal1-$nominal2;
+
+        echo number_format($nominal, 0);
+    }
 	function payment_add(){
-    	$data = $this->get_app_settings();
-        $data += $this->controller_attr;
-        $data += $this->get_function('Payment', 'payment');
-        $data += $this->get_menu();
-        $this->check_userakses($data['function_id'], ACT_CREATE);
+        $this->check_access();
+        $data = $this->controller_attr;
+        $data['function']='payment';
         $kontrak_id = $this->input->post('kontrak_id');
         $kontrak_payment_schedule_id = $this->input->post('kontrak_payment_schedule_id');
         $nominal = str_replace(',', '', $this->input->post('nominal'));
         // filter
         if ($kontrak_id == 0 || $this->input->post('kontrak_payment_schedule_id') == 0 || $this->input->post('rekening_id') == 0 || $nominal == 0) {
-            $this->returnJson(array('status' => 'error', 'msg' => 'Save failed, please check your form again!'));
+                $this->session->set_flashdata('notif','error');
+                $this->session->set_flashdata('msg','please compleate your input');
+                redirect($data['controller']."/".$data['function']."_form");
         }
         // INSERT TO TABLE KONTRAK_PAYMENT_RECORD
         $payment_type = getValue('payment_type', $this->tbl_kontrak_payment_schedule, array('id'=>'where/'.$kontrak_payment_schedule_id));
@@ -120,8 +127,8 @@ class Cashier extends DC_controller {
         		'payment_type' => $payment_type,
         		'date_created' => date('Y-m-d H:i:s', now()),
                 'date_modified' => date('Y-m-d H:i:s', now()),
-                'id_created' => $this->session_admin['admin_id'],
-                'id_modified' => $this->session_admin['admin_id'],
+                'id_creator' => $this->session->userdata['admin']['id'],
+                'id_modifier' => $this->session->userdata['admin']['id'],
         	);
 
         $this->db->insert($this->tbl_kontrak_payment_record, $data_kontrak_payment_record);
@@ -139,14 +146,14 @@ class Cashier extends DC_controller {
         		'nominal'=>$nominal,
         		'date_created' => date('Y-m-d H:i:s', now()),
                 'date_modified' => date('Y-m-d H:i:s', now()),
-                'id_created' => $this->session_admin['admin_id'],
-                'id_modified' => $this->session_admin['admin_id'],
+                'id_creator' => $this->session->userdata['admin']['id'],
+                'id_modifier' => $this->session->userdata['admin']['id'],
         );
         $this->db->insert($this->tbl_pemasukan_record, $data_pemasukan_record);
         $pemasukan_record_id = $this->db->insert_id();
 
         //UPDATE INVOICE
-        $this->model_basic->update($this->tbl_kontrak_payment_record, array('no_invoice' => $no_invoice), 'id', $kontrak_payment_record_id);
+       update($this->tbl_kontrak_payment_record, array('no_invoice' => $no_invoice), 'id', $kontrak_payment_record_id);
         
         // UPDATE KONTRAK_PAYMENT_SCHEDULE
         $nominal_paid_1 = getValue('nominal_paid', $this->tbl_kontrak_payment_schedule, array('id'=>'where/'.$kontrak_payment_schedule_id));
@@ -159,81 +166,87 @@ class Cashier extends DC_controller {
                                         'date_payment' => date('Y-m-d H:i:s', now()),
         								'date_created' => date('Y-m-d H:i:s', now()),
 						                'date_modified' => date('Y-m-d H:i:s', now()),
-						                'id_created' => $this->session_admin['admin_id'],
-						                'id_modified' => $this->session_admin['admin_id'],
+						                'id_creator' => $this->session->userdata['admin']['id'],
+						                'id_modifier' => $this->session->userdata['admin']['id'],
         								);
         // UPDATE UNIT STATUS & CUSTOMER STATUS
         if ($payment_type == 1) { // hanya ketika booking fee
            
-            $kontrak_unit = $this->model_basic->select_where($this->tbl_kontrak_unit, 'kontrak_id', $kontrak_id);
+            $kontrak_unit = select_where($this->tbl_kontrak_unit, 'kontrak_id', $kontrak_id);
             if ($kontrak_unit->num_rows() > 0) {
                 foreach ($kontrak_unit->result() as $ku) {
                     $update = array('status' => 1);
-                    $this->model_basic->update($this->tbl_unit, $update, 'id', $ku->unit_id);
+                    update($this->tbl_unit, $update, 'id', $ku->unit_id);
                 }
             }
-            $customer_id = $this->model_basic->select_where($this->tbl_kontrak, 'id', $kontrak_id)->row()->customer_id;
+            $customer_id = select_where($this->tbl_kontrak, 'id', $kontrak_id)->row()->customer_id;
             $update = array('status' => 1);
-            $this->model_basic->update($this->tbl_customer, $update, 'id', $customer_id);
+            update($this->tbl_customer, $update, 'id', $customer_id);
         }
 
         if ($this->db->where('id', $kontrak_payment_schedule_id)->update($this->tbl_kontrak_payment_schedule, $kontrak_payment_schedule_data)){
             //update sisa hutang
-            $kontrak = $this->model_basic->select_where($this->tbl_kontrak, 'id', $kontrak_id)->row();
+            $kontrak = select_where($this->tbl_kontrak, 'id', $kontrak_id)->row();
             $update = array('sisa_hutang' =>  $kontrak->sisa_hutang - $nominal_paid_2);
-            $this->model_basic->update($this->tbl_kontrak, $update, 'id', $kontrak->id);
+            update($this->tbl_kontrak, $update, 'id', $kontrak->id);
 
             //check bonus sales
             $this->check_bonus_sales($kontrak_id,$payment_type);
-            $this->returnJson(array('status' => 'ok', 'msg' => 'Input data success', 'redirect' => $data['controller'] . '/' . $data['function']));
+             $this->session->set_flashdata('notif','Success');
+                $this->session->set_flashdata('msg','Your input have been saved');
+                redirect($data['controller']."/".$data['function']);
         }
         else
-            $this->returnJson(array('status' => 'error', 'msg' => 'Failed when saving data'));
+                $this->session->set_flashdata('notif','error');
+                $this->session->set_flashdata('msg','your input not saved');
+                redirect($data['controller']."/".$data['function']."_form");
     }
 
     function payment_delete() {
-        $data = $this->get_app_settings();
-        $data += $this->controller_attr;
-        $data += $this->get_function('Payment', 'payment');
-        $data += $this->get_menu();
-        $this->check_userakses($data['function_id'], ACT_DELETE);
-        $id = $this->input->post('id');
+         $this->check_access();
+        $data = $this->controller_attr;
+        $data['function']='payment';
+       $id = $this->input->post('id');
         //$do_delete = $this->model_basic->delete($this->tbl_customer, 'id', $id);
         //fetch all detail
-        $pemasukan_record = $this->model_basic->select_where($this->tbl_pemasukan_record, 'id', $id)->row();
-        $kontrak_payment_record = $this->model_basic->select_where($this->tbl_kontrak_payment_record, 'id', $pemasukan_record->kontrak_payment_record_id)->row();
-        $kontrak_payment_schedule = $this->model_basic->select_where($this->tbl_kontrak_payment_schedule, 'id', $kontrak_payment_record->kontrak_payment_schedule_id)->row();
+        $pemasukan_record = select_where($this->tbl_pemasukan_record, 'id', $id)->row();
+        $kontrak_payment_record = select_where($this->tbl_kontrak_payment_record, 'id', $pemasukan_record->kontrak_payment_record_id)->row();
+        $kontrak_payment_schedule = select_where($this->tbl_kontrak_payment_schedule, 'id', $kontrak_payment_record->kontrak_payment_schedule_id)->row();
         //change payment status
         $update = array('is_delete' => 1);
-        $this->model_basic->update($this->tbl_pemasukan_record, $update, 'id', $id);
-        $this->model_basic->update($this->tbl_kontrak_payment_record, $update, 'id', $kontrak_payment_record->id);
+        update($this->tbl_pemasukan_record, $update, 'id', $id);
+        update($this->tbl_kontrak_payment_record, $update, 'id', $kontrak_payment_record->id);
         
         if (($kontrak_payment_schedule->nominal_paid - $kontrak_payment_record->nominal) == 0) {
             $update = array(
                         'nominal_paid' => 0,
                         'status' => 0,
-                        'id_modified' => $this->session_admin['admin_id'],
+                        'id_modifier' => $this->session->userdata['admin']['id'],
                         'date_modified' => date('Y-m-d H:i:s', now()),
                     );
         }else{
             $update = array(
                         'nominal_paid' => $kontrak_payment_schedule->nominal_paid - $kontrak_payment_record->nominal,
-                        'id_modified' => $this->session_admin['admin_id'],
+                        'id_modifier' => $this->session->userdata['admin']['id'],
                         'date_modified' => date('Y-m-d H:i:s', now()),
                     );
         }
-        $do_delete = $this->model_basic->update($this->tbl_kontrak_payment_schedule, $update, 'id', $kontrak_payment_schedule->id);
+        $do_delete =update($this->tbl_kontrak_payment_schedule, $update, 'id', $kontrak_payment_schedule->id);
 
         //update sisa hutang
-        $kontrak = $this->model_basic->select_where($this->tbl_kontrak, 'id', $kontrak_payment_schedule->kontrak_id)->row();
+        $kontrak = select_where($this->tbl_kontrak, 'id', $kontrak_payment_schedule->kontrak_id)->row();
         $update = array('sisa_hutang' =>  $kontrak->sisa_hutang + $kontrak_payment_record->nominal);
-        $this->model_basic->update($this->tbl_kontrak, $update, 'id', $kontrak->id);
+        update($this->tbl_kontrak, $update, 'id', $kontrak->id);
 
         if ($do_delete) {
-            $this->returnJson(array('status' => 'ok', 'msg' => 'Delete Success', 'redirect' => $data['controller'] . '/' . $data['function']));
+           $this->session->set_flashdata('notif','Success');
+                $this->session->set_flashdata('msg','your data have been saved');
+                redirect($data['controller']."/".$data['function']);
         }
         else
-            $this->returnJson(array('status' => 'error', 'msg' => 'Delete Failed'));
+             $this->session->set_flashdata('notif','error');
+                $this->session->set_flashdata('msg','your data not saved');
+                redirect($data['controller']."/".$data['function']);
     }
 
     function payment_pdf($id){
@@ -241,14 +254,14 @@ class Cashier extends DC_controller {
         // $data['payment'] = $this->model_basic->select_where($this->tbl_pemasukan_record, 'id', $id)->row();
         $data['payment'] = $this->model_cashier->load_kontrak($id);//print_die($data['payment']);
         $data['kontrak'] = $kontrak = $this->model_cashier->load_kontrak($id);//print_die($data['kontrak'] );
-        $data['customer']=$this->model_basic->select_where($this->tbl_customer, 'id',$data['kontrak']->customer_id)->row();//lastq();
+        $data['customer']=select_where($this->tbl_customer, 'id',$data['kontrak']->customer_id)->row();//lastq();
         $data['kontrak_unit'] = getAll($this->tbl_kontrak_unit, array('kontrak_id'=>'where/'.$data['kontrak']->id))->result();
-        $kontrak_payment_scheme=$this->model_basic->select_where($this->tbl_payment_scheme, 'id',$data['kontrak']->payment_scheme_id)->row();
+        $kontrak_payment_scheme=select_where($this->tbl_payment_scheme, 'id',$data['kontrak']->payment_scheme_id)->row();
         $data['kontrak_payment_scheme']=$kontrak_payment_scheme->title;
         $kontrak_type_id = getValue('kontrak_type', $this->tbl_payment_scheme, array('id'=>'where/'.$kontrak_payment_scheme->id));
         $data['kontrak_type']=getValue('name', $this->tbl_kontrak_type, array('id'=>'where/'.$kontrak_type_id));
         //print_die($data['payment_schedule']->result());
-        $html = $this->load->view('backend/cashier/payment_pdf', $data, true); 
+        $html = $this->load->view('cashier/payment_pdf', $data, true); 
         $this->mpdf = new mPDF();
         $this->mpdf->AddPage('p', // L - landscape, P - portrait
             '', '', '', '',
@@ -274,6 +287,60 @@ class Cashier extends DC_controller {
         $no_invoice_num = getAll($this->tbl_pemasukan_record, array('no_invoice'=>'where/'.$no_invoice))->num_rows();
         if($no_invoice_num>0)return true;
          else return false;
+    }
+
+    function check_bonus_sales($kontrak_id, $payment_type) {
+        $kontrak = select_where($this->tbl_kontrak, 'id', $kontrak_id)->row();
+        $sales_percentage =select_where($this->tbl_user, 'id', $kontrak->sales_id)->row()->sales_percentage;
+        $bonus_sales = $kontrak->price * ($sales_percentage/100);
+        //closing fee bonus
+        if ($payment_type == 1) {
+            $insert = array('user_id' => $kontrak->sales_id,
+                            'kontrak_id' => $kontrak_id,
+                            'kontrak_customer_id' => $kontrak->customer_id,
+                            'commision_type' => 1,
+                            'percentage' => 0,
+                            'nominal' => 1000000,
+                            'status' => 0,
+                            'id_creator' =>$this->session->userdata['admin']['id'],
+                            'date_created' => date('Y-m-d H:i:s', now())
+                        );
+            $this->model_basic->insert_all($this->tbl_payment_commision_history, $insert);
+        }
+        //e.o. closing fee bonus
+
+        //bonus pembayaran bertahap/cicilan
+        if ($kontrak->kontrak_type_id == 1) {
+            $sum_cicilan = $this->model_cashier->sum_cicilan($kontrak_id);
+            $where = array('user_id' => $kontrak->sales_id, 'kontrak_id' => $kontrak_id, 'commision_type' => 2);
+            $bonus_status = $this->model_basic->select_where_array($this->tbl_payment_commision_history, $where);
+            if ($sum_cicilan >= ($kontrak->price * 30/100) && $bonus_status->num_rows == 0) {
+                $insert = array('user_id' => $kontrak->sales_id,
+                    'kontrak_id' => $kontrak_id,
+                    'kontrak_customer_id' => $kontrak->customer_id,
+                    'commision_type' => 2,
+                    'percentage' => 0,
+                    'nominal' => $bonus_sales * 50/100,
+                    'status' => 0,
+                    'id_creator' => $this->session->userdata['admin']['id'],
+                    'date_created' => date('Y-m-d H:i:s', now())
+                );
+                $this->model_basic->insert_all($this->tbl_payment_commision_history, $insert);
+            }else if ($sum_cicilan >= $kontrak->price) {
+                $insert = array('user_id' => $kontrak->sales_id,
+                            'kontrak_id' => $kontrak_id,
+                            'kontrak_customer_id' => $kontrak->customer_id,
+                            'commision_type' => 2,
+                            'percentage' => 0,
+                            'nominal' => $bonus_sales * 50/100,
+                            'status' => 0,
+                            'id_creator' => $this->session->userdata['admin']['id'],
+                            'date_created' => date('Y-m-d H:i:s', now())
+                        );
+                insert_all($this->tbl_payment_commision_history, $insert);
+            }
+
+        }
     }
    
 }

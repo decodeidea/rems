@@ -8,7 +8,7 @@
  <div class="grid-body no-border">
                   <div class="row">
                     <div class="col-md-8 col-sm-8 col-xs-8">
-                  <form id="form-payment" method="POST" action="<?php if($data) echo $controller.'/'.$function."_add";?>">
+                  <form id="form-payment" method="POST" action="<?php  echo base_url()."".$controller.'/'.$function."_add";?>">
         <input type="hidden" name="id" value="<?php if(isset($data)){ echo $data->id; } ?>">
                     <input type="hidden" name="controller" id="controller" value="<?php echo $controller ?>">
                     <input type="hidden" name="method" value="<?php echo $function ?>" id="method">
