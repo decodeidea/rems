@@ -459,16 +459,16 @@ class sales extends DC_controller {
         $data['customer']=select_where($this->tbl_customer, 'id',$data['kontrak']->customer_id)->row();
         $data['payment_schedule'] = getAll($this->tbl_kontrak_payment_schedule, array('kontrak_id'=>'where/'.$id))->result();
         foreach ($data['payment_schedule'] as $key) {
-            $key->nominal = $this->indonesian_currency($key->nominal);
-            $key->nominal_paid = $this->indonesian_currency($key->nominal_paid);
-            $key->date_created = $this->indonesian_date($key->date_created);
-            $key->jatuh_tempo = $this->indonesian_date($key->jatuh_tempo);
+            $key->nominal = indonesian_currency($key->nominal);
+            $key->nominal_paid = indonesian_currency($key->nominal_paid);
+            $key->date_created = indonesian_date($key->date_created);
+            $key->jatuh_tempo = indonesian_date($key->jatuh_tempo);
 
         }
         $data['payment_record'] = $this->sales->payment_record_detail($id);
         foreach ($data['payment_record'] as $key) {
-            $key->nominal = $this->indonesian_currency($key->nominal);
-            $key->date_created = $this->indonesian_date($key->date_created);
+            $key->nominal = indonesian_currency($key->nominal);
+            $key->date_created = indonesian_date($key->date_created);
             if ($key->is_delete == 0) {
                 $key->status = "Paid";
             }else{
