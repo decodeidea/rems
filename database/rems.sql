@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 21, 2017 at 11:47 AM
+-- Generation Time: Jun 26, 2017 at 08:01 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -146,6 +146,22 @@ CREATE TABLE `dc_customer_album` (
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dc_data_sales`
+--
+
+CREATE TABLE `dc_data_sales` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `commision` decimal(10,3) NOT NULL,
+  `id_creator` int(11) NOT NULL,
+  `date_created` datetime NOT NULL,
+  `id_modifier` int(11) DEFAULT NULL,
+  `date_modified` datetime DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1047,6 +1063,12 @@ ALTER TABLE `dc_customer_album`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `dc_data_sales`
+--
+ALTER TABLE `dc_data_sales`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `dc_default`
 --
 ALTER TABLE `dc_default`
@@ -1200,6 +1222,11 @@ ALTER TABLE `dc_customer`
 -- AUTO_INCREMENT for table `dc_customer_album`
 --
 ALTER TABLE `dc_customer_album`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `dc_data_sales`
+--
+ALTER TABLE `dc_data_sales`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `dc_default`
