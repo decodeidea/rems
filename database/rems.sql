@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2017 at 08:01 PM
+-- Generation Time: Jul 06, 2017 at 08:02 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -304,7 +304,7 @@ INSERT INTO `dc_kontrak` (`id`, `kontrak_type_id`, `customer_id`, `sales_id`, `p
 (29, 1, 1, 3, 1, '2313423', 7879879, NULL, 5879879, 0, 0, '2017-06-21 15:09:10', '2017-06-21 15:09:10', 1, 1),
 (35, 0, 0, 0, 0, '', 0, NULL, 0, 0, 1, '2017-06-21 15:41:16', NULL, 1, NULL),
 (36, 0, 0, 0, 0, '', 0, NULL, 0, 0, 1, '2017-06-21 15:49:29', NULL, 1, NULL),
-(37, 1, 1, 3, 1, '00000037', 7879879, '2017-09-19 00:00:00', 6879879, 0, 0, '2017-06-21 15:51:10', '2017-06-21 15:51:10', 1, 1);
+(37, 1, 1, 3, 1, '00000037', 7879879, '2017-09-19 00:00:00', -93729238, 0, 0, '2017-06-21 15:51:10', '2017-06-21 15:51:10', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -324,6 +324,22 @@ CREATE TABLE `dc_kontrak_payment_record` (
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dc_kontrak_payment_record`
+--
+
+INSERT INTO `dc_kontrak_payment_record` (`id`, `kontrak_payment_schedule_id`, `no_invoice`, `rekening_id`, `nominal`, `payment_type`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
+(1, 191, '939g2a3vd', 1, 1000000, 1, '2017-07-04 16:03:38', '2017-07-04 16:03:38', 1, 1),
+(2, 191, '3ze36b7w6', 1, 1000000, 1, '2017-07-04 16:06:04', '2017-07-04 16:06:04', 1, 1),
+(3, 192, '8hirz4615', 1, 4435525, 3, '2017-07-04 16:11:29', '2017-07-04 16:11:29', 1, 1),
+(4, 192, 'y7kkq411f', 1, 4435525, 3, '2017-07-04 16:12:29', '2017-07-04 16:12:29', 1, 1),
+(5, 192, 'm2rl53p0o', 1, 4435525, 3, '2017-07-04 16:12:32', '2017-07-04 16:12:32', 1, 1),
+(6, 192, 'e78c58491', 1, 4435525, 3, '2017-07-04 16:12:45', '2017-07-04 16:12:45', 1, 1),
+(7, 192, 'su9805ti5', 1, 4435525, 3, '2017-07-04 16:12:57', '2017-07-04 16:12:57', 1, 1),
+(8, 192, 'j12z1w515', 1, 4435525, 3, '2017-07-04 16:13:10', '2017-07-04 16:13:10', 1, 1),
+(9, 193, 'u36i56959', 1, 4435525, 3, '2017-07-04 16:16:51', '2017-07-04 16:16:51', 1, 1),
+(10, 194, 't84rlxvn4', 2, 2027567, 2, '2017-07-04 16:17:17', '2017-07-04 16:17:17', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -542,10 +558,10 @@ INSERT INTO `dc_kontrak_payment_schedule` (`id`, `kontrak_id`, `payment_type`, `
 (188, 29, 3, 'Cicilan  - 1', '2017-07-21 00:00:00', 3985525, 0, '0000-00-00 00:00:00', 0, '2017-06-21 15:09:10', NULL, 1, NULL),
 (189, 29, 3, 'Cicilan  - 2', '2017-08-20 00:00:00', 3985525, 0, '0000-00-00 00:00:00', 0, '2017-06-21 15:09:10', NULL, 1, NULL),
 (190, 29, 2, 'DP - 1', '2017-09-19 00:00:00', 1927567, 0, '0000-00-00 00:00:00', 0, '2017-06-21 15:09:10', NULL, 1, NULL),
-(191, 37, 1, 'Booking Fee', '2017-06-21 15:51:10', 1000000, 0, '0000-00-00 00:00:00', 0, '2017-06-21 15:51:10', NULL, 1, NULL),
-(192, 37, 3, 'Cicilan  - 1', '2017-07-21 00:00:00', 4435525, 0, '0000-00-00 00:00:00', 0, '2017-06-21 15:51:10', NULL, 1, NULL),
-(193, 37, 3, 'Cicilan  - 2', '2017-08-20 00:00:00', 4435525, 0, '0000-00-00 00:00:00', 0, '2017-06-21 15:51:10', NULL, 1, NULL),
-(194, 37, 2, 'DP - 1', '2017-09-19 00:00:00', 2027567, 0, '0000-00-00 00:00:00', 0, '2017-06-21 15:51:10', NULL, 1, NULL);
+(191, 37, 1, 'Booking Fee', '2017-06-21 15:51:10', 1000000, 1000000, '2017-07-04 16:06:04', 1, '2017-07-04 16:06:04', '2017-07-04 16:06:04', 1, 1),
+(192, 37, 3, 'Cicilan  - 1', '2017-07-21 00:00:00', 4435525, 26613150, '2017-07-04 16:13:11', 1, '2017-07-04 16:13:11', '2017-07-04 16:13:11', 1, 1),
+(193, 37, 3, 'Cicilan  - 2', '2017-08-20 00:00:00', 4435525, 4435525, '2017-07-04 16:16:52', 1, '2017-07-04 16:16:52', '2017-07-04 16:16:52', 1, 1),
+(194, 37, 2, 'DP - 1', '2017-09-19 00:00:00', 2027567, 2027567, '2017-07-04 16:17:17', 1, '2017-07-04 16:17:17', '2017-07-04 16:17:17', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -750,6 +766,61 @@ INSERT INTO `dc_menu_accsess` (`id`, `id_menu`, `id_group`, `accsess`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `dc_payment_commision_history`
+--
+
+CREATE TABLE `dc_payment_commision_history` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `kontrak_id` int(11) NOT NULL,
+  `kontrak_customer_id` int(11) NOT NULL,
+  `commision_type` int(11) NOT NULL,
+  `percentage` int(11) NOT NULL,
+  `nominal` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `id_creator` int(11) NOT NULL,
+  `date_created` datetime NOT NULL,
+  `id_modifier` int(11) NOT NULL,
+  `date_modified` datetime NOT NULL,
+  `id_deleted` int(11) NOT NULL,
+  `date_deleted` datetime NOT NULL,
+  `is_delete` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dc_payment_commision_history`
+--
+
+INSERT INTO `dc_payment_commision_history` (`id`, `user_id`, `kontrak_id`, `kontrak_customer_id`, `commision_type`, `percentage`, `nominal`, `status`, `id_creator`, `date_created`, `id_modifier`, `date_modified`, `id_deleted`, `date_deleted`, `is_delete`) VALUES
+(1, 15, 10, 33, 3, 100, 0, 1, 15, '2017-01-04 23:10:29', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(2, 15, 11, 30, 3, 100, 0, 1, 15, '2017-01-04 23:15:40', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(3, 15, 12, 33, 3, 100, 0, 1, 15, '2017-01-05 00:01:30', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(4, 15, 13, 31, 3, 100, 0, 1, 15, '2017-01-05 00:41:17', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(5, 15, 16, 2, 3, 100, 0, 0, 15, '2017-01-05 02:49:56', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(6, 15, 19, 14, 3, 100, 0, 0, 15, '2017-01-05 22:57:34', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(7, 15, 2, 0, 3, 100, 0, 0, 15, '2017-01-06 00:43:11', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(8, 15, 3, 34, 3, 100, 0, 0, 15, '2017-01-06 00:46:48', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(9, 15, 4, 31, 3, 100, 0, 0, 15, '2017-01-06 00:48:11', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(10, 15, 7, 10, 3, 100, 0, 0, 15, '2017-01-06 00:59:43', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(11, 15, 8, 14, 3, 100, 0, 0, 15, '2017-01-06 01:01:16', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(12, 15, 13, 0, 3, 100, 0, 0, 15, '2017-01-06 09:24:06', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(13, 15, 15, 13, 3, 100, 0, 0, 15, '2017-01-06 09:37:09', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(14, 15, 16, 20, 3, 100, 0, 0, 15, '2017-01-06 09:49:05', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(15, 15, 17, 17, 3, 100, 0, 0, 15, '2017-01-06 09:50:57', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(16, 15, 18, 25, 3, 100, 0, 0, 15, '2017-01-06 09:53:07', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(17, 15, 19, 19, 3, 100, 0, 0, 15, '2017-01-06 22:07:14', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(18, 15, 23, 21, 3, 100, 0, 0, 15, '2017-01-06 22:15:22', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(19, 15, 27, 16, 3, 100, 0, 0, 15, '2017-01-06 22:22:45', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(20, 15, 29, 15, 3, 100, 0, 0, 15, '2017-01-06 22:26:31', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(21, 15, 30, 22, 3, 100, 0, 0, 15, '2017-01-06 23:16:35', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(22, 15, 4, 31, 1, 0, 1000000, 0, 20, '2017-05-19 06:03:33', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(23, 15, 25, 9, 1, 0, 1000000, 0, 7, '2017-05-19 13:39:40', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(24, 11, 47, 21, 1, 0, 1000000, 0, 7, '2017-05-19 14:54:03', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(25, 3, 37, 1, 2, 0, 0, 0, 1, '2017-07-04 16:17:17', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `dc_payment_scheme`
 --
 
@@ -837,6 +908,22 @@ CREATE TABLE `dc_pemasukan_record` (
   `id_creator` int(11) DEFAULT NULL,
   `id_modifier` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dc_pemasukan_record`
+--
+
+INSERT INTO `dc_pemasukan_record` (`id`, `no_invoice`, `rekening_id`, `kontrak_payment_record_id`, `nominal`, `is_delete`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
+(1, '939g2a3vd', 1, 1, 1000000, 0, '2017-07-04 16:03:38', '2017-07-04 16:03:38', 1, 1),
+(2, '3ze36b7w6', 1, 2, 1000000, 0, '2017-07-04 16:06:04', '2017-07-04 16:06:04', 1, 1),
+(3, '8hirz4615', 1, 3, 4435525, 0, '2017-07-04 16:11:30', '2017-07-04 16:11:30', 1, 1),
+(4, 'y7kkq411f', 1, 4, 4435525, 0, '2017-07-04 16:12:29', '2017-07-04 16:12:29', 1, 1),
+(5, 'm2rl53p0o', 1, 5, 4435525, 0, '2017-07-04 16:12:32', '2017-07-04 16:12:32', 1, 1),
+(6, 'e78c58491', 1, 6, 4435525, 0, '2017-07-04 16:12:45', '2017-07-04 16:12:45', 1, 1),
+(7, 'su9805ti5', 1, 7, 4435525, 0, '2017-07-04 16:12:57', '2017-07-04 16:12:57', 1, 1),
+(8, 'j12z1w515', 1, 8, 4435525, 0, '2017-07-04 16:13:10', '2017-07-04 16:13:10', 1, 1),
+(9, 'u36i56959', 1, 9, 4435525, 0, '2017-07-04 16:16:51', '2017-07-04 16:16:51', 1, 1),
+(10, 't84rlxvn4', 2, 10, 2027567, 0, '2017-07-04 16:17:17', '2017-07-04 16:17:17', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -956,7 +1043,7 @@ CREATE TABLE `dc_unit` (
 --
 
 INSERT INTO `dc_unit` (`id`, `area_id`, `unit_type`, `name`, `luas_netto`, `luas_semigross`, `number`, `floor`, `block`, `price`, `struktur`, `lantai`, `dapur`, `listrik`, `dinding`, `pintu`, `sanitasi`, `jendela`, `status`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
-(1, 1, 1, 'dsjh', '99.99', '0.00', 7, '', 'A01', 7879879, 'jkh', 'hkj', 'hhjk', 'khj', 'jkh', 'hk', 'hjk', 'hkj', NULL, NULL, '2017-06-16 16:26:18', NULL, 1);
+(1, 1, 1, 'dsjh', '99.99', '0.00', 7, '', 'A01', 7879879, 'jkh', 'hkj', 'hhjk', 'khj', 'jkh', 'hk', 'hjk', 'hkj', 1, NULL, '2017-06-16 16:26:18', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -1013,6 +1100,7 @@ CREATE TABLE `dc_user` (
   `last_name` varchar(250) NOT NULL,
   `photo` text NOT NULL,
   `user_group` int(10) NOT NULL,
+  `sales_percentage` decimal(6,2) DEFAULT NULL,
   `date_created` datetime NOT NULL,
   `date_modified` datetime DEFAULT NULL,
   `id_creator` int(10) NOT NULL,
@@ -1023,10 +1111,10 @@ CREATE TABLE `dc_user` (
 -- Dumping data for table `dc_user`
 --
 
-INSERT INTO `dc_user` (`id`, `username`, `password`, `email`, `first_name`, `last_name`, `photo`, `user_group`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
-(1, 'admins', '21232f297a57a5a743894a0e4a801fc3', 'admin@gmail.com', 'admin', 'webei', '16807164_1234243823400398_1687302977082263434_n.jpg', 1, '0000-00-00 00:00:00', '2017-04-17 00:12:22', 0, 1),
-(2, 'ilhamudzakir', '81dc9bdb52d04dc20036dbd8313ed055', 'ilhamudzakir@gmail.com', 'ilham', 'mudzakir', '20161201_6435.jpg', 5, '2017-04-17 01:54:09', NULL, 1, NULL),
-(3, 'sales', '9ed083b1436e5f40ef984b28255eef18', 'sales@sales.com', 'Sales', 'Coba', 'traxex-drow-ranger-dota-2-hd-wallpaper--busya_sama-1366x768.jpg', 6, '2017-06-15 17:11:17', NULL, 1, NULL);
+INSERT INTO `dc_user` (`id`, `username`, `password`, `email`, `first_name`, `last_name`, `photo`, `user_group`, `sales_percentage`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
+(1, 'admins', '21232f297a57a5a743894a0e4a801fc3', 'admin@gmail.com', 'admin', 'webei', '16807164_1234243823400398_1687302977082263434_n.jpg', 1, NULL, '0000-00-00 00:00:00', '2017-04-17 00:12:22', 0, 1),
+(2, 'ilhamudzakir', '81dc9bdb52d04dc20036dbd8313ed055', 'ilhamudzakir@gmail.com', 'ilham', 'mudzakir', '20161201_6435.jpg', 5, NULL, '2017-04-17 01:54:09', NULL, 1, NULL),
+(3, 'sales', '9ed083b1436e5f40ef984b28255eef18', 'sales@sales.com', 'Sales', 'Coba', 'traxex-drow-ranger-dota-2-hd-wallpaper--busya_sama-1366x768.jpg', 6, NULL, '2017-06-15 17:11:17', NULL, 1, NULL);
 
 --
 -- Indexes for dumped tables
@@ -1126,6 +1214,12 @@ ALTER TABLE `dc_menu`
 -- Indexes for table `dc_menu_accsess`
 --
 ALTER TABLE `dc_menu_accsess`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dc_payment_commision_history`
+--
+ALTER TABLE `dc_payment_commision_history`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1252,7 +1346,7 @@ ALTER TABLE `dc_kontrak`
 -- AUTO_INCREMENT for table `dc_kontrak_payment_record`
 --
 ALTER TABLE `dc_kontrak_payment_record`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `dc_kontrak_payment_schedule`
 --
@@ -1279,6 +1373,11 @@ ALTER TABLE `dc_menu`
 ALTER TABLE `dc_menu_accsess`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 --
+-- AUTO_INCREMENT for table `dc_payment_commision_history`
+--
+ALTER TABLE `dc_payment_commision_history`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+--
 -- AUTO_INCREMENT for table `dc_payment_scheme`
 --
 ALTER TABLE `dc_payment_scheme`
@@ -1297,7 +1396,7 @@ ALTER TABLE `dc_payment_type`
 -- AUTO_INCREMENT for table `dc_pemasukan_record`
 --
 ALTER TABLE `dc_pemasukan_record`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `dc_pengajuan_harga`
 --

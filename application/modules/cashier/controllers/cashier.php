@@ -180,8 +180,8 @@ class Cashier extends DC_controller {
                 }
             }
             $customer_id = select_where($this->tbl_kontrak, 'id', $kontrak_id)->row()->customer_id;
-            $update = array('status' => 1);
-            update($this->tbl_customer, $update, 'id', $customer_id);
+            // $update = array('status' => 1);
+            // update($this->tbl_customer, $update, 'id', $customer_id);
         }
 
         if ($this->db->where('id', $kontrak_payment_schedule_id)->update($this->tbl_kontrak_payment_schedule, $kontrak_payment_schedule_data)){
@@ -250,9 +250,10 @@ class Cashier extends DC_controller {
     }
 
     function payment_pdf($id){
+        $this->load->model('model_cashier');
         $this->load->library('mpdf60/mpdf');
         // $data['payment'] = $this->model_basic->select_where($this->tbl_pemasukan_record, 'id', $id)->row();
-        $data['payment'] = $this->model_cashier->load_kontrak($id);//print_die($data['payment']);
+        $data['payment'] =$this->model_cashier->load_kontrak($id);//print_die($data['payment']);
         $data['kontrak'] = $kontrak = $this->model_cashier->load_kontrak($id);//print_die($data['kontrak'] );
         $data['customer']=select_where($this->tbl_customer, 'id',$data['kontrak']->customer_id)->row();//lastq();
         $data['kontrak_unit'] = getAll($this->tbl_kontrak_unit, array('kontrak_id'=>'where/'.$data['kontrak']->id))->result();
@@ -305,15 +306,15 @@ class Cashier extends DC_controller {
                             'id_creator' =>$this->session->userdata['admin']['id'],
                             'date_created' => date('Y-m-d H:i:s', now())
                         );
-            $this->model_basic->insert_all($this->tbl_payment_commision_history, $insert);
+            insert_all($this->tbl_payment_commision_history, $insert);
         }
         //e.o. closing fee bonus
 
         //bonus pembayaran bertahap/cicilan
         if ($kontrak->kontrak_type_id == 1) {
-            $sum_cicilan = $this->model_cashier->sum_cicilan($kontrak_id);
+            $sum_cicilan = $this->cashier->sum_cicilan($kontrak_id);
             $where = array('user_id' => $kontrak->sales_id, 'kontrak_id' => $kontrak_id, 'commision_type' => 2);
-            $bonus_status = $this->model_basic->select_where_array($this->tbl_payment_commision_history, $where);
+            $bonus_status = select_where_array($this->tbl_payment_commision_history, $where);
             if ($sum_cicilan >= ($kontrak->price * 30/100) && $bonus_status->num_rows == 0) {
                 $insert = array('user_id' => $kontrak->sales_id,
                     'kontrak_id' => $kontrak_id,
@@ -325,7 +326,7 @@ class Cashier extends DC_controller {
                     'id_creator' => $this->session->userdata['admin']['id'],
                     'date_created' => date('Y-m-d H:i:s', now())
                 );
-                $this->model_basic->insert_all($this->tbl_payment_commision_history, $insert);
+                insert_all($this->tbl_payment_commision_history, $insert);
             }else if ($sum_cicilan >= $kontrak->price) {
                 $insert = array('user_id' => $kontrak->sales_id,
                             'kontrak_id' => $kontrak_id,
