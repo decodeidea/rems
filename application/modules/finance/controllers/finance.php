@@ -551,6 +551,106 @@ class finance extends DC_controller {
 		$data['ps'] = GetAll($this->tbl_kontrak_payment_schedule, array('kontrak_id'=>'where/'.$id, 'status'=>'where/0'));
 		$this->load->view('finance/kontrak_detail',$data);
 	}
+
+
+
+	//Commision
+
+
+	public function commision() {
+		$data = $this->controller_attr;
+		$data['data'] = select_all($this->tbl_payment_commision_history);
+		foreach ($data['data'] as $r) {
+			$r->user_id = select_where($this->tbl_user, 'id', $r->user_id)->row()->username;
+			$r->kontrak_id = select_where($this->tbl_kontrak, 'id', $r->kontrak_id)->row()->no_kontrak;
+			$r->nominal = $this->indonesian_currency($r->nominal);
+		}
+		$data['page'] = $this->load->view('finance/commision', $data, true);
+		$this->load->view('layout_backend',$data);
+	}
+
+	public function commision_form() {
+		$data = $this->controller_attr;
+		$id = $this->input->post('id');
+		if ($id) {
+			$data['data'] =select_where($this->tbl_payment_commision_history, 'id', $id)->row();
+		}
+		else
+			$data['data'] = null;
+		$data['page'] = $this->load->view('finance/commision_form', $data, true);
+		$this->load->view('layout_backend',$data);;
+	}
+
+	function commision_add() {
+		$data = $this->controller_attr;
+		$table_field = $this->db->list_fields($this->tbl_payment_commision_history);
+		$insert = array();
+		foreach ($table_field as $field) {
+			$insert[$field] = $this->input->post($field);
+		}
+		$insert['date_created'] = date('Y-m-d H:i:s', now());
+		$insert['date_modified'] = date('Y-m-d H:i:s', now());
+		$insert['id_created'] = $this->session_admin['admin_id'];
+		$insert['id_modified'] = $this->session_admin['admin_id'];
+		if ($insert['title']) {
+			// print_r($insert);die();
+			$do_insert = insert_all($this->tbl_payment_commision_history, $insert);
+			if ($do_insert) {
+				$this->returnJson(array('status' => 'ok', 'msg' => 'Input data success', 'redirect' => $data['controller'] . '/' . $data['function']));
+			}
+			else
+				$this->returnJson(array('status' => 'error', 'msg' => 'Failed when saving data'));
+		}
+		else
+			$this->returnJson(array('status' => 'error', 'msg' => 'Please complete the form'));
+	}
+
+	function commision_edit() {
+		$data = $this->controller_attr;
+		$table_field = $this->db->list_fields($this->tbl_payment_commision_history);
+		$update = array();
+		foreach ($table_field as $field) {
+			$update[$field] = $this->input->post($field);
+		}
+		unset($update['date_created']);
+		$update['date_modified'] = date('Y-m-d H:i:s', now());
+		$update['id_modified'] = $this->session_admin['admin_id'];
+
+		if ($update['title']) {
+			$do_update = update($this->tbl_payment_commision_history, $update, 'id', $update['id']);
+			if ($do_update)
+				$this->returnJson(array('status' => 'ok', 'msg' => 'Update success', 'redirect' => $data['controller'] . '/' . $data['function']));
+			else
+				$this->returnJson(array('status' => 'error', 'msg' => 'Failed when updating data'));
+		}
+		else
+			$this->returnJson(array('status' => 'error', 'msg' => 'Please complete the form'));
+	}
+
+	function commision_delete() {
+		$data = $this->controller_attr;
+		$id = $this->input->post('id');
+		$do_delete = delete($this->tbl_payment_commision_history, 'id', $id);
+		if ($do_delete) {
+			$this->returnJson(array('status' => 'ok', 'msg' => 'Delete Success', 'redirect' => $data['controller'] . '/' . $data['function']));
+		}
+		else
+			$this->returnJson(array('status' => 'error', 'msg' => 'Delete Failed'));
+	}
+
+	function commision_pay() {
+		$data = $this->controller_attr;
+
+		$id = $this->input->post('id');
+		$update = array('status' => 1);
+		$do_pay = update($this->tbl_payment_commision_history, $update, 'id', $id);
+		if ($do_pay) {
+			$this->returnJson(array('status' => 'ok', 'msg' => 'Update Success', 'redirect' => $data['controller'] . '/' . $data['function']));
+		}
+		else
+			$this->returnJson(array('status' => 'error', 'msg' => 'Update Failed'));
+	}
+
 }
 
 
