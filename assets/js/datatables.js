@@ -215,6 +215,10 @@ $(document).ready(function() {
 		$("#quick-access").css("display","none");
     });
 
+	$('.btn-cancel-comission').click( function() {
+		$("#quick-dolarr").css("display","none");
+	});
+
 	
     /*
      * Insert a 'details' column to the table
@@ -268,6 +272,10 @@ $(document).ready(function() {
 	$('.delete').on( "click",function() {
 		$("#quick-access").css("display","block");
     });
+
+	$('.dolarr').on( "click",function() {
+		$("#quick-dolarr").css("display","block");
+	});
 	
 	$('#example2_wrapper .dataTables_filter input').addClass("input-medium ");
     $('#example2_wrapper .dataTables_length select').addClass("select2-wrapper span12"); 
@@ -349,3 +357,56 @@ function delete_data()
     		});
 
           };
+
+
+
+
+function delete_commision()
+{
+	id=$('#delete_confirm').attr("data-id");
+	controller = $('#controller').val();
+	base_url = $('#base_url').val();
+	$.ajax({
+		url :  base_url + controller + "/commision_delete/"+id,
+		type: "POST",
+		dataType: "JSON",
+		success: function(data)
+		{
+			window.location= base_url + controller + "/commision";
+		},
+		error: function (jqXHR, textStatus, errorThrown)
+		{
+			//	alert('Error adding / update data');
+			window.location= base_url + controller + "/commision";
+		}
+	});
+
+};
+
+
+
+function pay_id(id){
+	$("#pay_confirm").attr("data-id",id);
+};
+
+function pay_confirm()
+{
+	id=$('#pay_confirm').attr("data-id");
+	controller = $('#controller').val();
+	base_url = $('#base_url').val();
+	$.ajax({
+		url :  base_url + controller + "/commision_pay/"+id,
+		type: "POST",
+		dataType: "JSON",
+		success: function(data)
+		{
+			window.location= base_url + controller + "/commision";
+		},
+		error: function (jqXHR, textStatus, errorThrown)
+		{
+			//	alert('Error adding / update data');
+			window.location= base_url + controller + "/commision";
+		}
+	});
+
+};

@@ -560,12 +560,16 @@ class finance extends DC_controller {
 	public function commision() {
 		$data = $this->controller_attr;
 		$data['data'] = select_all($this->tbl_payment_commision_history);
+
 		foreach ($data['data'] as $r) {
-			$r->user_id = select_where($this->tbl_user, 'id', $r->user_id)->row()->username;
-			$r->kontrak_id = select_where($this->tbl_kontrak, 'id', $r->kontrak_id)->row()->no_kontrak;
+			$r->user_id = select_where($this->tbl_user, 'id', $r->user_id)->row('username');
+			$r->kontrak_id = select_where($this->tbl_kontrak, 'id', $r->kontrak_id)->row('no_kontrak');
 			$r->nominal = $this->indonesian_currency($r->nominal);
 		}
+
 		$data['page'] = $this->load->view('finance/commision', $data, true);
+
+
 		$this->load->view('layout_backend',$data);
 	}
 
@@ -627,25 +631,24 @@ class finance extends DC_controller {
 			$this->returnJson(array('status' => 'error', 'msg' => 'Please complete the form'));
 	}
 
-	function commision_delete() {
+	function commision_delete($id) {
 		$data = $this->controller_attr;
-		$id = $this->input->post('id');
 		$do_delete = delete($this->tbl_payment_commision_history, 'id', $id);
+
 		if ($do_delete) {
-			$this->returnJson(array('status' => 'ok', 'msg' => 'Delete Success', 'redirect' => $data['controller'] . '/' . $data['function']));
+			$this->returnJson(array('status' => 'ok', 'msg' => 'Delete Success', 'redirect' => $data['controller'] . '/commision_form'));
 		}
+
 		else
 			$this->returnJson(array('status' => 'error', 'msg' => 'Delete Failed'));
 	}
 
-	function commision_pay() {
+	function commision_pay($id) {
 		$data = $this->controller_attr;
-
-		$id = $this->input->post('id');
 		$update = array('status' => 1);
 		$do_pay = update($this->tbl_payment_commision_history, $update, 'id', $id);
 		if ($do_pay) {
-			$this->returnJson(array('status' => 'ok', 'msg' => 'Update Success', 'redirect' => $data['controller'] . '/' . $data['function']));
+			$this->returnJson(array('status' => 'ok', 'msg' => 'Update Success', 'redirect' => $data['controller'] . '/commision_form'));
 		}
 		else
 			$this->returnJson(array('status' => 'error', 'msg' => 'Update Failed'));
