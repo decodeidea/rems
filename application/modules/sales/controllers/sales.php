@@ -271,8 +271,13 @@ class sales extends DC_controller {
         $data['function']='kontrak_add_unit';
 
         
-        $select= select_all_order_row($this->tbl_kontrak,'id','DESC');
-        $kontrak_id=$select->id+1;
+         $data = array(
+            'date_created' => date('Y-m-d H:i:s', now()),
+            'id_creator' => $this->session->userdata['admin']['id'],
+            'is_delete' => 1
+         );
+        $this->db->insert($this->tbl_kontrak, $data);
+        $kontrak_id = $this->db->insert_id();
         $unit_id = $this->input->post('unit_id');
 
         for ($i=0; $i <sizeof($unit_id) ; $i++) { 
@@ -338,7 +343,6 @@ class sales extends DC_controller {
         $this->check_access();
         $data = $this->controller_attr;
         $data['function']='kontrak_add';
-
         $price = str_replace(',', '', $this->input->post('price'));
         $bunga = $this->input->post('bunga');
         $bunga = $price * ($bunga/100);
@@ -358,30 +362,32 @@ class sales extends DC_controller {
         $insert['id_creator'] = $this->session->userdata['admin']['id'];
         $insert['id_modifier'] = $this->session->userdata['admin']['id'];
         $insert['price'] = $price;
+        $insert['is_delete'] = 0;
         $insert['sisa_hutang'] = str_replace(',', '', $this->input->post('sisa_hutang'));
         if ($insert['sales_id'] && $insert['customer_id'] && $insert['payment_scheme_id'] && $insert['no_kontrak']) {
-            $do_insert = insert_all($this->tbl_kontrak, $insert);
-            $kontrak_id = $this->db->insert_id();
+            $do_insert = update($this->tbl_kontrak, $insert,'id',$insert['id']);
+            $kontrak_id = $insert['id'];
             $kontrak_payment_schedule_id = $this->sales->insert_kontrak_payment_schedule($kontrak_id, $bunga);
-            // $this->sales->update_kontrak_date_end($kontrak_id);
-            // $this->check_bonus_sales($kontrak_id);
+             $this->sales->update_kontrak_date_end($kontrak_id);
+             $this->check_bonus_sales($kontrak_id);
             if ($do_insert) {
                 foreach ($this->input->post('unit_id') as $key) {
                     $insert = array('kontrak_id' => $kontrak_id, 'unit_id' => $key, 'date_created' => date('Y-m-d H:i:s', now()), 'id_creator' => $this->session->userdata['admin']['id']);
                     insert_all($this->tbl_kontrak_unit, $insert);
+                    update($this->tbl_unit, array('status' => 1), 'id', $key);
 
                 }
                $this->session->set_flashdata('notif','success');
             $this->session->set_flashdata('msg','Input Data Succsess');
-            redirect($data['controller']."/kontrak_form/".$this->input->post('id'));
+            redirect($data['controller']."/kontrak_detail/".$this->input->post('id'));
             }
             else
-                 $this->session->set_flashdata('notif','success');
+                 $this->session->set_flashdata('notif','error');
             $this->session->set_flashdata('msg','error, not saved');
             redirect($data['controller']."/kontrak_form/".$this->input->post('id'));
         }
         else
-             $this->session->set_flashdata('notif','success');
+             $this->session->set_flashdata('notif','error');
             $this->session->set_flashdata('msg','Please fill compleate the text');
             redirect($data['controller']."/kontrak_form/".$this->input->post('id'));
     }
@@ -393,7 +399,7 @@ class sales extends DC_controller {
         $id_sales = $this->session->userdata['admin']['id'];
 
         if ($this->session->userdata['admin']['user_group'] == 1) {
-            $data['list'] = select_all_order($this->tbl_kontrak,'id','DESC');
+            $data['list'] = select_where_order($this->tbl_kontrak,'is_delete','0','id','DESC')->result();
         }else{
             $data['list'] = select_where_order($this->tbl_kontrak,'sales_id',$id_sales,'id','DESC')->result();
         }
@@ -459,16 +465,16 @@ class sales extends DC_controller {
         $data['customer']=select_where($this->tbl_customer, 'id',$data['kontrak']->customer_id)->row();
         $data['payment_schedule'] = getAll($this->tbl_kontrak_payment_schedule, array('kontrak_id'=>'where/'.$id))->result();
         foreach ($data['payment_schedule'] as $key) {
-            $key->nominal = $this->indonesian_currency($key->nominal);
-            $key->nominal_paid = $this->indonesian_currency($key->nominal_paid);
-            $key->date_created = $this->indonesian_date($key->date_created);
-            $key->jatuh_tempo = $this->indonesian_date($key->jatuh_tempo);
+            $key->nominal = indonesian_currency($key->nominal);
+            $key->nominal_paid = indonesian_currency($key->nominal_paid);
+            $key->date_created = indonesian_date($key->date_created);
+            $key->jatuh_tempo = indonesian_date($key->jatuh_tempo);
 
         }
         $data['payment_record'] = $this->sales->payment_record_detail($id);
         foreach ($data['payment_record'] as $key) {
-            $key->nominal = $this->indonesian_currency($key->nominal);
-            $key->date_created = $this->indonesian_date($key->date_created);
+            $key->nominal = indonesian_currency($key->nominal);
+            $key->date_created = indonesian_date($key->date_created);
             if ($key->is_delete == 0) {
                 $key->status = "Paid";
             }else{
@@ -479,6 +485,38 @@ class sales extends DC_controller {
         $data['last'] = $this->sales->last_payment_record_detail($id)->row();
         $data['page'] = $this->load->view('sales/kontrak_detail', $data, true);
         $this->load->view('layout_backend', $data);
+    }
+
+    function check_bonus_sales($kontrak_id) {
+        $kontrak = select_where($this->tbl_kontrak, 'id', $kontrak_id)->row();
+        $sales_percentage =select_where($this->tbl_user, 'id', $kontrak->sales_id)->row()->sales_percentage;
+        $bonus_sales = $kontrak->price * ($sales_percentage/100);
+        if ($kontrak->kontrak_type_id == 2) { //bonus KPA
+            $insert = array('user_id' => $kontrak->sales_id,
+                            'kontrak_id' => $kontrak_id,
+                            'kontrak_customer_id' => $kontrak->customer_id,
+                            'commision_type' => 3,
+                            'percentage' => 100,
+                            'nominal' => $bonus_sales,
+                            'status' => 0,
+                            'id_created' => $this->session_admin['admin_id'],
+                            'date_created' => date('Y-m-d H:i:s', now())
+                        );
+            insert_all($this->tbl_payment_commision_history, $insert);
+        }elseif ($kontrak->kontrak_type_id == 3) { //bonus HARD CASH
+            $insert = array('user_id' => $kontrak->sales_id,
+                            'kontrak_id' => $kontrak_id,
+                            'kontrak_customer_id' => $kontrak->customer_id,
+                            'commision_type' => 4,
+                            'percentage' => 100,
+                            'nominal' => $bonus_sales,
+                            'status' => 0,
+                            'id_created' => $this->session_admin['admin_id'],
+                            'date_created' => date('Y-m-d H:i:s', now())
+                        );
+            insert_all($this->tbl_payment_commision_history, $insert);
+        }
+        //e.o. closing fee bonus
     }
 }
 

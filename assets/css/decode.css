@@ -1,5 +1,5 @@
 *, *:after, *:before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
-body, html { font-size: 100%; padding: 0; margin: 0;}
+body, html {  padding: 0; margin: 0;}
 
 
 /*
@@ -735,5 +735,10 @@ edited rifan
     background-image: none;
     border-radius: 2px;
     box-shadow: none;
+    color: #fff;
+}
+.table-bordered th {
+    background-color: #0aa699;
+    border: 0 none;
     color: #fff;
 }

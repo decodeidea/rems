@@ -71,12 +71,20 @@
                         </div>
                       </div>
 
+                       <div class="form-group">
+                        <label class="form-label">Floor</label>
+                        <div class="controls">
+                          <input type="text" name="floor" class="form-control" value="<?php if(isset($data)){ echo $data->floor; } ?>">
+                        </div>
+                      </div>
+
                       <div class="form-group">
                         <label class="form-label">Price</label>
                         <div class="controls">
                           <input type="text" name="price" class="form-control" value="<?php if(isset($data)){ echo $data->price; } ?>">
                         </div>
                       </div>
+                     
                       <div class="form-group">
                         <label class="form-label">Struktur</label>
                         <div class="controls">

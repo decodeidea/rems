@@ -47,6 +47,8 @@ class DC_Controller extends CI_Controller {
         $this->tbl_pemasukan_record = $this->tbl_prefix . 'pemasukan_record';
         $this->tbl_payment_commision_history = $this->tbl_prefix . 'payment_commision_history';
 
+        $this->tbl_pemasukan_record = $this->tbl_prefix . 'pemasukan_record';
+        $this->tbl_payment_commision_history = $this->tbl_prefix . 'payment_commision_history';
 
         //load model fo all page
         $this->load->model('model_basic');

@@ -50,8 +50,6 @@ class unit extends DC_controller {
         $data['area']=select_all($this->tbl_area);
         $data['unit_type']=select_all($this->tbl_unit_type);
 
-        $data['a1']=$this->model_basic->select_where($this->tbl_unit,'id',1)->row();
-
 		$data['page'] = $this->load->view('unit/list_unit_form',$data,true);
 		$this->load->view('layout_backend',$data);
 	}

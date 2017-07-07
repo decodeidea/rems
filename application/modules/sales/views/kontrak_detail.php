@@ -1,3 +1,10 @@
+     
+    <?php if($this->session->flashdata('notif')){ ?> 
+    <div class="alert alert-<?php echo $this->session->flashdata('notif') ?>">
+<button class="close" data-dismiss="alert"></button>
+<?php echo $this->session->flashdata('notif') ?>:&nbsp;<?php echo $this->session->flashdata('msg') ?></div>
+<?php } ?>
+
 <div class="row-fluid">
         <div class="span12">
           <div class="grid simple ">
@@ -83,7 +90,7 @@
 		                            <div class="form-group">
 		                            	<label class="col-md-12 col-xs-12 control-label" for="#px-campaign-campaign_list-form-posted_by">Unit </label>
 			                            <div class="col-md-12 col-xs-12">
-			                                <table class="table">
+			                                <table class="table table-bordered ">
 												<thead>
 													<th>No</th>
 													<th>Area</th>
@@ -287,7 +294,7 @@
 											<th>No</th>
 											<th>Area</th>
 											<th>Unit Name</th>
-											<th>Room Type</th>
+											<th>Unit Type</th>
 											<th>Luas Netto</th>
 											<th>Luas Semigross</th>
 											<th>Number</th>
@@ -307,12 +314,13 @@
 											$i=1;$total_price=0;foreach($kontrak_unit as $k){ 
 											$unit = getAll($this->tbl_unit, array('id'=>'where/'.$k->unit_id))->row();
 											$total_price = $total_price + $unit->price;
+											$unit_type=select_where($this->tbl_unit_type,'id',$unit->unit_type)->row();
 										?>
 										<tr>
 											<td><?=$i++?></td>
 											<td><?=getValue('name', $this->tbl_area, array('id'=>'where/'.$unit->area_id))?></td>
 											<td><?=$unit->name?></td>
-											<td><?=$unit->room_type?></td>
+											<td><?=$unit_type->name?></td>
 											<td><?=$unit->luas_netto?></td>
 											<td><?=$unit->luas_semigross?></td>
 											<td><?=$unit->number?></td>
