@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 06, 2017 at 08:02 AM
+-- Generation Time: Jul 25, 2017 at 05:13 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -680,7 +680,8 @@ INSERT INTO `dc_menu` (`id`, `name_menu`, `sub_menu`, `target`, `icon`, `positio
 (32, 'Denah', '31', 'denah', 'none', 1, '2017-06-15 00:04:25', NULL, 1, NULL),
 (33, 'Payment Scheme', '22', 'payment_scheme', 'none', 3, '2017-06-15 17:07:43', NULL, 1, NULL),
 (34, 'Pengajuan Harga', '31', 'pengajuan_harga', 'none', 2, '2017-06-18 05:17:47', NULL, 1, NULL),
-(35, 'Kontrak', '31', 'kontrak', 'none', 3, '2017-06-20 19:44:46', NULL, 1, NULL);
+(35, 'Kontrak', '31', 'kontrak', 'none', 3, '2017-06-20 19:44:46', NULL, 1, NULL),
+(36, 'Commision', '22', 'commision', 'none', 5, '2017-07-14 19:10:47', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -761,7 +762,8 @@ INSERT INTO `dc_menu_accsess` (`id`, `id_menu`, `id_group`, `accsess`) VALUES
 (70, 32, 1, 1),
 (71, 33, 1, 1),
 (72, 34, 1, 1),
-(73, 35, 1, 1);
+(73, 35, 1, 1),
+(74, 36, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -796,7 +798,7 @@ INSERT INTO `dc_payment_commision_history` (`id`, `user_id`, `kontrak_id`, `kont
 (2, 15, 11, 30, 3, 100, 0, 1, 15, '2017-01-04 23:15:40', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (3, 15, 12, 33, 3, 100, 0, 1, 15, '2017-01-05 00:01:30', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (4, 15, 13, 31, 3, 100, 0, 1, 15, '2017-01-05 00:41:17', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(5, 15, 16, 2, 3, 100, 0, 0, 15, '2017-01-05 02:49:56', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(5, 15, 16, 2, 3, 100, 0, 1, 15, '2017-01-05 02:49:56', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (6, 15, 19, 14, 3, 100, 0, 0, 15, '2017-01-05 22:57:34', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (7, 15, 2, 0, 3, 100, 0, 0, 15, '2017-01-06 00:43:11', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (8, 15, 3, 34, 3, 100, 0, 0, 15, '2017-01-06 00:46:48', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
@@ -812,7 +814,7 @@ INSERT INTO `dc_payment_commision_history` (`id`, `user_id`, `kontrak_id`, `kont
 (18, 15, 23, 21, 3, 100, 0, 0, 15, '2017-01-06 22:15:22', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (19, 15, 27, 16, 3, 100, 0, 0, 15, '2017-01-06 22:22:45', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (20, 15, 29, 15, 3, 100, 0, 0, 15, '2017-01-06 22:26:31', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(21, 15, 30, 22, 3, 100, 0, 0, 15, '2017-01-06 23:16:35', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(21, 15, 30, 22, 3, 100, 0, 1, 15, '2017-01-06 23:16:35', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (22, 15, 4, 31, 1, 0, 1000000, 0, 20, '2017-05-19 06:03:33', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (23, 15, 25, 9, 1, 0, 1000000, 0, 7, '2017-05-19 13:39:40', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (24, 11, 47, 21, 1, 0, 1000000, 0, 7, '2017-05-19 14:54:03', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
@@ -1043,7 +1045,8 @@ CREATE TABLE `dc_unit` (
 --
 
 INSERT INTO `dc_unit` (`id`, `area_id`, `unit_type`, `name`, `luas_netto`, `luas_semigross`, `number`, `floor`, `block`, `price`, `struktur`, `lantai`, `dapur`, `listrik`, `dinding`, `pintu`, `sanitasi`, `jendela`, `status`, `date_created`, `date_modified`, `id_creator`, `id_modifier`) VALUES
-(1, 1, 1, 'dsjh', '99.99', '0.00', 7, '', 'A01', 7879879, 'jkh', 'hkj', 'hhjk', 'khj', 'jkh', 'hk', 'hjk', 'hkj', 1, NULL, '2017-06-16 16:26:18', NULL, 1);
+(1, 1, 1, 'dsjh', '99.99', '0.00', 7, '', 'A01', 7879879, 'jkh', 'hkj', 'hhjk', 'khj', 'jkh', 'hk', 'hjk', 'hkj', 1, NULL, '2017-06-16 16:26:18', NULL, 1),
+(2, 1, 1, 'das', '99.99', '99.99', 76, '678', 'gj', 67576, 'dsadas', '6', 'gjhg', 'gj', 'jh', 'gj', '', 'gjh', NULL, '2017-07-25 22:11:43', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -1366,12 +1369,12 @@ ALTER TABLE `dc_kontrak_unit`
 -- AUTO_INCREMENT for table `dc_menu`
 --
 ALTER TABLE `dc_menu`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT for table `dc_menu_accsess`
 --
 ALTER TABLE `dc_menu_accsess`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 --
 -- AUTO_INCREMENT for table `dc_payment_commision_history`
 --
@@ -1416,7 +1419,7 @@ ALTER TABLE `dc_rekening`
 -- AUTO_INCREMENT for table `dc_unit`
 --
 ALTER TABLE `dc_unit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `dc_unit_album`
 --

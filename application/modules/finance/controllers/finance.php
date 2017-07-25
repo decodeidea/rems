@@ -564,7 +564,7 @@ class finance extends DC_controller {
 		foreach ($data['data'] as $r) {
 			$r->user_id = select_where($this->tbl_user, 'id', $r->user_id)->row('username');
 			$r->kontrak_id = select_where($this->tbl_kontrak, 'id', $r->kontrak_id)->row('no_kontrak');
-			$r->nominal = $this->indonesian_currency($r->nominal);
+			$r->nominal = indonesian_currency($r->nominal);
 		}
 
 		$data['page'] = $this->load->view('finance/commision', $data, true);
