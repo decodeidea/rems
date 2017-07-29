@@ -132,7 +132,7 @@ class Model_sales extends CI_Model {
 
   function payment_record_detail($kontrak_id)
   {
-    $this->db->select('a.id as id,a.rekening_id, d.no_kontrak, c.title as payment_title, a.nominal, a.date_created,')
+    $this->db->select('a.id as id,a.rekening_id, d.no_kontrak, c.title as payment_title, a.nominal, a.date_created,a.is_delete')
          ->from($this->tbl_pemasukan_record.' as a')
                  ->join($this->tbl_kontrak_payment_record.' as b', 'a.kontrak_payment_record_id = b.id')
                  ->join($this->tbl_kontrak_payment_schedule.' as c', 'b.kontrak_payment_schedule_id = c.id')

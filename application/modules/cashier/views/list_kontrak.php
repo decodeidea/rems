@@ -3,9 +3,9 @@
     <div class="alert alert-<?php echo $this->session->flashdata('notif') ?>">
 <button class="close" data-dismiss="alert"></button>
 <?php echo $this->session->flashdata('notif') ?>:&nbsp;<?php echo $this->session->flashdata('msg') ?></div>
-<?php } ?>
+<?php } ?>            
 
-     <div class="row-fluid">
+<div class="row-fluid">
         <div class="span12">
           <div class="grid simple ">
             <div class="grid-title">
@@ -16,22 +16,36 @@
               <div class="tools"> <a href="javascript:;" class="collapse"></a> <a href="javascript:;" class="reload"></a> </div>
             </div>
             <div class="grid-body ">
-<a id="add_button" href="<?php echo base_url() ?>unit/area_album_form/?area_id=<?php echo $this->uri->segment('3')?>"><button class="btn btn-primary">Add Image</button></a>
-  <div class="row gallery-list">
-  <?php if($list->num_rows()>0){ ?>
-  <?php foreach ($list->result() as $key) {?>
-  <div class="col-md-3">
-  <img width="100%" src="<?php echo base_url() ?>assets/uploads/area/<?php echo $key->id ?>/<?php echo $key->filename ?>">
-  <div class="footer-gallery">
-  <div class="text-center">
-  <p><?php echo $key->caption ?></p>
-  </div>
-  <a href="<?php echo base_url() ?>unit/area_album_delete/<?php echo $key->id ?>">
-  <button id="del<?php echo $key->id ?>" data-toggle="tooltip" data-original-title="Delete" class="btn btn-danger btn-xs btn-mini tip" type="button"><i class="fa fa-times"></i></button></a></div>
-  </div>
-  <?php }} ?>
-  </div>
-            </div>
+					<table class="table" id="list_data" >
+						<thead>
+							<tr>
+								<th class="text-center">No</th>
+								<th class="text-center">No Kontrak</th>
+								<!-- <th class="text-center">Unit</th> -->
+								<th class="text-center">Customer</th>
+								<th class="text-center">Sales</th>
+								<th class="text-center">Payment Schema</th>
+								<!-- <th class="text-center">Tipe Kontrak</th> -->
+								<th width="15%" class="text-center">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php $no=1; foreach ($list as $d_row) { ?>
+							<tr>
+								<td class="text-center"><?php echo $no; ?></td>
+								<td class="text-center"><?php echo $d_row->no_kontrak; ?></td>
+								<td class="text-center"><?php echo $d_row->customer; ?></td>
+								<td class="text-center"><?php echo $d_row->sales; ?></td>
+								<td class="text-center"><?php echo $d_row->payment_scheme; ?></td>
+								<td class="text-center">
+                     
+                     <a data-toggle="tooltip"  data-placement="top" data-original-title="Detail Kontrak" href="<?php echo base_url()."".$controller.'/kontrak_detail/'.$d_row->id; ?>" class="btn btn-info btn-xs btn-mini tip"><i class="fa fa-eye"></i></a>
+                    </td>
+							</tr>
+							<?php $no++; } ?>
+						</tbody>
+					</table>
+				</div>
           </div>
         </div>
       </div>

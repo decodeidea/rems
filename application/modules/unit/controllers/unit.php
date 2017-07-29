@@ -275,7 +275,7 @@ class unit extends DC_controller {
 		$this->check_access();
 		$data = $this->controller_attr;
 		$data['function']='area_album';
-		$data['list']=select_all($this->tbl_area_album);
+		$data['list']=select_where($this->tbl_area_album,'area_id',$id);
 		$data['page'] = $this->load->view('unit/list_area_album',$data,true);
 		$this->load->view('layout_backend',$data);
 	}
@@ -338,7 +338,7 @@ class unit extends DC_controller {
 	function area_album_delete($id){
 		$data = $this->controller_attr;
 		$function='area';
-		$query=delete($this->tbl_area,'id',$id);
+		$query=delete($this->tbl_area_album,'id',$id);
 		if($query){
 			$this->session->set_flashdata('notif','success');
 			$this->session->set_flashdata('msg','Your data have been deleted');

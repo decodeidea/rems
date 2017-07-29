@@ -16,6 +16,7 @@ class Cashier extends DC_controller {
 		}
 		$this->controller_attr = array('controller' => 'cashier','controller_name' => 'Cashier','method'=>ucwords($method),'menu'=>$this->get_menu());
 		 $this->load->model('Model_cashier', 'cashier');
+          $this->load->model('Model_sales', 'sales');
 	}
 	
 	 function index(){
@@ -26,7 +27,13 @@ class Cashier extends DC_controller {
 		$this->check_access();
 		$data = $this->controller_attr;
 		$data['function']='kontrak';
-		$data['list']=select_all($this->tbl_kontrak);
+		$data['list'] = getAll($this->tbl_kontrak, array('is_delete'=>'where/0'))->result();
+        foreach ($data['list'] as $data_row) {
+            $customer = isset(select_where($this->tbl_customer, 'id', $data_row->customer_id)->row()->name);
+            $data_row->customer = select_where($this->tbl_customer, 'id', $data_row->customer_id)->row()->name;
+            $data_row->sales = select_where($this->tbl_user, 'id', $data_row->sales_id)->row()->username;
+            $data_row->payment_scheme = select_where($this->tbl_payment_scheme, 'id', $data_row->payment_scheme_id)->row()->title;
+        }
 		$data['page'] = $this->load->view('cashier/list_kontrak',$data,true);
 		$this->load->view('layout_backend',$data);
 	}
@@ -342,6 +349,124 @@ class Cashier extends DC_controller {
             }
 
         }
+    }
+    public function kontrak_detail($id) {
+       $this->check_access();
+        $data = $this->controller_attr;
+        $data['function']='kontrak';
+        $data['kontrak'] = select_where($this->tbl_kontrak, 'id', $id)->row();
+        $data['kontrak']->date_created = date('d M Y H:i:s', strtotime($data['kontrak']->date_created));
+        $data['kontrak']->sisa_hutang = indonesian_currency($data['kontrak']->sisa_hutang);
+        $admin = getValue('first_name', $this->tbl_user, array('id'=>'where/'.$data['kontrak']->id_creator));
+        $data['kontrak']->posted_by = $admin;
+         if($data['kontrak']->id_modifier != 0)
+            {
+                $data['update'] = new stdClass();
+                $data['update']->name = select_where($this->tbl_user, 'id', $data['kontrak']->id_modifier)->row()->username;
+                $data['update']->date_modified = date('d M Y H:i:s', strtotime($data['kontrak']->date_modified));
+            }
+       
+        $data['kontrak_unit'] = getAll($this->tbl_kontrak_unit, array('kontrak_id'=>'where/'.$id))->result();
+        $kontrak_payment_scheme=select_where($this->tbl_payment_scheme, 'id',$data['kontrak']->payment_scheme_id)->row();
+        $data['kontrak_payment_scheme']=$kontrak_payment_scheme->title;
+        $kontrak_type_id = getValue('kontrak_type', $this->tbl_payment_scheme, array('id'=>'where/'.$kontrak_payment_scheme->id));
+        $data['kontrak_type']=getValue('name', $this->tbl_kontrak_type, array('id'=>'where/'.$kontrak_type_id));
+        $data['customer']=select_where($this->tbl_customer, 'id',$data['kontrak']->customer_id)->row();
+        $data['payment_schedule'] = getAll($this->tbl_kontrak_payment_schedule, array('kontrak_id'=>'where/'.$id))->result();
+        foreach ($data['payment_schedule'] as $key) {
+            $key->nominal = indonesian_currency($key->nominal);
+            $key->nominal_paid = indonesian_currency($key->nominal_paid);
+            $key->date_created = indonesian_date($key->date_created);
+            $key->jatuh_tempo = indonesian_date($key->jatuh_tempo);
+
+        }
+        $data['payment_record'] = $this->sales->payment_record_detail($id);
+        foreach ($data['payment_record'] as $key) {
+            $key->nominal = indonesian_currency($key->nominal);
+            $key->date_created = indonesian_date($key->date_created);
+            if ($key->is_delete == 0) {
+                $key->status = "Paid";
+            }else{
+                $key->status = "Cancelled";
+            }
+        }
+        $data['last_num_rows'] = $this->sales->last_payment_record_detail($id)->num_rows();
+        $data['last'] = $this->sales->last_payment_record_detail($id)->row();
+        $data['page'] = $this->load->view('cashier/kontrak_detail',$data,true);
+        $this->load->view('layout_backend',$data);
+    }
+
+    function lunas_contract() {
+        $data = $this->get_app_settings();
+        $data += $this->controller_attr;
+        $data += $this->get_function('Kontrak', 'kontrak_pelunasan');
+        $data += $this->get_menu();
+        $this->check_userakses($data['function_id'], ACT_UPDATE);
+
+        $id = $this->input->post('id');
+        $kontrak = $this->model_basic->select_where($this->tbl_kontrak, 'id', $id)->row();
+
+        $data_kontrak_payment_record = array(
+                'kontrak_payment_schedule_id'=>0,
+                'rekening_id' => 1,
+                'nominal'=>$kontrak->sisa_hutang,
+                'payment_type' => 99,
+                'date_created' => date('Y-m-d H:i:s', now()),
+                'date_modified' => date('Y-m-d H:i:s', now()),
+                'id_created' => $this->session_admin['admin_id'],
+                'id_modified' => $this->session_admin['admin_id'],
+            );
+
+        $this->db->insert($this->tbl_kontrak_payment_record, $data_kontrak_payment_record);
+        $kontrak_payment_record_id = $this->db->insert_id();
+
+        // INSERT TO TABLE PEMASUKAN RECORD
+        do {
+            $no_invoice = $this->generate_no_invoice(9);
+        } while ($this->is_in_table($no_invoice));
+
+        $data_pemasukan_record = array(
+                'no_invoice'=>$no_invoice,
+                'rekening_id'=> 1,
+                'kontrak_payment_record_id' => $kontrak_payment_record_id,
+                'nominal'=>$kontrak->sisa_hutang,
+                'date_created' => date('Y-m-d H:i:s', now()),
+                'date_modified' => date('Y-m-d H:i:s', now()),
+                'id_created' => $this->session_admin['admin_id'],
+                'id_modified' => $this->session_admin['admin_id'],
+        );
+        $this->db->insert($this->tbl_pemasukan_record, $data_pemasukan_record);
+        $pemasukan_record_id = $this->db->insert_id();
+
+        //UPDATE INVOICE
+        $this->model_basic->update($this->tbl_kontrak_payment_record, array('no_invoice' => $no_invoice), 'id', $kontrak_payment_record_id);
+
+        //UPDATE SCHEDULE
+        $schedule = $this->model_basic->select_where_array($this->tbl_kontrak_payment_schedule, array('status' => 0, 'kontrak_id' => $id));
+        if ($schedule->num_rows() > 0) {
+            foreach ($schedule->result() as $d) {
+                $update = array(
+                                        'nominal_paid' => 0,
+                                        'status'=>1,
+                                        'date_payment' => date('Y-m-d H:i:s', now()),
+                                        'date_created' => date('Y-m-d H:i:s', now()),
+                                        'date_modified' => date('Y-m-d H:i:s', now()),
+                                        'id_created' => $this->session_admin['admin_id'],
+                                        'id_modified' => $this->session_admin['admin_id'],
+                                        );
+                $update = $this->model_basic->update($this->tbl_kontrak_payment_schedule, $update, 'id', $d->id);
+            }
+        }
+                
+        //UPDATE KONTRAK        
+        $update = array('sisa_hutang' => 0);
+        $do_update = $this->model_basic->update($this->tbl_kontrak,$update,'id',$id);
+
+        if ($do_update) {
+            $this->returnJson(array('status' => 'ok', 'msg' => 'Pelunasan Success', 'redirect' => $data['controller'] . '/' . $data['function']));
+        }
+        else
+            $this->returnJson(array('status' => 'error', 'msg' => 'Pelunasan Failed'));
     }
    
 }
