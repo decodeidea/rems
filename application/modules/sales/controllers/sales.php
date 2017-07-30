@@ -59,8 +59,69 @@ class sales extends DC_controller {
         $data['area']=select_where($this->tbl_area,'id',$id)->row();
         $data['unit']=select_where_array_group($this->tbl_unit,$where,'block')->result();
 
-        $data['a1']=select_where($this->tbl_unit,'id',1)->row();
-
+        // AREA A
+		$data['a1']=select_where($this->tbl_unit,'id',1)->row();
+        $data['a2']=select_where($this->tbl_unit,'id',2)->row();
+        $data['a3']=select_where($this->tbl_unit,'id',3)->row();
+        $data['a4']=select_where($this->tbl_unit,'id',4)->row();
+        $data['a5']=select_where($this->tbl_unit,'id',5)->row();
+        $data['a6']=select_where($this->tbl_unit,'id',6)->row();
+        $data['a7']=select_where($this->tbl_unit,'id',7)->row();
+        $data['a8']=select_where($this->tbl_unit,'id',8)->row();
+        $data['a9']=select_where($this->tbl_unit,'id',9)->row();
+        $data['a10']=select_where($this->tbl_unit,'id',10)->row();
+        $data['a11']=select_where($this->tbl_unit,'id',11)->row();
+        $data['a12']=select_where($this->tbl_unit,'id',12)->row();
+        $data['a14']=select_where($this->tbl_unit,'id',13)->row();
+		
+		// AREA B
+		$data['b1']=select_where($this->tbl_unit,'id',14)->row();
+        $data['b2']=select_where($this->tbl_unit,'id',15)->row();
+        $data['b3']=select_where($this->tbl_unit,'id',16)->row();
+        $data['b4']=select_where($this->tbl_unit,'id',17)->row();
+        $data['b5']=select_where($this->tbl_unit,'id',18)->row();
+        $data['b6']=select_where($this->tbl_unit,'id',19)->row();
+        $data['b7']=select_where($this->tbl_unit,'id',20)->row();
+        $data['b8']=select_where($this->tbl_unit,'id',21)->row();
+        $data['b9']=select_where($this->tbl_unit,'id',22)->row();
+        $data['b10']=select_where($this->tbl_unit,'id',23)->row();
+        $data['b11']=select_where($this->tbl_unit,'id',24)->row();
+        $data['b12']=select_where($this->tbl_unit,'id',25)->row();
+        $data['b14']=select_where($this->tbl_unit,'id',26)->row();
+        $data['b15']=select_where($this->tbl_unit,'id',27)->row();
+        $data['b16']=select_where($this->tbl_unit,'id',28)->row();
+        $data['b17']=select_where($this->tbl_unit,'id',29)->row();
+        $data['b18']=select_where($this->tbl_unit,'id',30)->row();
+        $data['b19']=select_where($this->tbl_unit,'id',31)->row();
+        $data['b20']=select_where($this->tbl_unit,'id',32)->row();
+        $data['b21']=select_where($this->tbl_unit,'id',33)->row();
+        $data['b22']=select_where($this->tbl_unit,'id',34)->row();
+		
+		// AREA B
+		$data['c1']=select_where($this->tbl_unit,'id',35)->row();
+        $data['c2']=select_where($this->tbl_unit,'id',36)->row();
+        $data['c3']=select_where($this->tbl_unit,'id',37)->row();
+        $data['c4']=select_where($this->tbl_unit,'id',38)->row();
+        $data['c5']=select_where($this->tbl_unit,'id',39)->row();
+        $data['c6']=select_where($this->tbl_unit,'id',40)->row();
+        $data['c7']=select_where($this->tbl_unit,'id',41)->row();
+        $data['c8']=select_where($this->tbl_unit,'id',42)->row();
+        $data['c9']=select_where($this->tbl_unit,'id',43)->row();
+        $data['c10']=select_where($this->tbl_unit,'id',44)->row();
+        $data['c11']=select_where($this->tbl_unit,'id',45)->row();
+        $data['c12']=select_where($this->tbl_unit,'id',46)->row();
+        $data['c14']=select_where($this->tbl_unit,'id',47)->row();
+        $data['c15']=select_where($this->tbl_unit,'id',48)->row();
+        $data['c16']=select_where($this->tbl_unit,'id',49)->row();
+        $data['c17']=select_where($this->tbl_unit,'id',50)->row();
+        $data['c18']=select_where($this->tbl_unit,'id',51)->row();
+        $data['c19']=select_where($this->tbl_unit,'id',52)->row();
+        $data['c20']=select_where($this->tbl_unit,'id',53)->row();
+        $data['c21']=select_where($this->tbl_unit,'id',54)->row();
+        $data['c22']=select_where($this->tbl_unit,'id',55)->row();
+        $data['c23']=select_where($this->tbl_unit,'id',56)->row();
+        $data['c24']=select_where($this->tbl_unit,'id',57)->row();
+        $data['c25']=select_where($this->tbl_unit,'id',58)->row();
         //print_r($data['a1']);
         
        	$data['page'] = $this->load->view('sales/list_denah',$data,true); //print_r($data['content']);

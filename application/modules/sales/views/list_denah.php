@@ -30,177 +30,409 @@
 								
 							</div>
 							<div class="areaA02">
+<<<<<<< HEAD
 								<input name="unit_id[]" value="2" type="checkbox">
+=======
+								<?php if($a2->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $a2->id ?>" type="checkbox">
+								<?php
+									}
+								?>
+>>>>>>> origin/master
 							</div>
 							<div class="areaA03">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($a3->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $a3->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaA04">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($a4->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $a4->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaA05">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($a5->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $a5->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaA06">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($a6->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $a6->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaA07">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($a7->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $a7->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaA08">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($a8->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $a8->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaA09">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($a9->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $a9->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaA10">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($a10->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $a10->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaA11">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($a11->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $a11->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaA12">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($a12->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $a12->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaA14">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($a14->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $a14->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							
 							<div class="areaB01">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b1->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b1->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB02">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b2->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b2->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB03">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b3->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b3->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB04">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b4->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b4->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB05">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b5->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b5->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB06">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b6->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b6->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB07">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b7->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b7->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB08">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b8->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b8->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB09">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b9->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b9->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB10">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b10->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b10->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB11">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b11->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b11->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB12">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b12->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b12->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB14">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b14->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b14->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB15">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b15->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b15->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB16">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b16->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b16->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB17">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b17->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b17->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB18">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b18->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b18->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB19">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b19->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b19->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB20">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b20->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b20->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB21">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b21->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b21->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaB22">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($b22->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $b22->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							
 							<div class="areaC01">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c1->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c1->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC02">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c2->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c2->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC03">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c3->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c3->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC04">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c4->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c4->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC05">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c5->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c5->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC06">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c6->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c6->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC07">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c7->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c7->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC08">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c8->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c8->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC09">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c9->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c9->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC10">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c10->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c10->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC11">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c11->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c11->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC12">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c12->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c12->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC14">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c14->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c14->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC15">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c15->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c15->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC16">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c16->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c16->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC17">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c17->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c17->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC18">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c18->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c18->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC19">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c19->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c19->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC20">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c20->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c20->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC21">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c21->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c21->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC22">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c22->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c22->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC23">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c23->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c23->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC24">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c24->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c24->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							<div class="areaC25">
-								<input name="unit_id[]" value="" type="checkbox">
+								<?php if($c25->status=='1'){ echo'not-available';}else{ ?>
+									<input name="unit_id[]" value="<?php echo $c25->id ?>" type="checkbox">
+								<?php
+									}
+								?>
 							</div>
 							
 							<div class="button_denah">
