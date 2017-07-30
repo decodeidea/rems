@@ -26,8 +26,8 @@
                     <?php }else{ ?>
                       <a class="pull-right" href="sales/area_unit/<?php echo $data->id ?>"> <img src="<?php echo base_url() ?>assets/uploads/area/<?php echo $data->id ?>/<?php echo $data->image ?>" alt="<?php echo $data->caption ?>"></a>
                     
-                      <div class="caption-area">
-                        <h3><?php echo $data->name ?></h3>
+                      <div class="caption-area text-center" >
+                        <h3 style="color: #fff"><?php echo $data->name ?></h3>
                       
                       </div>
                     <?php } ?>

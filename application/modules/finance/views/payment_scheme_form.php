@@ -16,14 +16,14 @@
 							<div class="form-group">
 								<label class="form-label">Name</label>
 								<div class="controls">
-									<input type="text" name="title" required class="form-control" value="<?php if(isset($data)){ echo $data->title; } ?>">
+									<input type="text" required name="title" required class="form-control" value="<?php if(isset($data)){ echo $data->title; } ?>">
 								</div>
 							</div>
 
 							<div class="form-group">
 								<label class="form-label">Kontrak Type</label>
 								<div class="controls">
-									<select class="select2 form-control" name="kontrak_type">
+									<select required class="select2 form-control" name="kontrak_type">
 										<option>-- Choose Contract Type --</option>
 										<?php foreach ($kontrak_type as $k) {
 											if($data) {
@@ -40,7 +40,7 @@
 							<div class="form-group">
 								<label class="form-label">Bunga(%)</label>
 								<div class="controls">
-									<input type="text" class="form-control" name="bunga" id="bunga" value="<?php if($data!=null) echo $data->bunga;?>">
+									<input type="text" class="form-control" required name="bunga" id="bunga" value="<?php if($data!=null) echo $data->bunga;?>">
 								</div>
 							</div>
 
@@ -70,10 +70,10 @@
 												foreach($detail->result() as $d): ?>
 													<tr>
 														<td>
-															<input type="text" name="title_detail[]" class="form-control" required="" value="<?=$d->title?>">
+															<input type="text" required name="title_detail[]" class="form-control" required="" value="<?=$d->title?>">
 														</td>
 														<td>
-															<select class="select2" name="payment_type_id[]" style="width: 100%">
+															<select required class="select2" name="payment_type_id[]" style="width: 100%">
 																<option>-- Choose Payment Type --</option>
 																<?php
 																foreach ($payment_type->result() as $r) {
@@ -84,15 +84,15 @@
 															</select>
 														</td>
 														<td>
-															<input type="text" name="tenor[]" class="form-control" value="<?=$d->tenor?>">
+															<input type="text" required name="tenor[]" class="form-control" value="<?=$d->tenor?>">
 														</td>
 														<td>
-															<input type="text" name="interval[]" class="form-control" value="<?=$d->interval?>">
+															<input type="text" required name="interval[]" class="form-control" value="<?=$d->interval?>">
 														</td>
 														<td>
-															<input type="text" name="persentase[]" class="form-control" value="<?=$d->persentase?>">
+															<input type="text" required name="persentase[]" class="form-control" value="<?=$d->persentase?>">
 														</td>
-														<td><button type="button" class="btn btn-danger removebutton"><i class="fa fa-times"></i></button></td>
+														<td><button type="button"  class="btn btn-danger removebutton"><i class="fa fa-times"></i></button></td>
 													</tr>
 												<?php endforeach;}?>
 											</tbody>

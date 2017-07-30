@@ -283,7 +283,9 @@ class sales extends DC_controller {
         for ($i=0; $i <sizeof($unit_id) ; $i++) { 
             $unit = array(
                     'kontrak_id'=>$kontrak_id,
-                    'unit_id'   => $unit_id[$i]
+                    'unit_id'   => $unit_id[$i],
+                    'date_created' => date('Y-m-d H:i:s', now()),
+                    'id_creator' => $this->session->userdata['admin']['id'],
                 );
             $this->db->insert($this->tbl_kontrak_unit, $unit);
         }

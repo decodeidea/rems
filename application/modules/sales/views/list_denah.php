@@ -30,7 +30,7 @@
 								
 							</div>
 							<div class="areaA02">
-								<input name="unit_id[]" value="" type="checkbox">
+								<input name="unit_id[]" value="2" type="checkbox">
 							</div>
 							<div class="areaA03">
 								<input name="unit_id[]" value="" type="checkbox">

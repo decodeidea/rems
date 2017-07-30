@@ -88,6 +88,11 @@ class admin extends DC_controller {
 			redirect('admin/login');
 		}
 		$data = $this->controller_attr;
+		$data['customer']=select_where($this->tbl_customer,'name !=',1)->num_rows();
+		$data['unit_sold']=select_where($this->tbl_unit,'status ',1)->num_rows();
+		$data['unit_available']=select_where($this->tbl_unit,'status',null)->num_rows();
+		$data['unit_buy']=$this->db->query("SELECT * FROM dc_kontrak_unit` WHERE date_created LIKE '".date('Y-m-d')."'")->num_rows();
+		$data['unit_all']=select_where($this->tbl_unit,'name !=',1)->num_rows();
 		$data['page'] = $this->load->view('admin/dashboard',$data,true);
 		$this->load->view('layout_backend',$data);
 	}
