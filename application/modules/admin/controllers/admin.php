@@ -93,6 +93,15 @@ class admin extends DC_controller {
 		$data['unit_available']=select_where($this->tbl_unit,'status',null)->num_rows();
 		$data['unit_buy']=$this->db->query("SELECT * FROM dc_kontrak_unit` WHERE date_created LIKE '".date('Y-m-d')."'")->num_rows();
 		$data['unit_all']=select_where($this->tbl_unit,'name !=',1)->num_rows();
+		$data['upcoming_payment']=select_all_limit_order($this->tbl_kontrak_payment_schedule,'10','jatuh_tempo','ASC')->result();
+            foreach ($data['upcoming_payment'] as $key) {
+                $kontrak = select_where($this->tbl_kontrak, 'id', $key->kontrak_id)->row();
+                $key->no_kontrak = $kontrak->no_kontrak;
+                $customer = select_where($this->tbl_customer, 'id', $kontrak->customer_id)->row();
+                $key->customer_nm = $customer->name;
+                $key->nominal = $this->indonesian_currency($key->nominal);
+                $key->jatuh_tempo = $this->indonesian_date($key->jatuh_tempo);
+            }
 		$data['page'] = $this->load->view('admin/dashboard',$data,true);
 		$this->load->view('layout_backend',$data);
 	}

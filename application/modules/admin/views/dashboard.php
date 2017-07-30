@@ -63,6 +63,36 @@
               </div>
             </div>
           </div>
+
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title-box">
+            <h3>Upcoming Payment</h3>
+          </div>
+        </div>
+        <div class="panel-body padding-0">
+          <table class="table no-margin">
+            <tr>
+              <th>No.</th>
+              <th>No. Kontrak</th>
+              <th>Customer</th>
+              <th>Nominal</th>
+              <th>Jatuh Tempo</th>
+            </tr>
+            <?php $i = 1;foreach ($upcoming_payment as $key) { ?>
+              <tr>
+                <td><?php echo $i ?></td>
+                <td><a href="sales/kontrak_detail/<?php echo $key->kontrak_id ?>"><?php echo $key->no_kontrak ?></a></td>
+                <td><?php echo $key->customer_nm ?></td>
+                <td><?php echo $key->nominal ?></td>
+                <td><?php echo $key->jatuh_tempo ?></td>
+              </tr>
+            <?php $i++;} ?>
+          </table>
+        </div>
+      </div>
+    </div>
         </div>
       </div>
 
