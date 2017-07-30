@@ -116,10 +116,10 @@ class Cashier extends DC_controller {
 
         // CHECK UNIT AVAILABILITY
         // if ($payment_type == 1) { // hanya ketika booking fee
-        //     $kontrak_unit = $this->model_basic->select_where($this->tbl_kontrak_unit, 'kontrak_id', $kontrak_id);
+        //     $kontrak_unit = select_where($this->tbl_kontrak_unit, 'kontrak_id', $kontrak_id);
         //     if ($kontrak_unit->num_rows() > 0) {
         //         foreach ($kontrak_unit->result() as $ku) {
-        //             $unit_status = $this->model_basic->select_where($this->tbl_unit, 'id', $ku->unit_id)->row()->status;
+        //             $unit_status = select_where($this->tbl_unit, 'id', $ku->unit_id)->row()->status;
         //             if ($unit_status == 1) {
         //                 $this->returnJson(array('status' => 'error', 'msg' => 'Payment Failed. Please check unit availability in current form!'));
         //             }
@@ -214,7 +214,7 @@ class Cashier extends DC_controller {
         $data = $this->controller_attr;
         $data['function']='payment';
        $id = $this->input->post('id');
-        //$do_delete = $this->model_basic->delete($this->tbl_customer, 'id', $id);
+        //$do_delete = delete($this->tbl_customer, 'id', $id);
         //fetch all detail
         $pemasukan_record = select_where($this->tbl_pemasukan_record, 'id', $id)->row();
         $kontrak_payment_record = select_where($this->tbl_kontrak_payment_record, 'id', $pemasukan_record->kontrak_payment_record_id)->row();
@@ -259,7 +259,7 @@ class Cashier extends DC_controller {
     function payment_pdf($id){
         $this->load->model('model_cashier');
         $this->load->library('mpdf60/mpdf');
-        // $data['payment'] = $this->model_basic->select_where($this->tbl_pemasukan_record, 'id', $id)->row();
+        // $data['payment'] = select_where($this->tbl_pemasukan_record, 'id', $id)->row();
         $data['payment'] =$this->model_cashier->load_kontrak($id);//print_die($data['payment']);
         $data['kontrak'] = $kontrak = $this->model_cashier->load_kontrak($id);//print_die($data['kontrak'] );
         $data['customer']=select_where($this->tbl_customer, 'id',$data['kontrak']->customer_id)->row();//lastq();
@@ -397,14 +397,12 @@ class Cashier extends DC_controller {
     }
 
     function lunas_contract() {
-        $data = $this->get_app_settings();
-        $data += $this->controller_attr;
-        $data += $this->get_function('Kontrak', 'kontrak_pelunasan');
-        $data += $this->get_menu();
-        $this->check_userakses($data['function_id'], ACT_UPDATE);
+         $this->check_access();
+        $data = $this->controller_attr;
+        $data['function']='kontrak';
 
         $id = $this->input->post('id');
-        $kontrak = $this->model_basic->select_where($this->tbl_kontrak, 'id', $id)->row();
+        $kontrak = select_where($this->tbl_kontrak, 'id', $id)->row();
 
         $data_kontrak_payment_record = array(
                 'kontrak_payment_schedule_id'=>0,
@@ -439,10 +437,10 @@ class Cashier extends DC_controller {
         $pemasukan_record_id = $this->db->insert_id();
 
         //UPDATE INVOICE
-        $this->model_basic->update($this->tbl_kontrak_payment_record, array('no_invoice' => $no_invoice), 'id', $kontrak_payment_record_id);
+        update($this->tbl_kontrak_payment_record, array('no_invoice' => $no_invoice), 'id', $kontrak_payment_record_id);
 
         //UPDATE SCHEDULE
-        $schedule = $this->model_basic->select_where_array($this->tbl_kontrak_payment_schedule, array('status' => 0, 'kontrak_id' => $id));
+        $schedule = select_where_array($this->tbl_kontrak_payment_schedule, array('status' => 0, 'kontrak_id' => $id));
         if ($schedule->num_rows() > 0) {
             foreach ($schedule->result() as $d) {
                 $update = array(
@@ -454,19 +452,45 @@ class Cashier extends DC_controller {
                                         'id_created' => $this->session_admin['admin_id'],
                                         'id_modified' => $this->session_admin['admin_id'],
                                         );
-                $update = $this->model_basic->update($this->tbl_kontrak_payment_schedule, $update, 'id', $d->id);
+                $update = update($this->tbl_kontrak_payment_schedule, $update, 'id', $d->id);
             }
         }
                 
         //UPDATE KONTRAK        
         $update = array('sisa_hutang' => 0);
-        $do_update = $this->model_basic->update($this->tbl_kontrak,$update,'id',$id);
+        $do_update = update($this->tbl_kontrak,$update,'id',$id);
 
         if ($do_update) {
-            $this->returnJson(array('status' => 'ok', 'msg' => 'Pelunasan Success', 'redirect' => $data['controller'] . '/' . $data['function']));
+            $this->session->set_flashdata('notif','Success');
+                $this->session->set_flashdata('msg','your data have been saved');
+                redirect($data['controller']."/".$data['function']);
         }
         else
-            $this->returnJson(array('status' => 'error', 'msg' => 'Pelunasan Failed'));
+            $this->session->set_flashdata('notif','error');
+                $this->session->set_flashdata('msg','your input not saved');
+                redirect($data['controller']."/".$data['function']."_form");
+    }
+    function kontrak_batal($id){
+        $this->check_access();
+        $data = $this->controller_attr;
+        $data['function']='kontrak';
+        $kontrak=select_where($this->tbl_kontrak,'id',$id)->row();
+        $kontrak_unit=select_where($this->tbl_kontrak_unit,'kontrak_id',$id)->row();
+        $data_kontrak=array(
+            'status'=>1,
+            );
+        update($this->tbl_kontrak,$data_kontrak,'id',$id);
+        $data_unit=array('status' => '', );
+        $do_update=update($this->tbl_unit,$data_unit,'id',$kontrak_unit->unit_id);
+        if ($do_update) {
+            $this->session->set_flashdata('notif','Success');
+                $this->session->set_flashdata('msg','your data have been saved');
+                redirect($data['controller']."/".$data['function']);
+        }
+        else
+            $this->session->set_flashdata('notif','error');
+                $this->session->set_flashdata('msg','your input not saved');
+                redirect($data['controller']."/".$data['function']);
     }
    
 }

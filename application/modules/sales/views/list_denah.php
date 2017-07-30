@@ -30,15 +30,12 @@
 								
 							</div>
 							<div class="areaA02">
-<<<<<<< HEAD
 								<input name="unit_id[]" value="2" type="checkbox">
-=======
 								<?php if($a2->status=='1'){ echo'not-available';}else{ ?>
 									<input name="unit_id[]" value="<?php echo $a2->id ?>" type="checkbox">
 								<?php
 									}
 								?>
->>>>>>> origin/master
 							</div>
 							<div class="areaA03">
 								<?php if($a3->status=='1'){ echo'not-available';}else{ ?>

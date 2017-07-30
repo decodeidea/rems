@@ -2,6 +2,10 @@
 /* This JS is only for DEMO Purposes - Extract the code that you need
 -----------------------------------------------------------------*/	
 /* Set the defaults for DataTables initialisation */
+$('.delete').on( "click",function() {
+		$("#quick-access").css("display","block");
+    });
+    
 $.extend( true, $.fn.dataTable.defaults, {
 	"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'p i>>",
 	"sPaginationType": "bootstrap",
@@ -269,9 +273,7 @@ $(document).ready(function() {
     });
 	$("div.toolbar").html('<div class="table-tools-actions"><a id="add_button" href="'+$('#base_url').val()+$('#controller').val()+"/"+$('#method').val()+'_form/"><button class="btn btn-primary" style="margin-left:12px">Add</button></a></div>');
 	
-	$('.delete').on( "click",function() {
-		$("#quick-access").css("display","block");
-    });
+	
 
 	$('.dolarr').on( "click",function() {
 		$("#quick-dolarr").css("display","block");

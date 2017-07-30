@@ -11,8 +11,8 @@
         <!-- <img src="<?=base_url('assets\backend_assets\page\sales\logo.png')?>"> -->
       </div>
       <div id="company">
-        <h3 class="name">PT. LIMA PUTRA REALTI</h3>
-        <div>Jl.Harmonika Pasar 2 No.12 Setiabudi Medan</div>
+        <h3 class="name">De Panorama Garden</h3>
+        <div>Tasik</div>
         <!-- <div>(602) 519-0450</div>
         <div><a href="mailto:company@example.com">company@example.com</a></div>
       </div> -->

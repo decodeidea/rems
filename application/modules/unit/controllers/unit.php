@@ -28,9 +28,8 @@ class unit extends DC_controller {
 		foreach ($list as $key) {
 			$area=select_where($this->tbl_area,'id',$key->area_id)->row();
 			$key->area=$area->name;
-
 			$unit_type=select_where($this->tbl_unit_type,'id',$key->unit_type)->row();
-			$key->area=$unit_type->name;
+			$key->unit_type=$unit_type->name;
 		}
 		$data['list']=$list;
 		$data['page'] = $this->load->view('unit/list_unit',$data,true);

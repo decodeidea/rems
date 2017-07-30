@@ -24,7 +24,7 @@
             <div class="form-group">
               <label class="form-label">No. Kontrak</label>
               <div class="controls">
-                <input type="text" class="form-control" name="no_kontrak" id="px-unit-area-name" value="<?php echo sprintf('%08d', $id) ?>">
+                <input required type="text" class="form-control" name="no_kontrak" id="px-unit-area-name" value="<?php echo sprintf('%08d', $id) ?>">
               </div>
             </div>
 
@@ -77,7 +77,7 @@
                 }else{
                   $disabled = "";
                   } ?>
-                <select class="select2" style="width:100%"  name="customer_id" id="px-system-useraccess-form-id-usergroup" <?php echo $disabled ?>>
+                <select required class="select2" style="width:100%"  name="customer_id" id="px-system-useraccess-form-id-usergroup" <?php echo $disabled ?>>
                 <option value="-">-- Choose Customer --</option>
                 <?php foreach ($customer as $c) { ?>
                   <?php if($data!=null and $c->id==$data->customer_id){ 
@@ -102,7 +102,7 @@
                 }else{
                   $disabled = "";
                   } ?>
-                <select class="select2" style="width:100%"  name="sales_id" id="px-system-useraccess-form-id-usergroup" <?php echo $disabled ?>>
+                <select  required class="select2" style="width:100%"  name="sales_id" id="px-system-useraccess-form-id-usergroup" <?php echo $disabled ?>>
                 <option value="-">-- Choose Sales --</option>
                 <?php foreach ($all_user as $au) { ?>
                 <?php if($data!=null and $au->id==$data->id_created){ 
@@ -121,7 +121,7 @@
             <div class="form-group">
               <label class="form-label">Payment Schema</label>
               <div class="controls">
-                <select class="select2" style="width:100%" name="payment_scheme_id" id="payment_scheme">
+                <select required class="select2" style="width:100%" name="payment_scheme_id" id="payment_scheme">
                   <option value="-">-- Choose Payment Schema --</option>
                   <?php foreach ($payment_scheme as $p) { ?>
                     <option <?php if($data!=null and $p->id==$data->payment_scheme_id){ echo"selected"; } ?> value="<?php echo $p->id; ?>"><?php echo $p->title; ?></option>
@@ -146,7 +146,7 @@
             <div class="form-group">
               <label class="form-label" >Bunga(%)</label>
               <div class="controls">
-                <input type="text" name="bunga" id="bunga" value="0" class="form-control" readonly>
+                <input required type="text" name="bunga" id="bunga" value="0" class="form-control" readonly>
               </div>
             </div>
 
@@ -158,14 +158,14 @@
                 <?php
                 }else{
                   ?>
-                <input type="text" class="form-control money text-right" onkeyup="hitung()" name="price" id="price" value="<?php echo $total_price; ?>" readonly>
+                <input required type="text" class="form-control money text-right" onkeyup="hitung()" name="price" id="price" value="<?php echo $total_price; ?>" readonly>
                 <?php } ?>
               </div>
             </div>
             <div class="form-group">
               <label class="form-label">Booking Fee</label>
               <div class="controls">
-                <input type="text" class="form-control money text-right" onkeyup="hitung()" name="booking_fee" id="booking_fee" value="<?php if($booking_fee!=null) echo $booking_fee;else echo 0; ?>">
+                <input required type="text" class="form-control money text-right" onkeyup="hitung()" name="booking_fee" id="booking_fee" value="<?php if($booking_fee!=null) echo $booking_fee;else echo 0; ?>">
               </div>
             </div>
             <div class="form-group">

@@ -40,7 +40,12 @@
 								<td class="text-center">
                      
                      <a data-toggle="tooltip"  data-placement="top" data-original-title="Detail Kontrak" href="<?php echo base_url()."".$controller.'/kontrak_detail/'.$d_row->id; ?>" class="btn btn-info btn-xs btn-mini tip"><i class="fa fa-eye"></i></a>
-                    </td>
+                     <?php if($d_row->status==0){ ?>
+                       <a data-toggle="tooltip"  data-placement="top" data-original-title="Batalkan Kontrak" href="<?php echo base_url()."".$controller.'/kontrak_batal/'.$d_row->id; ?>" class="btn btn-danger btn-xs btn-mini tip"><i class="fa fa-times"></i></a>
+                    <?php }else{ ?>
+                    <a data-toggle="tooltip"  data-placement="top" data-original-title="Kontrak telah dibatalkan" href="#" class="btn  btn-xs btn-mini tip"><i class="fa fa-file"></i></a>
+                   <?php } ?>
+                                     </td>
 							</tr>
 							<?php $no++; } ?>
 						</tbody>
