@@ -99,8 +99,8 @@ class admin extends DC_controller {
                 $key->no_kontrak = $kontrak->no_kontrak;
                 $customer = select_where($this->tbl_customer, 'id', $kontrak->customer_id)->row();
                 $key->customer_nm = $customer->name;
-                $key->nominal = $this->indonesian_currency($key->nominal);
-                $key->jatuh_tempo = $this->indonesian_date($key->jatuh_tempo);
+                $key->nominal = indonesian_currency($key->nominal);
+                $key->jatuh_tempo = indonesian_date($key->jatuh_tempo);
             }
 		$data['page'] = $this->load->view('admin/dashboard',$data,true);
 		$this->load->view('layout_backend',$data);

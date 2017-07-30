@@ -1,3 +1,9 @@
+     
+    <?php if($this->session->flashdata('notif')){ ?> 
+    <div class="alert alert-<?php echo $this->session->flashdata('notif') ?>">
+<button class="close" data-dismiss="alert"></button>
+<?php echo $this->session->flashdata('notif') ?>:&nbsp;<?php echo $this->session->flashdata('msg') ?></div>
+<?php } ?> 
         <div class="row">
             <div class="col-md-12">
               <div class="grid simple">

@@ -68,10 +68,10 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="panel-title-box">
-            <h3>Upcoming Payment</h3>
+            <h3 style="color: #fff">Upcoming Payment</h3>
           </div>
         </div>
-        <div class="panel-body padding-0">
+        <div class="panel-body padding-0" style="background: #fff">
           <table class="table no-margin">
             <tr>
               <th>No.</th>
@@ -83,7 +83,7 @@
             <?php $i = 1;foreach ($upcoming_payment as $key) { ?>
               <tr>
                 <td><?php echo $i ?></td>
-                <td><a href="sales/kontrak_detail/<?php echo $key->kontrak_id ?>"><?php echo $key->no_kontrak ?></a></td>
+                <td><a href="<?php echo base_url() ?>cashier/kontrak_detail/<?php echo $key->kontrak_id ?>"><?php echo $key->no_kontrak ?></a></td>
                 <td><?php echo $key->customer_nm ?></td>
                 <td><?php echo $key->nominal ?></td>
                 <td><?php echo $key->jatuh_tempo ?></td>

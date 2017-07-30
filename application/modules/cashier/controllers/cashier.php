@@ -392,7 +392,7 @@ class Cashier extends DC_controller {
         }
         $data['last_num_rows'] = $this->sales->last_payment_record_detail($id)->num_rows();
         $data['last'] = $this->sales->last_payment_record_detail($id)->row();
-        $data['page'] = $this->load->view('cashier/kontrak_detail',$data,true);
+        $data['page'] = $this->load->view('cashier/kontrak_payment_detail',$data,true);
         $this->load->view('layout_backend',$data);
     }
 

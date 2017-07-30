@@ -179,6 +179,7 @@
 		                            <div class="clearfix"></div>
 		                        </div>
 	                        	<div class="box-back">
+	                        	 <div class="col-md-9 col-xs-12">
 	                        	<?php if($kontrak->sisa_hutang==0){ ?>
 
 			                        <p>Kontrak ini sudah Lunas</p>
@@ -187,6 +188,8 @@
 			                        <p>Kasir dapat melakukan pelunasan kontrak sesuai dengan peraturan yang berlaku.</p>
 			                        <button class="btn btn-danger btn-cancel" type="button" data-original-title="Lunas" data-placement="top" data-toggle="tooltip" data-target-id="<?php echo $kontrak->id ?>">Lunasi Kontrak</button>
 			                        <?php } ?>
+			                        </div>
+			                        <div class="clearfix"></div>
 	                        	</div>
 		                    </div>
 		                </div>
