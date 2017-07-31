@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2017 at 09:06 PM
+-- Generation Time: Jul 31, 2017 at 08:05 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -417,7 +417,9 @@ INSERT INTO `dc_menu` (`id`, `name_menu`, `sub_menu`, `target`, `icon`, `positio
 (33, 'Payment Scheme', '22', 'payment_scheme', 'none', 3, '2017-06-15 17:07:43', NULL, 1, NULL),
 (34, 'Pengajuan Harga', '31', 'pengajuan_harga', 'none', 2, '2017-06-18 05:17:47', NULL, 1, NULL),
 (35, 'Kontrak', '31', 'kontrak', 'none', 3, '2017-06-20 19:44:46', NULL, 1, NULL),
-(36, 'Commision', '22', 'commision', 'none', 5, '2017-07-14 19:10:47', NULL, 1, NULL);
+(36, 'Commision', '22', 'commision', 'none', 5, '2017-07-14 19:10:47', NULL, 1, NULL),
+(37, 'Report', '0', 'report', 'fa fa-calendar', 3, '0000-00-00 00:00:00', '2017-07-31 13:05:13', 0, 1),
+(38, 'Laporan Penjualan', '37', 'laporan_penjualan', 'none', 1, '2017-07-31 13:04:30', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -604,7 +606,9 @@ INSERT INTO `dc_menu_accsess` (`id`, `id_menu`, `id_group`, `accsess`) VALUES
 (176, 31, 7, 1),
 (177, 32, 7, 1),
 (178, 34, 7, 1),
-(179, 35, 7, 1);
+(179, 35, 7, 1),
+(180, 37, 1, 1),
+(181, 38, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1206,12 +1210,12 @@ ALTER TABLE `dc_kontrak_unit`
 -- AUTO_INCREMENT for table `dc_menu`
 --
 ALTER TABLE `dc_menu`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 --
 -- AUTO_INCREMENT for table `dc_menu_accsess`
 --
 ALTER TABLE `dc_menu_accsess`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=180;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=182;
 --
 -- AUTO_INCREMENT for table `dc_payment_commision_history`
 --
