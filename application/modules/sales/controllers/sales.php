@@ -349,6 +349,8 @@ class sales extends DC_controller {
                     'id_creator' => $this->session->userdata['admin']['id'],
                 );
             $this->db->insert($this->tbl_kontrak_unit, $unit);
+            $unit=array('status' => 1, );
+                    update($this->tbl_unit, $unit, 'id', $unit_id[$i]);
         }
         redirect('sales/kontrak_form/'.$kontrak_id, 'refresh');
     }
@@ -437,7 +439,7 @@ class sales extends DC_controller {
                 foreach ($this->input->post('unit_id') as $key) {
                     $insert = array('kontrak_id' => $kontrak_id, 'unit_id' => $key, 'date_created' => date('Y-m-d H:i:s', now()), 'id_creator' => $this->session->userdata['admin']['id']);
                     insert_all($this->tbl_kontrak_unit, $insert);
-                    update($this->tbl_unit, array('status' => 1), 'id', $key);
+                    
 
                 }
                $this->session->set_flashdata('notif','success');
