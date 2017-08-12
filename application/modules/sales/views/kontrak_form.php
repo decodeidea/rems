@@ -98,7 +98,7 @@
               <div class="controls">
               <?php if ($flag != null) {
                   $disabled = "disabled";
-                  echo "<input type='hidden' name='sales_id' value=".$data_pengajuan->id_created.">";
+                  echo "<input type='hidden' name='sales_id' value=".$data_pengajuan->id_creator.">";
                 }else{
                   $disabled = "";
                   } ?>
