@@ -8134,7 +8134,7 @@ body.rtl .footer-widget {
 }
 
 .inputfile + label {
-    max-width: 80%;
+    max-width: 90%;
     font-size: 13px;
     /* 20px */
     font-weight: 700;
@@ -8215,7 +8215,7 @@ body.rtl .footer-widget {
 .inputfile:focus + label strong,
 .inputfile.has-focus + label strong,
 .inputfile + label:hover strong {
-    background-color: #d3394c;
+    background-color: #045D8E;
 }
 
 @media screen and (max-width: 50em) {
